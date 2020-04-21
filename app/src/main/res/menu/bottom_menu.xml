@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_map"
-        android:enabled="true"
-        android:icon="@drawable/ic_map_black_24dp"
-        android:title="지도"/>
 
     <item
         android:id="@+id/action_hotel"
         android:enabled="true"
-        android:icon="@drawable/ic_local_hotel_black_24dp"
-        android:title="호텔"/>
+        android:icon="@drawable/icon_search"
+        android:title="검색"/>
+
+    <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@drawable/icon_map"
+        android:title="지도"/>
 
     <item
         android:id="@+id/action_pic"
         android:enabled="true"
-        android:icon="@drawable/ic_thumb_up_black_24dp"
-        android:title="좋아연"/>
+        android:icon="@drawable/icon_shoppingcart"
+        android:title="거래"/>
 
     <item
         android:id="@+id/action_sms"
         android:enabled="true"
-        android:icon="@drawable/ic_local_laundry_service_black_24dp"
+        android:icon="@drawable/icon_sns"
         android:title="SNS"/>
 
     <item
         android:id="@+id/action_review"
         android:enabled="true"
-        android:icon="@drawable/ic_comment_black_24dp"
+        android:icon="@drawable/icon_chat"
         android:title="채팅"/>
 </menu>
