@@ -35,25 +35,26 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId())
                 {
-                    case R.id.action_map:
+                    case R.id.action_sns:
                         setFrag(0);
                         break;
-                    case R.id.action_hotel:
+                    case R.id.action_search:
                         setFrag(1);
                         break;
-                    case R.id.action_sms:
+                    case R.id.action_shopping:
                         setFrag(2);
                         break;
-                    case R.id.action_pic:
+                    case R.id.action_map:
                         setFrag(3);
                         break;
-                    case R.id.action_review:
+                    case R.id.action_chat:
                         setFrag(4);
                         break;
                 }
                 return true;
             }
         });
+
         frag1 = new Frag1();
         frag2 = new Frag2();
         frag3 = new Frag3();

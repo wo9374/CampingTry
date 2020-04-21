@@ -2,10 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_hotel"
+        android:id="@+id/action_sns"
+        android:enabled="true"
+        android:icon="@drawable/icon_sns"
+        android:title="SNS"/>
+
+    <item
+        android:id="@+id/action_search"
         android:enabled="true"
         android:icon="@drawable/icon_search"
         android:title="검색"/>
+
+    <item
+        android:id="@+id/action_shopping"
+        android:enabled="true"
+        android:icon="@drawable/icon_shoppingcart"
+        android:title="거래"/>
 
     <item
         android:id="@+id/action_map"
@@ -14,19 +26,7 @@
         android:title="지도"/>
 
     <item
-        android:id="@+id/action_pic"
-        android:enabled="true"
-        android:icon="@drawable/icon_shoppingcart"
-        android:title="거래"/>
-
-    <item
-        android:id="@+id/action_sms"
-        android:enabled="true"
-        android:icon="@drawable/icon_sns"
-        android:title="SNS"/>
-
-    <item
-        android:id="@+id/action_review"
+        android:id="@+id/action_chat"
         android:enabled="true"
         android:icon="@drawable/icon_chat"
         android:title="채팅"/>
