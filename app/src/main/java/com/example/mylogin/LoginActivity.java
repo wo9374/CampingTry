@@ -1,13 +1,13 @@
 package com.example.mylogin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -56,11 +56,13 @@ public class LoginActivity extends AppCompatActivity {
                             {
                                 String userID = jsonObject.getString("userID");
                                 String userPass = jsonObject.getString("userPassword");
+                                String userSubname = jsonObject.getString("userSubname");
 
                                 Toast.makeText(getApplicationContext(),"로그인에 성공하셨습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userID", userID);
                                 intent.putExtra("userPass", userPass);
+                                intent.putExtra("userSubname", userSubname);
                                 startActivity(intent);
                             } else { //로그인 실패
                                 Toast.makeText(getApplicationContext(),"로그인에 실패하셨습니다.",Toast.LENGTH_SHORT).show();
