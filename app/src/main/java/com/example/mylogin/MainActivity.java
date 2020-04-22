@@ -64,16 +64,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         tv_id = findViewById(R.id.tv_id);
-        tv_pass = findViewById(R.id.tv_pass);
+//        tv_pass = findViewById(R.id.tv_pass);
         tv_nic = findViewById(R.id.tv_nic);
 
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-        String userPass = intent.getStringExtra("userPass");
+//        String userPass = intent.getStringExtra("userPass");
         String userSubname = intent.getStringExtra("userSubname");
 
         tv_id.setText(userID);
-        tv_pass.setText(userPass);
+//        tv_pass.setText(userPass);
         tv_nic.setText(userSubname);
     }
 
