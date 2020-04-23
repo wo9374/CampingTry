@@ -326,16 +326,4 @@
         <item>서귀포시</item>
         <item>제주시</item>
     </string-array>
-
-    <string-array name="테마">
-        <item>전체 테마</item>
-        <item>해변</item>
-        <item>섬</item>
-        <item>산</item>
-        <item>숲</item>
-        <item>계곡</item>
-        <item>강</item>
-        <item>호수</item>
-        <item>도심</item>
-    </string-array>
 </resources>

@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
 
 public class Frag2 extends Fragment {
 
@@ -24,8 +23,14 @@ public class Frag2 extends Fragment {
     private Spinner spinner2;
     private Spinner spinner3;
 
-    public String[] data;
-    ArrayAdapter<String> adapter;
+    private String[] data;
+    private ArrayAdapter<String> adapter;
+
+    private ImageButton btn_search;
+
+    private String[] tema = {"전체 테마","해변","섬","산","숲","계곡","강","호수","도심"};
+    private int[] temaImgs= new int[9]; //테마 선택 그림넣을 배열변수
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,7 +109,7 @@ public class Frag2 extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });//spinner1 selected litener end
+        });//spinner1 selected listener end
 
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -117,18 +122,17 @@ public class Frag2 extends Fragment {
             }
         });//spinner2 selected end
 
-        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // 테마 선택 부분
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });//spinner3 selected end
 
+        for (int i=0; i<temaImgs.length;i++){
+            temaImgs[i] = getResources().getIdentifier("tema_"+i,"drawable","com.example.mylogin");
+            //
+        }
+        AdapterTemaSpinner adapterTemaSpinner = new AdapterTemaSpinner(tema,temaImgs,ct);
+        spinner3.setAdapter(adapterTemaSpinner);
+
+        btn_search = view.findViewById(R.id.btn_search);
 
         return view;
-    }
+    }//onCreateView end
 }

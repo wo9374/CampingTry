@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mylogin">
 
-    <uses-permission android:name="android.permission.INTERNET"/><!--인터넷 권한 선언-->
-    <!--android:usesCleartextTraffic="true" <-파이 이상부턴 저거 application에 넣어줘야함-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".LoginActivity">
-            <intent-filter><!--처음 엑티비티 설정하는 목록1-->
+            <intent-filter> <!-- 처음 엑티비티 설정하는 목록1 -->
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter><!--처음 엑티비티 설정하는 목록(이걸 옮긴다)-->
+            </intent-filter> <!-- 처음 엑티비티 설정하는 목록(이걸 옮긴다) -->
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
