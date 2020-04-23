@@ -20,7 +20,7 @@
         android:layout_weight="3"
         android:gravity="center"
         android:text="TextView"
-        android:textSize="12dp" />
+        android:textSize="13dp" />
 
     <CheckBox
         android:id="@+id/chk_tema"
