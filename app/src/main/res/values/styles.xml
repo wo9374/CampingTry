@@ -11,5 +11,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!--탭 레이아웃 텍스트 스타일-->
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">18dp</item>
+    </style>
 
 </resources>

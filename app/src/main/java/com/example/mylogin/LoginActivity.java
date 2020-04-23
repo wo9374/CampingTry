@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_id, et_pass;
-    private Button btn_login, btn_register;
+    private Button btn_login, btn_register, btn_searchlog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         et_pass = findViewById(R.id.et_pass);
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_register);
+        btn_searchlog = findViewById(R.id.btn_searchlog);
 
         //회원가입
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +41,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //아이디/비밀번호 찾기
+        btn_searchlog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SearchIdActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //로그인
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
