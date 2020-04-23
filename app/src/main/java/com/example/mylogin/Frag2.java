@@ -28,7 +28,7 @@ public class Frag2 extends Fragment {
 
     private ImageButton btn_search;
 
-    private String[] tema = {"전체 테마","해변","섬","산","숲","계곡","강","호수","도심"};
+    private String[] tema = {"전체테마","해변","섬","산","숲","계곡","강","호수","도심"};
     private int[] temaImgs= new int[9]; //테마 선택 그림넣을 배열변수
 
     @Nullable
@@ -126,12 +126,15 @@ public class Frag2 extends Fragment {
 
         for (int i=0; i<temaImgs.length;i++){
             temaImgs[i] = getResources().getIdentifier("tema_"+i,"drawable","com.example.mylogin");
-            //
+            //테마선택 스피너에 넣을 이미지
         }
         AdapterTemaSpinner adapterTemaSpinner = new AdapterTemaSpinner(tema,temaImgs,ct);
         spinner3.setAdapter(adapterTemaSpinner);
+        // 어뎁터 써서 만들어둔 spinner_tema에 사진과 텍스트 체크박스를 넣고 갯수만큼 뿌려줌
 
-        btn_search = view.findViewById(R.id.btn_search);
+
+
+        btn_search = view.findViewById(R.id.btn_search); //검색 돋보기 버튼
 
         return view;
     }//onCreateView end

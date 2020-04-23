@@ -30,7 +30,6 @@ public class AdapterTemaSpinner extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return tema[position];
-
     }
 
     @Override
@@ -45,16 +44,15 @@ public class AdapterTemaSpinner extends BaseAdapter {
         }
 
         TextView tv = (TextView) convertView.findViewById(R.id.txt_tema);
-        tv.setText(tema[position]);
-
         ImageView imgTema = (ImageView) convertView.findViewById(R.id.img_tema);
-        imgTema.setImageResource(temaImg[position]);
-
         CheckBox c1= (CheckBox)convertView.findViewById(R.id.chk_tema);
+
+        tv.setText(tema[position]);
+        imgTema.setImageResource(temaImg[position]);
         c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked){ //테마에서 체크된 부분
 
                 }
             }
