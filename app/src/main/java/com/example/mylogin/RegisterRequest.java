@@ -24,6 +24,7 @@ public class RegisterRequest extends StringRequest {
         map.put("userSubname", userSubname);
         map.put("userBirth", userBirth + "");
         map.put("userNum", userNum + "");
+//        map.put("userEmail", userEmail + "");
     }
 
     @Override

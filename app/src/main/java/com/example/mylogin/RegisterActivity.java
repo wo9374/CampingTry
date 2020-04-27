@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText et_id, et_pass, et_pass2, et_name, et_subname, et_birth, et_num;
+    private EditText et_id, et_pass, et_pass2, et_name, et_subname, et_birth, et_num, et_email;
     private Button btn_register;
 
     @Override
@@ -33,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_subname = findViewById(R.id.et_subname);
         et_birth = findViewById(R.id.et_birth);
         et_num = findViewById(R.id.et_num);
+//        et_email = findViewById(R.id.et_email);
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String userSubname = et_subname.getText().toString();
                 final int userBirth = Integer.parseInt(et_birth.getText().toString());
                 final int userNum = Integer.parseInt(et_num.getText().toString());
+//                final String userEmail = et_email.getText().toString();
 
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override

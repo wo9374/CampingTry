@@ -217,6 +217,30 @@
         app:layout_constraintStart_toStartOf="@+id/et_birth"
         app:layout_constraintTop_toBottomOf="@+id/et_birth" />
 
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toTopOf="@+id/et_email" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="비밀번호 찾기에 사용됩니다"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/et_num"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_num"
+        app:layout_constraintTop_toBottomOf="@+id/et_num" />
+
     <Button
         android:id="@+id/btn_register"
         android:layout_width="0dp"
@@ -230,5 +254,5 @@
         app:layout_constraintEnd_toEndOf="@+id/et_num"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/et_num" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 </androidx.constraintlayout.widget.ConstraintLayout>
