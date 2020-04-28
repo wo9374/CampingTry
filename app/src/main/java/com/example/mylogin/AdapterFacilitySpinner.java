@@ -10,27 +10,26 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AdapterTemaSpinner extends BaseAdapter {
+public class AdapterFacilitySpinner extends BaseAdapter {
 
-    String tema[];
+    String facility[];
     Context context;
-    int temaImg[];
-    boolean all;
+    int facilityImgs[];
 
-    public AdapterTemaSpinner(String[] tema, int[] temaImg,Context context){
-        this.tema= tema;
-        this.temaImg=temaImg;
+    public AdapterFacilitySpinner(String[] tema, int[] temaImg, Context context){
+        this.facility= tema;
+        this.facilityImgs=temaImg;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return tema.length;
+        return facility.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return tema[position];
+        return facility[position];
     }
 
     @Override
@@ -39,21 +38,22 @@ public class AdapterTemaSpinner extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_tema,null);
+            //스피너테마 레이아웃 그대로 사용
         }
 
         TextView tv = (TextView) convertView.findViewById(R.id.txt_tema);
         ImageView imgTema = (ImageView) convertView.findViewById(R.id.img_tema);
-        final CheckBox c1= (CheckBox)convertView.findViewById(R.id.chk_tema);
+        CheckBox c1= (CheckBox)convertView.findViewById(R.id.chk_tema);
 
-        tv.setText(tema[position]);
-        imgTema.setImageResource(temaImg[position]);
+        tv.setText(facility[position]);
+        imgTema.setImageResource(facilityImgs[position]);
         c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){ //테마에서 체크된 부분 position 값으로 분류
+                if (isChecked){ //시설에서 체크된 부분 position 값으로 분류
 
                 }
             }
