@@ -23,6 +23,11 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+
+        <!-- 구글맵 API-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCnAEbngMbRujX6g9w3Vql4800Sz-OSzcM"/>
     </application>
 
 </manifest>
