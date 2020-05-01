@@ -98,7 +98,6 @@ public class Frag4 extends Fragment implements OnMapReadyCallback {
         markerOptions.title("영진전문대학교");
         markerOptions.snippet("대구광역시 북구 복현2동 복현로 35");
         googleMap.addMarker(markerOptions);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(YJP));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(YJP,16));
     }
 }
