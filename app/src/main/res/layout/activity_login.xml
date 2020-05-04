@@ -84,4 +84,17 @@
         app:layout_constraintEnd_toEndOf="@+id/btn_register"
         app:layout_constraintStart_toStartOf="@+id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:textColor="#F09661"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btn_searchlog"
+        app:layout_constraintStart_toStartOf="@+id/btn_searchlog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_searchlog" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

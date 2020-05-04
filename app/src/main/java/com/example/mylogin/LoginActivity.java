@@ -3,10 +3,15 @@ package com.example.mylogin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +25,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_id, et_pass;
     private Button btn_login, btn_register, btn_searchlog;
+    public static TextView tv_state;
+    private NetworkReceiver receiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,15 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_register);
         btn_searchlog = findViewById(R.id.btn_searchlog);
+        tv_state = findViewById(R.id.tv_state);
+
+        //브로드 캐스트 리시버 등록
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+//        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        registerReceiver(receiver, filter);
+
+
 
         //회원가입
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -90,4 +107,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //브로드 캐스트 리시버 해제
+        unregisterReceiver(receiver);
+
+        //앱 종료시 꼭 이 구문을 사용해줘야함
+    }
+
 }
