@@ -1,18 +1,16 @@
 package com.example.mylogin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,10 +21,13 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private long backBtnTime = 0;
     private EditText et_id, et_pass;
     private Button btn_login, btn_register, btn_searchlog;
     public static TextView tv_state;
     private NetworkReceiver receiver;
+
+
 
 
     @Override
@@ -106,6 +107,21 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime){
+            super.onBackPressed();
+        }
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this,"다시 오시길 기다릴게요! 안녕~",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

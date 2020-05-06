@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="email">
+        <item>naver.com</item>
+        <item>gmail.com</item>
+        <item>chollian.net</item>
+        <item>dreamwiz.com</item>
+        <item>freechal.com</item>
+        <item>yahoo.co.kr</item>
+        <item>hanmail.com</item>
+        <item>nate.com</item>
+        <item>daum.com</item>
+    </string-array>
+</resources>

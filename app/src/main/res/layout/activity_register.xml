@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="26dp"
         android:ems="10"
         android:hint="14자 이내로 입력해주세요"
         android:inputType="textPersonName"
@@ -230,16 +230,37 @@
 
     <EditText
         android:id="@+id/et_email"
-        android:layout_width="250dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="비밀번호 찾기에 사용됩니다"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_num"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_num"
         app:layout_constraintTop_toBottomOf="@+id/et_num" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/email_spinner"
+        app:layout_constraintStart_toEndOf="@+id/et_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_num" />
+
+    <Spinner
+        android:id="@+id/email_spinner"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/email"
+        app:layout_constraintEnd_toEndOf="@+id/et_num"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toEndOf="@+id/et_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_num"></Spinner>
 
     <Button
         android:id="@+id/btn_register"
