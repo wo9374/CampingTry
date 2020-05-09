@@ -5,6 +5,7 @@
     <color name="colorAccent">#F09661 </color>
 
     <color name="default_bccolor">#FFFFDF</color>
-
     <color name="white">#ffffff</color>
+    <color name="colorDivision">#e0e0e0</color>
+    <color name="colorNavIcon">#1d1d1d</color>
 </resources>
