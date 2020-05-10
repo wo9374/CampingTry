@@ -8,8 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mylogin.SNS.Frag1;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private Frag4 frag4;
     private Frag5 frag5;
 
-    private TextView tv_id, tv_pass, tv_nic;
+    private TextView tv_id, tv_nic;
+    private ImageView tv_profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,17 +68,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         tv_id = findViewById(R.id.tv_id);
-//        tv_pass = findViewById(R.id.tv_pass);
         tv_nic = findViewById(R.id.tv_nic);
+        tv_profile = findViewById(R.id.tv_profile);
 
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-//        String userPass = intent.getStringExtra("userPass");
         String userSubname = intent.getStringExtra("userSubname");
+        String photoUrl = intent.getStringExtra("photoUrl");
 
         tv_id.setText(userID);
-//        tv_pass.setText(userPass);
         tv_nic.setText(userSubname);
+        Glide.with(this).load(photoUrl).into(tv_profile);
     }
 
     //프래그먼트 교체가 일어나는 실행문

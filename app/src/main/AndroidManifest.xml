@@ -4,8 +4,8 @@
     package="com.example.mylogin">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SearchIdActivity"></activity>
+        <activity android:name=".SearchIdActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter> <!-- 처음 엑티비티 설정하는 목록1 -->
                 <action android:name="android.intent.action.MAIN" />
@@ -24,19 +24,15 @@
             </intent-filter> <!-- 처음 엑티비티 설정하는 목록(이걸 옮긴다) -->
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-
-        <!--네트워크 상태체크-->
-        <receiver android:name = "NetworkReceiver">
+        <activity android:name=".MainActivity" /> <!-- 네트워크 상태체크 -->
+        <receiver android:name=".NetworkReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED"/>
+                <action android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED" />
             </intent-filter>
-        </receiver>
-
-        <!-- 구글맵 API-->
+        </receiver> <!-- 구글맵 API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCnAEbngMbRujX6g9w3Vql4800Sz-OSzcM"/>
+            android:value="AIzaSyCnAEbngMbRujX6g9w3Vql4800Sz-OSzcM" />
     </application>
 
 </manifest>

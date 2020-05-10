@@ -85,16 +85,28 @@
         app:layout_constraintStart_toStartOf="@+id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
+    <com.google.android.gms.common.internal.SignInButtonImpl
+        android:id="@+id/btn_google"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/fui_ic_googleg_color_24dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_searchlog"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/btn_searchlog"
+        app:layout_constraintTop_toBottomOf="@+id/btn_searchlog" />
+
     <TextView
         android:id="@+id/tv_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:textColor="#F09661"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btn_searchlog"
         app:layout_constraintStart_toStartOf="@+id/btn_searchlog"
-        app:layout_constraintTop_toBottomOf="@+id/btn_searchlog" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
