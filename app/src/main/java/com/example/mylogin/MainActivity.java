@@ -2,12 +2,16 @@ package com.example.mylogin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +22,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView; //바텀 네비게이션 뷰
+    private DrawerLayout drawerLayout;
+    private View drawerView;
     private FragmentManager fm;
     private FragmentTransaction ft;
     private Frag1 frag1;
@@ -79,7 +85,56 @@ public class MainActivity extends AppCompatActivity {
         tv_id.setText(userID);
         tv_nic.setText(userSubname);
         Glide.with(this).load(photoUrl).into(tv_profile);
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerView = (View)findViewById(R.id.drawer);
+
+        Button btn_open = (Button)findViewById(R.id.btn_open);
+        btn_open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(drawerView);
+            }
+        });
+
+        Button btn_close = (Button)findViewById(R.id.btn_close);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawers();
+            }
+        });
+
+        drawerLayout.setDrawerListener(listener);
+        drawerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
     }
+
+    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
+        @Override//슬라이드 했을시
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+        }
+
+        @Override//오픈상황
+        public void onDrawerOpened(@NonNull View drawerView) {
+
+        }
+
+        @Override//슬라이드메뉴 닫혔을때
+        public void onDrawerClosed(@NonNull View drawerView) {
+
+        }
+
+        @Override//상태 체인지
+        public void onDrawerStateChanged(int newState) {
+
+        }
+    };
 
     //프래그먼트 교체가 일어나는 실행문
     private void setFrag(int n)
