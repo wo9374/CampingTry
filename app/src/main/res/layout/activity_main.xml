@@ -78,16 +78,16 @@
 
             <Button
                 android:id="@+id/btn_open"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom|end"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|start"
                 android:layout_marginBottom="10dp"
-                android:background="?android:attr/textSelectHandleLeft"
-                android:text="★"
+                android:background="@android:drawable/ic_media_play"
+                android:backgroundTint="#00FFFFFF"
+                android:text="▶"
                 android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
         </FrameLayout>
 

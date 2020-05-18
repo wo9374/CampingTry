@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="?android:attr/actionModeSplitBackground"
-        android:text="캠 핑   장 터"
+        android:text="거 래 글   작 성"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
@@ -27,7 +27,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_sample"
+            android:id="@+id/tv_sample2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="샘플이다잉"
@@ -35,10 +35,13 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_shop"
-        android:layout_width="50dp"
+        android:id="@+id/btn_shop2"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom|end"
-        android:background="@android:drawable/ic_input_add"
-        android:backgroundTint="#F09661" />
+        android:backgroundTint="#F09661"
+        android:text="게    시"
+        android:textColor="@color/default_bccolor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </LinearLayout>
