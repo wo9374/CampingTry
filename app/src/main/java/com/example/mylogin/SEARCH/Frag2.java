@@ -1,4 +1,4 @@
-package com.example.mylogin;
+package com.example.mylogin.SEARCH;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.mylogin.AdapterFacilitySpinner;
+import com.example.mylogin.AdapterTemaSpinner;
+import com.example.mylogin.R;
 
 public class Frag2 extends Fragment {
 
