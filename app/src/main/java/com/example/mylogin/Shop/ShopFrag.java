@@ -42,6 +42,7 @@ public class ShopFrag extends Fragment implements View.OnClickListener {
     private ImageView iv_UserPhoto;
     private String absoultePath;
     private String result;
+    private Bitmap bitmap;
 
     @Nullable
     @Override
@@ -201,12 +202,10 @@ public class ShopFrag extends Fragment implements View.OnClickListener {
         try {
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            /*bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
             // sendBroadcast를 통해 Crop된 사진을 앨범에 보이도록 갱신한다.
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-
-                    Uri.fromFile(copyFile)));*/
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(copyFile)));
 
             out.flush();
             out.close();
@@ -216,6 +215,9 @@ public class ShopFrag extends Fragment implements View.OnClickListener {
             e.printStackTrace();
 
         }
+    }
+
+    private void sendBroadcast(Intent intent) {
     }
 
 
