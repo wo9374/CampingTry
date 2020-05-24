@@ -92,4 +92,12 @@
         android:layout_marginBottom="10dp"
         app:srcCompat="@drawable/campingtry_logo" />
 
+    <Button
+        android:id="@+id/go_camping"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/button_round"
+        android:text="P C 버 전 이 동"
+        android:textSize="12sp" />
+
 </LinearLayout>

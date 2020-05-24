@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
+import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -123,7 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override//오픈상황
         public void onDrawerOpened(@NonNull View drawerView) {
-
+            Button go_camping = (Button)findViewById(R.id.go_camping);
+            go_camping.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override//슬라이드메뉴 닫혔을때
