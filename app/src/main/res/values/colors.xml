@@ -8,4 +8,5 @@
     <color name="white">#ffffff</color>
     <color name="colorDivision">#e0e0e0</color>
     <color name="colorNavIcon">#1d1d1d</color>
+    <color name="gray">#A4A4A4</color>
 </resources>
