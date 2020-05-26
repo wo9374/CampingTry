@@ -27,9 +27,10 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClientClass());
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BREAK) && webView.canGoBack()){
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()){
             webView.goBack();
             return true;
         }
