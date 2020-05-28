@@ -1,10 +1,15 @@
 package com.example.mylogin.SNS;
 
+import android.content.ClipData;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +33,8 @@ public class Frag1 extends Fragment {
     private Sns_favorite s_frag4;
     private Sns_account s_frag5;
 
+
+    private int pick_from_multi_image = 0000;
 
     @Nullable
     @Override
@@ -101,4 +108,32 @@ public class Frag1 extends Fragment {
         }
     }
 
+    public void TakeMultiImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,pick_from_multi_image);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == pick_from_multi_image){
+            if (data==null){
+
+            }else{
+                if(data.getClipData()==null){
+                    Toast.makeText(this.getActivity(),"다중선택 불가 기기입니다.",Toast.LENGTH_LONG).show();
+                }else{
+                    ClipData clipData = data.getClipData();
+                    if(clipData.getItemCount() > 6){
+                        Toast.makeText(this.getActivity(),"사진은 6장까지 선택 가능합니다.",Toast.LENGTH_LONG).show();
+                    }else if(clipData.getItemCount()==1){
+
+                    }
+                }
+            }
+        }
+    }
 }
