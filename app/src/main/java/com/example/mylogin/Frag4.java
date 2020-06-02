@@ -1,5 +1,6 @@
 package com.example.mylogin;
 
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +30,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
@@ -45,15 +47,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 
 
 public class Frag4 extends Fragment
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
-
-    private MapView mapView = null;
+        LocationListener {
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -62,6 +63,7 @@ public class Frag4 extends Fragment
     private static final int FASTEST_UPDATE_INTERVAL_MS = 15000;
 
     private GoogleMap googleMap = null;
+    private MapView mapView = null;
     private GoogleApiClient googleApiClient = null;
     private Marker currentMarker = null;
 
@@ -76,11 +78,11 @@ public class Frag4 extends Fragment
         // required
     }
 
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
-        if ( currentMarker != null ) currentMarker.remove();
+    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet){
+        if (currentMarker != null) currentMarker.remove();
 
-        if ( location != null) {
-            //현재위치의 위도 경도 가져옴
+        if (location != null){
+            //현재위치 정보 수집
             LatLng currentLocation = new LatLng( location.getLatitude(), location.getLongitude());
 
             MarkerOptions markerOptions = new MarkerOptions();
@@ -94,7 +96,6 @@ public class Frag4 extends Fragment
             this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             return;
         }
-
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DEFAULT_LOCATION);
         markerOptions.title(markerTitle);
@@ -111,34 +112,31 @@ public class Frag4 extends Fragment
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag4, container, false);
+        View layout = inflater.inflate(R.layout.frag4, container, false);
 
-        mapView = (MapView) view.findViewById(R.id.googleMap);
+        mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                Location location = new Location("");
-                location.setLatitude(place.getLatLng().latitude);
-                location.setLongitude(place.getLatLng().longitude);
-
-                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
-            }
-
-            @Override
-            public void onError(Status status) {
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-
-        return view;
+//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment )
+//                getActivity().getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(Place place) {
+//                Location location = new Location("");
+//                location.setLatitude(place.getLatLng().latitude);
+//                location.setLongitude(place.getLatLng().longitude);
+//
+//                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
+//            }
+//
+//            @Override
+//            public void onError(Status status) {
+//                Log.i(TAG, "An error occurred: " + status);
+//            }
+//        });
+        return layout;
     }
 
     @Override
@@ -177,7 +175,7 @@ public class Frag4 extends Fragment
         mapView.onPause();
 
         if ( googleApiClient != null && googleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (LocationListener) this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (com.google.android.gms.location.LocationListener) this);
             googleApiClient.disconnect();
         }
     }
@@ -194,11 +192,11 @@ public class Frag4 extends Fragment
         mapView.onLowMemory();
 
         if ( googleApiClient != null ) {
-            googleApiClient.unregisterConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this);
+            googleApiClient.unregisterConnectionCallbacks(this);
             googleApiClient.unregisterConnectionFailedListener(this);
 
             if ( googleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (LocationListener) this);
+                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (com.google.android.gms.location.LocationListener) this);
                 googleApiClient.disconnect();
             }
         }
@@ -211,12 +209,11 @@ public class Frag4 extends Fragment
         //액티비티가 처음 생성될 때 실행되는 함수
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
-        if (mapView != null)
+        if(mapView != null)
         {
             mapView.onCreate(savedInstanceState);
         }
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -264,7 +261,7 @@ public class Frag4 extends Fragment
 
     private void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
+                .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
@@ -279,6 +276,60 @@ public class Frag4 extends Fragment
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(TAG, "onLocationChanged call..");
+        searchCurrentPlaces();
+    }
+
+    private void searchCurrentPlaces() {
+        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi.getCurrentPlace(googleApiClient, null);
+        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
+            @Override
+            public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
+                int i = 0;
+                LikelyPlaceNames = new String[MAXENTRIES];
+                LikelyAddresses = new String[MAXENTRIES];
+                LikelyAttributions = new String[MAXENTRIES];
+                LikelyLatLngs = new LatLng[MAXENTRIES];
+
+                for(PlaceLikelihood placeLikelihood : placeLikelihoods) {
+                    LikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
+                    LikelyAddresses[i] = (String) placeLikelihood.getPlace().getAddress();
+                    LikelyAttributions[i] = (String) placeLikelihood.getPlace().getAttributions();
+                    LikelyLatLngs[i] = placeLikelihood.getPlace().getLatLng();
+
+                    i++;
+                    if(i > MAXENTRIES - 1 ) {
+                        break;
+                    }
+                }
+                placeLikelihoods.release();
+
+                Location location = new Location("");
+                location.setLatitude(LikelyLatLngs[0].latitude);
+                location.setLongitude(LikelyLatLngs[0].longitude);
+
+                setCurrentLocation(location, LikelyPlaceNames[0], LikelyAddresses[0]);
+            }
+        });
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
     @Override
@@ -316,11 +367,11 @@ public class Frag4 extends Fragment
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 LocationServices.FusedLocationApi
-                        .requestLocationUpdates(googleApiClient, locationRequest, this);
+                        .requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
             }
         } else {
             LocationServices.FusedLocationApi
-                    .requestLocationUpdates(googleApiClient, locationRequest, this);
+                    .requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
 
             this.googleMap.getUiSettings().setCompassEnabled(true);
             this.googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
@@ -328,11 +379,11 @@ public class Frag4 extends Fragment
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
-        if ( i ==  CAUSE_NETWORK_LOST )
+    public void onConnectionSuspended(int cause) {
+        if ( cause ==  CAUSE_NETWORK_LOST )
             Log.e(TAG, "onConnectionSuspended(): Google Play services " +
                     "connection lost.  Cause: network lost.");
-        else if (i == CAUSE_SERVICE_DISCONNECTED )
+        else if (cause == CAUSE_SERVICE_DISCONNECTED )
             Log.e(TAG,"onConnectionSuspended():  Google Play services " +
                     "connection lost.  Cause: service disconnected");
     }
@@ -345,48 +396,5 @@ public class Frag4 extends Fragment
 
         setCurrentLocation(location, "위치정보 가져올 수 없음",
                 "위치 퍼미션과 GPS활성 여부 확인");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.i(TAG, "onLocationChanged call..");
-        searchCurrentPlaces();
-    }
-
-    private void searchCurrentPlaces() {
-        @SuppressWarnings("MissingPermission")
-        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
-                .getCurrentPlace(googleApiClient, null);
-        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>(){
-
-            @Override
-            public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
-                int i = 0;
-                LikelyPlaceNames = new String[MAXENTRIES];
-                LikelyAddresses = new String[MAXENTRIES];
-                LikelyAttributions = new String[MAXENTRIES];
-                LikelyLatLngs = new LatLng[MAXENTRIES];
-
-                for(PlaceLikelihood placeLikelihood : placeLikelihoods) {
-                    LikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
-                    LikelyAddresses[i] = (String) placeLikelihood.getPlace().getAddress();
-                    LikelyAttributions[i] = (String) placeLikelihood.getPlace().getAttributions();
-                    LikelyLatLngs[i] = placeLikelihood.getPlace().getLatLng();
-
-                    i++;
-                    if(i > MAXENTRIES - 1 ) {
-                        break;
-                    }
-                }
-
-                placeLikelihoods.release();
-
-                Location location = new Location("");
-                location.setLatitude(LikelyLatLngs[0].latitude);
-                location.setLongitude(LikelyLatLngs[0].longitude);
-
-                setCurrentLocation(location, LikelyPlaceNames[0], LikelyAddresses[0]);
-            }
-        });
     }
 }
