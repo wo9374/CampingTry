@@ -1,110 +1,85 @@
 package com.example.mylogin;
 
-
-import android.Manifest;
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import android.provider.Settings;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
-public class Frag4 extends Fragment
-        implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
-    private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
-    private static final String TAG = "googlemap_example";
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
-    private static final int UPDATE_INTERVAL_MS = 15000;
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 15000;
+public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
 
-    private GoogleMap googleMap = null;
+    private FragmentActivity mContext;
+
+    private static final String TAG = Frag4.class.getSimpleName();
+    private GoogleMap mMap;
     private MapView mapView = null;
-    private GoogleApiClient googleApiClient = null;
     private Marker currentMarker = null;
 
-    private final static int MAXENTRIES = 5;
-    private String[] LikelyPlaceNames = null;
-    private String[] LikelyAddresses = null;
-    private String[] LikelyAttributions = null;
-    private LatLng[] LikelyLatLngs = null;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private LocationRequest locationRequest;
+    private Location mCurrentLocatiion;
 
-    public Frag4()
-    {
-        // required
+    private final LatLng mDefaultLocation = new LatLng(37.56, 126.97);
+    private static final int DEFAULT_ZOOM = 15;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean mLocationPermissionGranted;
+
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int UPDATE_INTERVAL_MS = 1000 * 60 * 1;
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 1000 * 30 ;
+
+    private static final String KEY_CAMERA_POSITION = "camera_position";
+    private static final String KEY_LOCATION = "location";
+
+    public Frag4(){
     }
 
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet){
-        if (currentMarker != null) currentMarker.remove();
-
-        if (location != null){
-            //현재위치 정보 수집
-            LatLng currentLocation = new LatLng( location.getLatitude(), location.getLongitude());
-
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(currentLocation);
-            markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
-            markerOptions.draggable(true);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            currentMarker = this.googleMap.addMarker(markerOptions);
-
-            this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-            return;
-        }
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(DEFAULT_LOCATION);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        currentMarker = this.googleMap.addMarker(markerOptions);
-
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        mContext = (FragmentActivity) activity;
+        super.onAttach(activity);
     }
 
     @Override
@@ -114,29 +89,207 @@ public class Frag4 extends Fragment
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mCurrentLocatiion = savedInstanceState.getParcelable(KEY_LOCATION);
+            CameraPosition mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
         View layout = inflater.inflate(R.layout.frag4, container, false);
-
         mapView = (MapView)layout.findViewById(R.id.map);
+        if(mapView != null) {
+            mapView.onCreate(savedInstanceState);
+        }
         mapView.getMapAsync(this);
 
-//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment )
-//                getActivity().getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-//            @Override
-//            public void onPlaceSelected(Place place) {
-//                Location location = new Location("");
-//                location.setLatitude(place.getLatLng().latitude);
-//                location.setLongitude(place.getLatLng().longitude);
-//
-//                setCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
-//            }
-//
-//            @Override
-//            public void onError(Status status) {
-//                Log.i(TAG, "An error occurred: " + status);
-//            }
-//        });
         return layout;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        MapsInitializer.initialize(mContext);
+
+        locationRequest = new LocationRequest()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) // 정확도를 최우선적으로 고려
+                .setInterval(UPDATE_INTERVAL_MS) // 위치가 Update 되는 주기
+                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS); // 위치 획득후 업데이트되는 주기
+
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder();
+
+        builder.addLocationRequest(locationRequest);
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        setDefaultLocation();
+
+        getLocationPermission();
+
+        updateLocationUI();
+
+        getDeviceLocation();
+    }
+
+    private void updateLocationUI(){
+        if (mMap == null) {
+            return;
+        }
+        try {
+            if (mLocationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mCurrentLocatiion = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private void getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(mContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(mContext,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    private void setDefaultLocation() {
+        if (currentMarker != null) currentMarker.remove();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(mDefaultLocation);
+        markerOptions.title("위치정보 가져올 수 없음");
+        markerOptions.snippet("위치 퍼미션과 GPS 활성 여부 확인하세요");
+        markerOptions.draggable(true);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        currentMarker = mMap.addMarker(markerOptions);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15);
+        mMap.moveCamera(cameraUpdate);
+    }
+    String getCurrentAddress(LatLng latlng) {
+        List<Address> addressList = null ;
+        Geocoder geocoder = new Geocoder( mContext, Locale.getDefault());
+
+        try {
+            addressList = geocoder.getFromLocation(latlng.latitude,latlng.longitude,1);
+        } catch (IOException e) {
+            Toast. makeText( mContext, "위치로부터 주소를 인식할 수 없습니다. 네트워크가 연결되어 있는지 확인해 주세요.", Toast.LENGTH_SHORT ).show();
+            e.printStackTrace();
+            return "주소 인식 불가" ;
+        }
+
+        if (addressList.size() < 1) { // 주소 리스트가 비어있는지 비어 있으면
+            return "해당 위치에 주소 없음" ;
+        }
+        Address address = addressList.get(0);
+        StringBuilder addressStringBuilder = new StringBuilder();
+        for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+            addressStringBuilder.append(address.getAddressLine(i));
+            if (i < address.getMaxAddressLineIndex())
+                addressStringBuilder.append("\n");
+        }
+
+        return addressStringBuilder.toString();
+    }
+    LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            super.onLocationResult(locationResult);
+
+            List<Location> locationList = locationResult.getLocations();
+
+            if (locationList.size() > 0) {
+                Location location = locationList.get(locationList.size() - 1);
+
+                LatLng currentPosition
+                        = new LatLng(location.getLatitude(), location.getLongitude());
+
+                String markerTitle = getCurrentAddress(currentPosition);
+                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
+                        + " 경도:" + String.valueOf(location.getLongitude());
+
+                Log.d(TAG, "Time :" + CurrentTime() + " onLocationResult : " + markerSnippet);
+
+                //현재 위치에 마커 생성하고 이동
+                setCurrentLocation(location, markerTitle, markerSnippet);
+                mCurrentLocatiion = location;
+            }
+        }
+};
+
+    private String CurrentTime() {
+        Date today = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+        return time.format(today);
+    }
+
+    private void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
+        if (currentMarker != null) currentMarker.remove();
+
+        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(currentLatLng);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+
+        currentMarker = mMap.addMarker(markerOptions);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+        mMap.moveCamera(cameraUpdate);
+    }
+
+    private void getDeviceLocation() {
+        try {
+            if (mLocationPermissionGranted) {
+                mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
+
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
@@ -149,35 +302,26 @@ public class Frag4 extends Fragment
     public void onStop() {
         super.onStop();
         mapView.onStop();
-
-        if ( googleApiClient != null && googleApiClient.isConnected())
-            googleApiClient.disconnect();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+        if (mFusedLocationProviderClient != null) {
+            mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
-
-        if ( googleApiClient != null)
-            googleApiClient.connect();
+        if (mLocationPermissionGranted) {
+            mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+            if (mMap!=null)
+                mMap.setMyLocationEnabled(true);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
-
-        if ( googleApiClient != null && googleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (com.google.android.gms.location.LocationListener) this);
-            googleApiClient.disconnect();
-        }
     }
 
     @Override
@@ -187,214 +331,16 @@ public class Frag4 extends Fragment
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mFusedLocationProviderClient != null) {
+            mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onLowMemory();
-
-        if ( googleApiClient != null ) {
-            googleApiClient.unregisterConnectionCallbacks(this);
-            googleApiClient.unregisterConnectionFailedListener(this);
-
-            if ( googleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, (com.google.android.gms.location.LocationListener) this);
-                googleApiClient.disconnect();
-            }
-        }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //액티비티가 처음 생성될 때 실행되는 함수
-        MapsInitializer.initialize(getActivity().getApplicationContext());
-
-        if(mapView != null)
-        {
-            mapView.onCreate(savedInstanceState);
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // OnMapReadyCallback implements 해야 mapView.getMapAsync(this); 사용가능. this 가 OnMapReadyCallback
-
-        this.googleMap = googleMap;
-
-        //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에 지도의 초기위치를 서울로 이동
-        setCurrentLocation(null, "위치정보 가져올 수 없음", "위치 퍼미션과 GPS 활성 여부 확인");
-
-        //나침반이 나타나도록 설정
-        googleMap.getUiSettings().setCompassEnabled(true);
-        // 매끄럽게 이동함
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-        //  API 23 이상이면 런타임 퍼미션 처리 필요
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // 사용권한체크
-            int hasFineLocationPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-            if ( hasFineLocationPermission == PackageManager.PERMISSION_DENIED) {
-                //사용권한이 없을경우
-                //권한 재요청
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            } else {
-                //사용권한이 있는경우
-                if ( googleApiClient == null) {
-                    buildGoogleApiClient();
-                }
-
-                if ( ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                {
-                    googleMap.setMyLocationEnabled(true);
-                }
-            }
-        } else {
-
-            if ( googleApiClient == null) {
-                buildGoogleApiClient();
-            }
-
-            googleMap.setMyLocationEnabled(true);
-        }
-    }
-
-    private void buildGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(getActivity(), this)
-                .build();
-        googleApiClient.connect();
-    }
-
-    public boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.i(TAG, "onLocationChanged call..");
-        searchCurrentPlaces();
-    }
-
-    private void searchCurrentPlaces() {
-        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi.getCurrentPlace(googleApiClient, null);
-        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
-            @Override
-            public void onResult(@NonNull PlaceLikelihoodBuffer placeLikelihoods) {
-                int i = 0;
-                LikelyPlaceNames = new String[MAXENTRIES];
-                LikelyAddresses = new String[MAXENTRIES];
-                LikelyAttributions = new String[MAXENTRIES];
-                LikelyLatLngs = new LatLng[MAXENTRIES];
-
-                for(PlaceLikelihood placeLikelihood : placeLikelihoods) {
-                    LikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
-                    LikelyAddresses[i] = (String) placeLikelihood.getPlace().getAddress();
-                    LikelyAttributions[i] = (String) placeLikelihood.getPlace().getAttributions();
-                    LikelyLatLngs[i] = placeLikelihood.getPlace().getLatLng();
-
-                    i++;
-                    if(i > MAXENTRIES - 1 ) {
-                        break;
-                    }
-                }
-                placeLikelihoods.release();
-
-                Location location = new Location("");
-                location.setLatitude(LikelyLatLngs[0].latitude);
-                location.setLongitude(LikelyLatLngs[0].longitude);
-
-                setCurrentLocation(location, LikelyPlaceNames[0], LikelyAddresses[0]);
-            }
-        });
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        if ( !checkLocationServicesStatus()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("위치 서비스 비활성화");
-            builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n" +
-                    "위치 설정을 수정하십시오.");
-            builder.setCancelable(true);
-            builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent callGPSSettingIntent =
-                            new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-                }
-            });
-            builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-            builder.create().show();
-        }
-
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
-
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ( ActivityCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                LocationServices.FusedLocationApi
-                        .requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
-            }
-        } else {
-            LocationServices.FusedLocationApi
-                    .requestLocationUpdates(googleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
-
-            this.googleMap.getUiSettings().setCompassEnabled(true);
-            this.googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause) {
-        if ( cause ==  CAUSE_NETWORK_LOST )
-            Log.e(TAG, "onConnectionSuspended(): Google Play services " +
-                    "connection lost.  Cause: network lost.");
-        else if (cause == CAUSE_SERVICE_DISCONNECTED )
-            Log.e(TAG,"onConnectionSuspended():  Google Play services " +
-                    "connection lost.  Cause: service disconnected");
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Location location = new Location("");
-        location.setLatitude(DEFAULT_LOCATION.latitude);
-        location.setLongitude((DEFAULT_LOCATION.longitude));
-
-        setCurrentLocation(location, "위치정보 가져올 수 없음",
-                "위치 퍼미션과 GPS활성 여부 확인");
+        mapView.onDestroy();
     }
 }

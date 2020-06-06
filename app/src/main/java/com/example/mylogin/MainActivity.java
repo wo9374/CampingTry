@@ -6,7 +6,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -14,12 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
+
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         String userID = intent.getStringExtra("userID");
         String userSubname = intent.getStringExtra("userSubname");
         String photoUrl = intent.getStringExtra("photoUrl");
+        context = this.getBaseContext();
 
         tv_id.setText(userID);
         tv_nic.setText(userSubname);
@@ -114,6 +125,35 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        checkPermissions();
+    }
+
+    PermissionListener permissionlistener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            Toast.makeText(context, "권한 허용을 하지 않으면 서비스를 이용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) { // 마시멜로(안드로이드 6.0) 이상 권한 체크
+            TedPermission.with(context)
+                    .setPermissionListener(permissionlistener)
+                    .setRationaleMessage("앱을 이용하기 위해서는 접근 권한이 필요합니다")
+                    .setDeniedMessage("앱에서 요구하는 권한설정이 필요합니다...\n [설정] > [권한] 에서 사용으로 활성화해주세요.")
+                    .setPermissions(new String[]{
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                     })
+                    .check();
+
+        } else {
+        }
     }
 
     DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
