@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="전체">
-        <item>전체/도</item>
+        <item>도/시</item>
         <item>서울시</item>
         <item>부산시</item>
         <item>대구시</item>

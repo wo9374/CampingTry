@@ -27,7 +27,7 @@
                 android:text="키워드검색" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/keyword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
@@ -67,11 +67,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/textView10"
@@ -87,20 +82,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="시설" />
-
-            <Spinner
-                android:id="@+id/spinner4"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0" />
         </TableRow>
+
     </TableLayout>
 
     <ListView

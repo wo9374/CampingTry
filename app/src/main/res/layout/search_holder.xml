@@ -29,32 +29,22 @@
                 android:layout_height="170dp"
                 android:layout_weight="3" />
 
-
-            <TextView
-                android:id="@+id/title_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image_slide"
-                android:text="지역" />
-
             <TextView
                 android:id="@+id/title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/title_address"
+                android:layout_toRightOf="@+id/image_slide"
                 android:text="캠핑장 이름" />
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/content_holder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/title_address"
+                android:layout_below="@+id/title_name"
                 android:layout_toRightOf="@+id/image_slide"
                 android:text="설명"/>
 
@@ -65,7 +55,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/image_slide"
-                android:layout_below="@+id/content"
+                android:layout_below="@+id/content_holder"
                 android:layout_above="@+id/addicon"/>
 
 
