@@ -137,6 +137,15 @@
                 android:layout_weight="1"
                 android:text="(필수)"
                 android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="상세 보기"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -146,18 +155,27 @@
 
             <CheckBox
                 android:id="@+id/checkBox2"
-                android:layout_width="340dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="서비스 이용약관 동의" />
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="(필수)"
                 android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="상세 보기"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -167,18 +185,27 @@
 
             <CheckBox
                 android:id="@+id/checkBox3"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="개인정보 수집 이용 동의" />
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="(필수)"
                 android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="상세 보기"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -188,17 +215,26 @@
 
             <CheckBox
                 android:id="@+id/checkBox4"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="위치 정보 이용약관 동의" />
 
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="190dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="(선택)" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="상세 보기"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -208,17 +244,26 @@
 
             <CheckBox
                 android:id="@+id/check1"
-                android:layout_width="270dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="장기 미접속 시에도 계정 유지" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="(선택)" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="상세 보기"
+                android:textAlignment="viewEnd"
+                android:textSize="10sp" />
         </LinearLayout>
 
     </LinearLayout>
