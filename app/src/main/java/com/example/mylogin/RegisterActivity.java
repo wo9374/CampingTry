@@ -32,10 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
         et_id = findViewById(R.id.et_id);
         et_pass = findViewById(R.id.et_pass);
         et_pass2 = findViewById(R.id.et_pass2);
-        et_name = findViewById(R.id.et_name);
+        //et_name = findViewById(R.id.et_name);
         et_subname = findViewById(R.id.et_subname);
-        et_birth = findViewById(R.id.et_birth);
-        et_num = findViewById(R.id.et_num);
+        //et_birth = findViewById(R.id.et_birth);
+        //et_num = findViewById(R.id.et_num);
         et_email = findViewById(R.id.et_email);
         em_spinner = (Spinner)findViewById(R.id.email_spinner);
 

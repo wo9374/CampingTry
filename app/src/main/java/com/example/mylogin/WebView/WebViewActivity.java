@@ -14,7 +14,7 @@ import com.example.mylogin.R;
 public class WebViewActivity extends AppCompatActivity {
 
     private WebView webView;
-    private String url = "https://www.naver.com";
+    private String url = "http://3.34.136.232:8080/index.do";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
