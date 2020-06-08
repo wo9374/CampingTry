@@ -7,12 +7,25 @@
     android:background="#FFFFDF"
     tools:context=".RegisterActivity">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="회 원 정 보"
+        android:textColor="#F09661"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/et_email"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="130dp"
         android:ems="10"
         android:hint="이 메 일"
         android:inputType="textPersonName"
@@ -24,40 +37,40 @@
         android:layout_width="160dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="26dp"
         android:entries="@array/email"
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
+        app:layout_constraintTop_toTopOf="@+id/et_email"></Spinner>
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="110dp"
         android:layout_marginEnd="8dp"
         android:text="@"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
         app:layout_constraintEnd_toStartOf="@+id/email_spinner"
         app:layout_constraintStart_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/et_email" />
 
     <EditText
         android:id="@+id/et_id"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="아 이 디"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <EditText
         android:id="@+id/et_pass"
@@ -216,7 +229,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#F09661"
-        android:text="회 원 가 입"
+        android:text="본 인 인 증"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
