@@ -110,9 +110,9 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         MapsInitializer.initialize(mContext);
 
         locationRequest = new LocationRequest()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY) // 정확도를 최우선적으로 고려
-                .setInterval(UPDATE_INTERVAL_MS) // 위치가 Update 되는 주기
-                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS); // 위치 획득후 업데이트되는 주기
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL_MS)
+                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
         LocationSettingsRequest.Builder builder =
                 new LocationSettingsRequest.Builder();
@@ -198,7 +198,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             return "주소 인식 불가" ;
         }
 
-        if (addressList.size() < 1) { // 주소 리스트가 비어있는지 비어 있으면
+        if (addressList.size() < 1) {
             return "해당 위치에 주소 없음" ;
         }
         Address address = addressList.get(0);
