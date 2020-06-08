@@ -52,10 +52,10 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
 
     private FragmentActivity mContext;
 
-    private static final String TAG = Frag4.class.getSimpleName();
     private GoogleMap mMap;
     private MapView mapView = null;
     private Marker currentMarker = null;
+    private static final String TAG = Frag4.class.getSimpleName();
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest locationRequest;
@@ -114,9 +114,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
                 .setInterval(UPDATE_INTERVAL_MS)
                 .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
-        LocationSettingsRequest.Builder builder =
-                new LocationSettingsRequest.Builder();
-
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(locationRequest);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
@@ -221,16 +219,13 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             if (locationList.size() > 0) {
                 Location location = locationList.get(locationList.size() - 1);
 
-                LatLng currentPosition
-                        = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
 
                 String markerTitle = getCurrentAddress(currentPosition);
-                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
-                        + " 경도:" + String.valueOf(location.getLongitude());
+                String markerSnippet = "위도:" + String.valueOf(location.getLatitude()) + " 경도:" + String.valueOf(location.getLongitude());
 
                 Log.d(TAG, "Time :" + CurrentTime() + " onLocationResult : " + markerSnippet);
 
-                //현재 위치에 마커 생성하고 이동
                 setCurrentLocation(location, markerTitle, markerSnippet);
                 mCurrentLocatiion = location;
             }
@@ -276,8 +271,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         mLocationPermissionGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true;
                 }
             }
