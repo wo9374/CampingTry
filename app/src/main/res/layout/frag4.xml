@@ -7,20 +7,25 @@
     android:orientation="vertical">
 
 
-        <androidx.cardview.widget.CardView
-            android:name="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            card_view:cardCornerRadius="4dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="8">
 
-                <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    android:id="@+id/place_autocomplete_fragment"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                </fragment>
-        </androidx.cardview.widget.CardView>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the Address." />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search" />
+
+    </LinearLayout>
 
         <com.google.android.gms.maps.MapView
             android:id='@+id/map'
