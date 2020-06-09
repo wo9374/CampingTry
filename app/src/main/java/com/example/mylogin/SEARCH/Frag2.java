@@ -1,9 +1,8 @@
 package com.example.mylogin.SEARCH;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mylogin.AdapterFacilitySpinner;
-import com.example.mylogin.AdapterTemaSpinner;
 import com.example.mylogin.R;
+
+import java.util.ArrayList;
 
 public class Frag2 extends Fragment {
 
@@ -34,21 +34,29 @@ public class Frag2 extends Fragment {
 
     private ImageButton btn_search;
 
-    private String[] tema = {"전체테마","해변","섬","산","숲","계곡","강","호수","도심"};
-    private int[] temaImgs= new int[9]; //테마 선택 그림 넣을 배열변수
-
-    private String[] facility = {"전체시설","캠핑장비대여","애완동물 출입","물놀이 시설","편의점","운동시설"};
-    private int[] facilityImgs = new int[6]; //시설 선택 그림 넣을 배열변수
-
+    private String[] tema = {"오토캠핑","글램핑","카라반","펜션","계곡","피크닉"};
+    private int[] temaImgs= new int[6]; //테마 선택 그림 넣을 배열변수
     private EditText keyword;
 
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
     private String mAdd, sAdd; //스피너 값에 따른 주소찾을 쿼리문으로 보낼 스트링 변수
+
+    public static boolean chk[] = new boolean[6];
+    private String tema_chk;
+
+    RecyclerView mRecyclerView = null ;
+    SearchAdapter mAdapter = null;
+    ArrayList<SearchRecycleItem> mList =  new ArrayList<SearchRecycleItem>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag2, container, false);
         ct = container.getContext();
+        int j;
+        for(j=0; j<chk.length;j++){
+            chk[j]= false;
+        }
 
         keyword = view.findViewById(R.id.keyword); //키워드 창
 
@@ -132,7 +140,6 @@ public class Frag2 extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // 시/군 선택부분
-
             }
 
             @Override
@@ -141,16 +148,25 @@ public class Frag2 extends Fragment {
         });//spinner2 selected end
 
 
-
-
         for (int i=0; i<temaImgs.length;i++){
             temaImgs[i] = getResources().getIdentifier("tema_"+i,"drawable","com.example.mylogin");
             //테마선택 스피너에 넣을 이미지
         }
-        AdapterTemaSpinner adapterTemaSpinner = new AdapterTemaSpinner(tema,temaImgs,ct);
+        final AdapterTemaSpinner adapterTemaSpinner = new AdapterTemaSpinner(tema,temaImgs,ct);
         spinner3.setAdapter(adapterTemaSpinner);
         // 어뎁터 써서 만들어둔 spinner_tema에 사진과 텍스트 체크박스를 넣고 갯수만큼 뿌려줌
 
+        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btn_search = view.findViewById(R.id.btn_search); //검색 돋보기 버튼
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -160,19 +176,58 @@ public class Frag2 extends Fragment {
                     Toast.makeText(ct,"지역을 선택해 주세요.",Toast.LENGTH_LONG).show();
                 }else{ //지역선택
                     if(spinner2.getSelectedItemPosition()==0){ //시군 선택안하면 선택한 도/시로 전체검색
-
                         mAdd = spinner1.getSelectedItem().toString();
                         keyword_txt = keyword.getText().toString();
+                        CheckTema();
+                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 찾아주삼
                     }else{ //시군 선택했을때
 
                         mAdd = spinner1.getSelectedItem().toString();
                         sAdd = spinner2.getSelectedItem().toString();
                         keyword_txt = keyword.getText().toString();
+                        CheckTema();
+                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼
+
+                        int img = R.drawable.tema_5;
+                        addItem(img,"테스트 제목","테스트 설명","테스트 주소");
+                        //임시로 하드코딩
+
+                        mAdapter.notifyDataSetChanged(); //새로고침
                     }
                 } //지역 선택 else 끝
             }
         });
 
+        mRecyclerView = view.findViewById(R.id.search_Recycle);
+        mAdapter = new SearchAdapter(mList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
+
+
         return view;
     }//onCreateView end.
+
+    void CheckTema(){
+        tema_chk = null;
+        for (int y=0; y<chk.length;y++){
+            if(chk[y]){
+                if(tema_chk == null){
+                    tema_chk= tema[y];
+                }else{
+                    tema_chk = tema_chk+","+tema[y];
+                }
+            }
+        }
+    }
+
+    void addItem(int image, String title,String content,String address){
+        SearchRecycleItem item = new SearchRecycleItem();
+
+        item.setImage(image);
+        item.setTitle(title);
+        item.setContent(content);
+        item.setAddress(address);
+
+        mList.add(item);
+    }
 }

@@ -2,16 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="170dp"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginRight="8dp"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
-    app:cardMaxElevation="2dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
-
+    <!-- cardElevation //레이아웃에서 떨어진 효과 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,14 +22,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ViewFlipper
+            <ImageView
                 android:id="@+id/image_slide"
-                android:layout_width="150dp"
-                android:layout_height="170dp"
+                android:layout_width="140dp"
+                android:layout_height="120dp"
                 android:layout_weight="3" />
 
             <TextView
-                android:id="@+id/title_name"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -39,28 +38,18 @@
                 android:text="캠핑장 이름" />
 
             <TextView
-                android:id="@+id/content_holder"
+                android:id="@+id/content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/title_name"
-                android:layout_toRightOf="@+id/image_slide"
-                android:text="설명"/>
-
-            <ListView
-                android:id="@+id/icon_listview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/image_slide"
-                android:layout_below="@+id/content_holder"
-                android:layout_above="@+id/addicon"/>
+                android:text="설명" />
 
 
             <ImageView
-                android:id="@+id/addicon"
+                android:id="@+id/add_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentBottom="true"
@@ -76,7 +65,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@+id/addicon"
+                android:layout_toRightOf="@+id/add_icon"
                 android:text="주소" />
 
 
@@ -89,26 +78,31 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/Detail_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="상세정보"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:background="@color/colorPrimaryDark"/>
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/Review_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
-                android:text="리뷰 0"
-                android:textSize="12sp" />
+                android:text="리뷰"
+                android:textSize="12sp"
+                android:background="@color/colorPrimaryDark"/>
 
             <Button
+                android:id="@+id/Reservation_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="예약하기"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:background="@color/colorAccent"/>
         </LinearLayout>
     </LinearLayout>
 

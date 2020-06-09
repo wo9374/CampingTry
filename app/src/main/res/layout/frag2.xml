@@ -86,7 +86,8 @@
 
     </TableLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_Recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -97,5 +98,5 @@
         android:background="@drawable/border_round"
         android:fastScrollEnabled="true">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

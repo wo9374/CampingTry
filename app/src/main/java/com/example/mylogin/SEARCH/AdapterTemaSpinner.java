@@ -1,4 +1,4 @@
-package com.example.mylogin;
+package com.example.mylogin.SEARCH;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,16 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.mylogin.R;
+
+import static com.example.mylogin.SEARCH.Frag2.chk;
 
 public class AdapterTemaSpinner extends BaseAdapter {
 
     String tema[];
     Context context;
     int temaImg[];
-    boolean all;
+
 
     public AdapterTemaSpinner(String[] tema, int[] temaImg,Context context){
         this.tema= tema;
@@ -50,11 +52,13 @@ public class AdapterTemaSpinner extends BaseAdapter {
 
         tv.setText(tema[position]);
         imgTema.setImageResource(temaImg[position]);
-        c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        c1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){ //테마에서 체크된 부분 position 값으로 분류
-
+            public void onClick(View v) {
+                if(chk[position]==true){
+                    chk[position]=false;
+                }else{
+                    chk[position]=true;
                 }
             }
         });
