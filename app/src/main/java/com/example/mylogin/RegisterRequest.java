@@ -13,18 +13,15 @@ public class RegisterRequest extends StringRequest {
     final static private String URL = "http://hwi4011.dothome.co.kr/Register.php";
     private Map<String, String> map;
 
-    public RegisterRequest(String userID, String userPassword, String userName, String userSubname, int userBirth, int userNum, Response.Listener<String> listener)
+    public RegisterRequest(String userEmail, String userID, String userPassword, String userSubname, Response.Listener<String> listener)
     {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
+        map.put("userEmail", userEmail + "");
         map.put("userID", userID);
         map.put("userPassword", userPassword);
-        map.put("userName", userName);
         map.put("userSubname", userSubname);
-        map.put("userBirth", userBirth + "");
-        map.put("userNum", userNum + "");
-//        map.put("userEmail", userEmail + "");
     }
 
     @Override
