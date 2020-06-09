@@ -8,6 +8,7 @@
     android:layout_marginRight="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
+    app:cardMaxElevation="2dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
     <!-- cardElevation //레이아웃에서 떨어진 효과 -->
@@ -74,35 +75,35 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/Detail_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="상세정보"
                 android:textSize="12sp"
-                android:background="@color/colorPrimaryDark"/>
+                android:backgroundTint="#F09661"/>
 
             <Button
                 android:id="@+id/Review_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="리뷰"
                 android:textSize="12sp"
-                android:background="@color/colorPrimaryDark"/>
+                android:backgroundTint="#F09661"/>
 
             <Button
                 android:id="@+id/Reservation_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="예약하기"
                 android:textSize="12sp"
-                android:background="@color/colorAccent"/>
+                android:backgroundTint="#F09661"/>
         </LinearLayout>
     </LinearLayout>
 
