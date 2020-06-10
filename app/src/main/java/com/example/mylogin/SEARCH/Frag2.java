@@ -1,6 +1,8 @@
 package com.example.mylogin.SEARCH;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +19,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.mylogin.LoginActivity;
 import com.example.mylogin.R;
+import com.example.mylogin.RegisterActivity;
+import com.example.mylogin.RegisterRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Frag2 extends Fragment {
 
@@ -205,6 +218,28 @@ public class Frag2 extends Fragment {
                         mAdapter.notifyDataSetChanged(); //새로고침
                     }
                 } //지역 선택 else 끝
+                final Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                                if (success)//회원등록 성공
+                                {
+
+                                } else { //회원등록 실패
+
+                                    return;
+                                }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                SearchRequest searchRequest = new SearchRequest(mAdd, sAdd, keyword_txt, tema_chk, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(getContext());
+                queue.add(searchRequest);
             }
         });
 
