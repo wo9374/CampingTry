@@ -73,28 +73,28 @@ public class Frag2 extends Fragment {
                 }else{
                     switch (position){ //도 및 광역시 스피너에 따라 행정구역 시/군 변경
                         case 1:
-                            data = getResources().getStringArray(R.array.서울시);
+                            data = getResources().getStringArray(R.array.서울);
                             break;
                         case 2:
-                            data = getResources().getStringArray(R.array.부산시);
+                            data = getResources().getStringArray(R.array.부산);
                             break;
                         case 3:
-                            data = getResources().getStringArray(R.array.대구시);
+                            data = getResources().getStringArray(R.array.대구);
                             break;
                         case 4:
-                            data = getResources().getStringArray(R.array.인천시);
+                            data = getResources().getStringArray(R.array.인천);
                             break;
                         case 5:
-                            data = getResources().getStringArray(R.array.광주시);
+                            data = getResources().getStringArray(R.array.광주);
                             break;
                         case 6:
-                            data = getResources().getStringArray(R.array.대전시);
+                            data = getResources().getStringArray(R.array.대전);
                             break;
                         case 7:
-                            data = getResources().getStringArray(R.array.울산시);
+                            data = getResources().getStringArray(R.array.울산);
                             break;
                         case 8:
-                            data = getResources().getStringArray(R.array.세종시);
+                            data = getResources().getStringArray(R.array.세종);
                             break;
                         case 9:
                             data = getResources().getStringArray(R.array.경기도);

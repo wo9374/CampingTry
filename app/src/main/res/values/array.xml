@@ -2,14 +2,14 @@
 <resources>
     <string-array name="전체">
         <item>도/시</item>
-        <item>서울시</item>
-        <item>부산시</item>
-        <item>대구시</item>
-        <item>인천시</item>
-        <item>광주시</item>
-        <item>대전시</item>
-        <item>울산시</item>
-        <item>세종시</item>
+        <item>서울</item>
+        <item>부산</item>
+        <item>대구</item>
+        <item>인천</item>
+        <item>광주</item>
+        <item>대전</item>
+        <item>울산</item>
+        <item>세종</item>
         <item>경기도</item>
         <item>강원도</item>
         <item>충청북도</item>
@@ -25,7 +25,7 @@
         <item>시/군</item>
     </string-array>
     
-    <string-array name="서울시">
+    <string-array name="서울">
         <item>시/군</item>
         <item>강남구</item>
         <item>강동구</item>
@@ -54,7 +54,7 @@
         <item>중랑구</item>
     </string-array>
 
-    <string-array name="부산시">
+    <string-array name="부산">
         <item>시/군</item>
         <item>강서구</item>
         <item>금정구</item>
@@ -74,7 +74,7 @@
         <item>해운대구</item>
     </string-array>
 
-    <string-array name="대구시">
+    <string-array name="대구">
         <item>시/군</item>
         <item>남구</item>
         <item>달서구</item>
@@ -87,7 +87,7 @@
         <item>중구</item>
     </string-array>
     
-    <string-array name="인천시">
+    <string-array name="인천">
         <item>시/군</item>
         <item>강화군</item>
         <item>계양구</item>
@@ -101,7 +101,7 @@
         <item>중구</item>
     </string-array>
 
-    <string-array name="광주시">
+    <string-array name="광주">
         <item>시/군</item>
         <item>광산구</item>
         <item>남구</item>
@@ -110,7 +110,7 @@
         <item>서구</item>
     </string-array>
 
-    <string-array name="대전시">
+    <string-array name="대전">
         <item>시/군</item>
         <item>대덕구</item>
         <item>동구</item>
@@ -119,7 +119,7 @@
         <item>중구</item>
     </string-array>
 
-    <string-array name="울산시">
+    <string-array name="울산">
         <item>시/군</item>
         <item>남구</item>
         <item>동구</item>
@@ -128,7 +128,7 @@
         <item>중구</item>
     </string-array>
 
-    <string-array name="세종시">
+    <string-array name="세종">
         <item>시/군</item>
         <item>금남면</item>
         <item>세종시</item>

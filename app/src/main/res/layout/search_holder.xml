@@ -49,6 +49,27 @@
                 android:text="설명" />
 
 
+            <TextView
+                android:id="@+id/bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/add_icon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/image_slide"
+                android:text="$" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/add_icon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/bill"
+                android:text="가격"
+                />
+
             <ImageView
                 android:id="@+id/add_icon"
                 android:layout_width="20dp"

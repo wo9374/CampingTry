@@ -56,6 +56,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView content;
         ImageView add_icon;
         TextView address;
+        TextView bill;
+        TextView price;
+
         Button Detail_btn;
         Button Review_btn;
 
@@ -67,12 +70,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             content = itemView.findViewById(R.id.content);
             add_icon = itemView.findViewById(R.id.add_icon);
             address = itemView.findViewById(R.id.address);
+            bill = itemView.findViewById(R.id.bill);
+            price = itemView.findViewById(R.id.price);
+
+
             Detail_btn = itemView.findViewById(R.id.Detail_btn);
             Review_btn = itemView.findViewById(R.id.Review_btn);
 
             Detail_btn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    //Intent intent = new Intent(this, DetailInformation.class);
                 }
             });
         }
