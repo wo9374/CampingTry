@@ -19,8 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SEARCH.Detail.DetailInformation"></activity>
-        <activity android:name=".WebView.WebViewActivity" />
+        <activity android:name=".WebView.WebViewActivity"></activity>
         <activity android:name=".SearchIdActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter> <!-- 처음 엑티비티 설정하는 목록1 -->
@@ -41,7 +40,7 @@
             android:value="AIzaSyCnAEbngMbRujX6g9w3Vql4800Sz-OSzcM" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

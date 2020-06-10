@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText et_id, et_pass, et_pass2, et_enam, et_subname,  et_num, et_email;
+    private EditText et_id, et_pass, et_pass2, et_subname, et_email;
     private Button btn_register;
     private Spinner em_spinner;
 
