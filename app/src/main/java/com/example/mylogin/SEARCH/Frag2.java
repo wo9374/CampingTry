@@ -1,7 +1,6 @@
 package com.example.mylogin.SEARCH;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +33,8 @@ public class Frag2 extends Fragment {
 
     private ImageButton btn_search;
 
-    private String[] tema = {"오토캠핑","글램핑","카라반","펜션","계곡","피크닉"};
-    private int[] temaImgs= new int[6]; //테마 선택 그림 넣을 배열변수
+    private String[] tema = {"오토캠핑","글램핑","카라반","펜션","피크닉"};
+    private int[] temaImgs= new int[5]; //테마 선택 그림 넣을 배열변수
     private EditText keyword;
 
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
@@ -186,7 +185,7 @@ public class Frag2 extends Fragment {
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
 
-                        int img = R.drawable.tema_5;
+                        int img = R.drawable.tema_4;
                         addItem(img,"테스트 제목","테스트 설명",mAdd);
                         //임시로 하드코딩
 
@@ -199,7 +198,7 @@ public class Frag2 extends Fragment {
                         CheckTema();
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
-                        int img = R.drawable.tema_5;
+                        int img = R.drawable.tema_4;
                         addItem(img,"테스트 제목","테스트 설명",mAdd + " " + sAdd);
                         //임시로 하드코딩
 

@@ -13,6 +13,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical">
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -26,19 +27,26 @@
                             android:id="@+id/textView15"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="주소"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView33"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="TextView"
+                            android:textSize="16sp" />
 
                     </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray" />
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -48,19 +56,26 @@
                             android:id="@+id/textView45"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="문의처"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView31"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="TextView"
+                            android:textSize="16sp" />
 
                     </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray" />
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -70,55 +85,82 @@
                             android:id="@+id/textView35"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="캠핑장 환경"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView36"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
                             android:text="TextView"
-                            android:gravity="center_horizontal"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="캠핑장 테마"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView37"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
                             android:text="TextView"
-                            android:gravity="center_horizontal"/>
+                            android:textSize="16sp" />
 
                     </TableRow>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray" />
+
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/textView12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="운영일"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textView30"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
                             android:layout_span="2"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:text="TextView"
+                            android:textSize="16sp" />
 
                     </TableRow>
 
                 </TableLayout>
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="사진"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.gms.maps.MapView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.gms.maps.MapView>
             </LinearLayout>
         </ScrollView>
 
