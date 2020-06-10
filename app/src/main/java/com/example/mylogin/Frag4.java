@@ -1,5 +1,6 @@
 package com.example.mylogin;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -53,14 +54,11 @@ import java.util.Locale;
 public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
 
     private FragmentActivity mContext;
-    private  Geocoder geocoder;
-    private Button button;
-    private EditText editText;
 
+    private static final String TAG = Frag4.class.getSimpleName();
     private GoogleMap mMap;
     private MapView mapView = null;
     private Marker currentMarker = null;
-    private static final String TAG = Frag4.class.getSimpleName();
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest locationRequest;
@@ -104,8 +102,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             mapView.onCreate(savedInstanceState);
         }
         mapView.getMapAsync(this);
-//        editText = (EditText) findViewById(R.id.editText);
-//        button=(Button)findViewById(R.id.button);
 
         return layout;
     }
@@ -121,7 +117,9 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
                 .setInterval(UPDATE_INTERVAL_MS)
                 .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        LocationSettingsRequest.Builder builder =
+                new LocationSettingsRequest.Builder();
+
         builder.addLocationRequest(locationRequest);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
@@ -136,7 +134,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        geocoder = new Geocoder(mContext);
 
         setDefaultLocation();
 
@@ -145,47 +142,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         updateLocationUI();
 
         getDeviceLocation();
-
-        // 버튼 이벤트
-        button.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                String str=editText.getText().toString();
-                List<Address> addressList = null;
-                try {
-                    // editText에 입력한 텍스트(주소, 지역, 장소 등)을 지오 코딩을 이용해 변환
-                    addressList = geocoder.getFromLocationName(
-                            str, // 주소
-                            10); // 최대 검색 결과 개수
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println(addressList.get(0).toString());
-                // 콤마를 기준으로 split
-                String []splitStr = addressList.get(0).toString().split(",");
-                String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1,splitStr[0].length() - 2); // 주소
-                System.out.println(address);
-
-                String latitude = splitStr[10].substring(splitStr[10].indexOf("=") + 1); // 위도
-                String longitude = splitStr[12].substring(splitStr[12].indexOf("=") + 1); // 경도
-                System.out.println(latitude);
-                System.out.println(longitude);
-
-                // 좌표(위도, 경도) 생성
-                LatLng point = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-                // 마커 생성
-                MarkerOptions mOptions2 = new MarkerOptions();
-                mOptions2.title("search result");
-                mOptions2.snippet(address);
-                mOptions2.position(point);
-                // 마커 추가
-                mMap.addMarker(mOptions2);
-                // 해당 좌표로 화면 줌
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point,15));
-            }
-        });
     }
 
     private void updateLocationUI(){
@@ -234,9 +190,11 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(cameraUpdate);
     }
     String getCurrentAddress(LatLng latlng) {
+        // 위치 정보와 지역으로부터 주소 문자열을 구한다.
         List<Address> addressList = null ;
         Geocoder geocoder = new Geocoder( mContext, Locale.getDefault());
 
+        // 지오코더를 이용하여 주소 리스트를 구한다.
         try {
             addressList = geocoder.getFromLocation(latlng.latitude,latlng.longitude,1);
         } catch (IOException e) {
@@ -248,6 +206,8 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         if (addressList.size() < 1) {
             return "해당 위치에 주소 없음" ;
         }
+
+        // 주소를 담는 문자열을 생성하고 리턴
         Address address = addressList.get(0);
         StringBuilder addressStringBuilder = new StringBuilder();
         for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
@@ -268,10 +228,12 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             if (locationList.size() > 0) {
                 Location location = locationList.get(locationList.size() - 1);
 
-                LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng currentPosition
+                        = new LatLng(location.getLatitude(), location.getLongitude());
 
                 String markerTitle = getCurrentAddress(currentPosition);
-                String markerSnippet = "위도:" + String.valueOf(location.getLatitude()) + " 경도:" + String.valueOf(location.getLongitude());
+                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
+                        + " 경도:" + String.valueOf(location.getLongitude());
 
                 Log.d(TAG, "Time :" + CurrentTime() + " onLocationResult : " + markerSnippet);
 
@@ -279,7 +241,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
                 mCurrentLocatiion = location;
             }
         }
-};
+    };
 
     private String CurrentTime() {
         Date today = new Date();
@@ -320,7 +282,8 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         mLocationPermissionGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true;
                 }
             }
@@ -354,11 +317,12 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        if (mLocationPermissionGranted) {
-            mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
-            if (mMap!=null)
-                mMap.setMyLocationEnabled(true);
-        }
+        try {
+            if (mLocationPermissionGranted) {
+                mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+                if (mMap!=null)
+                    mMap.setMyLocationEnabled(true);}
+        }catch (SecurityException e){e.printStackTrace();}
     }
 
     @Override

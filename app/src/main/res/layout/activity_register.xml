@@ -11,7 +11,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:text="회 원 정 보"
         android:textColor="#F09661"
         android:textSize="36sp"
@@ -24,32 +24,18 @@
         android:id="@+id/et_email"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="이 메 일"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/email_spinner"
-        android:layout_width="160dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="26dp"
-        android:entries="@array/email"
-        app:layout_constraintBottom_toBottomOf="@+id/et_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="@+id/et_email"></Spinner>
-
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:text="@"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -58,19 +44,17 @@
         app:layout_constraintStart_toEndOf="@+id/et_email"
         app:layout_constraintTop_toTopOf="@+id/et_email" />
 
-    <EditText
-        android:id="@+id/et_id"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="아 이 디"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/email_spinner"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:entries="@array/email"
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintStart_toEndOf="@+id/et_email"
+        app:layout_constraintTop_toTopOf="@+id/et_email"></Spinner>
 
     <EditText
         android:id="@+id/et_pass"
@@ -80,9 +64,9 @@
         android:ems="10"
         android:hint="비밀번호-영문+숫자+특수문자 6~14자"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/et_id"
-        app:layout_constraintStart_toStartOf="@+id/et_id"
-        app:layout_constraintTop_toBottomOf="@+id/et_id" />
+        app:layout_constraintEnd_toEndOf="@+id/email_spinner"
+        app:layout_constraintStart_toStartOf="@+id/et_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <EditText
         android:id="@+id/et_pass2"
@@ -98,6 +82,18 @@
         app:layout_constraintTop_toBottomOf="@+id/et_pass" />
 
     <EditText
+        android:id="@+id/et_id"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="이 름"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/et_pass2"
+        app:layout_constraintStart_toStartOf="@+id/et_pass2"
+        app:layout_constraintTop_toBottomOf="@+id/et_pass2" />
+
+    <EditText
         android:id="@+id/et_subname"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
@@ -105,9 +101,63 @@
         android:ems="10"
         android:hint="닉 네 임"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_pass2"
-        app:layout_constraintStart_toStartOf="@+id/et_pass2"
-        app:layout_constraintTop_toBottomOf="@+id/et_pass2" />
+        app:layout_constraintEnd_toEndOf="@+id/et_id"
+        app:layout_constraintStart_toStartOf="@+id/et_id"
+        app:layout_constraintTop_toBottomOf="@+id/et_id" />
+
+    <EditText
+        android:id="@+id/et_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="전 화 번 호"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/et_subname"
+        app:layout_constraintStart_toStartOf="@+id/et_subname"
+        app:layout_constraintTop_toBottomOf="@+id/et_subname" />
+
+    <LinearLayout
+        android:id="@+id/sex"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/et_num"
+        app:layout_constraintStart_toStartOf="@+id/et_num"
+        app:layout_constraintTop_toBottomOf="@+id/et_num">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="성별"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/et_male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="남 성" />
+
+            <RadioButton
+                android:id="@+id/et_female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="여 성" />
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -115,9 +165,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/et_subname"
-        app:layout_constraintStart_toStartOf="@+id/et_subname"
-        app:layout_constraintTop_toBottomOf="@+id/et_subname">
+        app:layout_constraintEnd_toEndOf="@+id/sex"
+        app:layout_constraintStart_toStartOf="@+id/sex"
+        app:layout_constraintTop_toBottomOf="@+id/sex">
 
         <LinearLayout
             android:layout_width="match_parent"
