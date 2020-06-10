@@ -223,9 +223,9 @@ public class Frag2 extends Fragment {
         for (int y=0; y<chk.length;y++){
             if(chk[y]){
                 if(tema_chk == null){
-                    tema_chk= tema[y];
+                    tema_chk = String.valueOf(y);;
                 }else{
-                    tema_chk = tema_chk+","+tema[y];
+                    tema_chk = tema_chk+","+ y;
                 }
             }
         }

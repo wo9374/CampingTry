@@ -15,6 +15,8 @@ import com.example.mylogin.SEARCH.Detail.DetailInformation;
 
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
     private ArrayList<SearchRecycleItem> mData = null;
@@ -62,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         Button Detail_btn;
         Button Review_btn;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.image_slide);
@@ -80,7 +82,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             Detail_btn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = new Intent(this, DetailInformation.class);
+                    Intent intent = new Intent(v.getContext(), DetailInformation.class);
+                    v.getContext().startActivity(intent);
                 }
             });
         }
