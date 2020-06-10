@@ -172,6 +172,9 @@ public class Frag2 extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mList.clear(); // 검색 버튼 누를때마다 초기화
+
                 if (spinner1.getSelectedItemPosition()==0){ //지역 선택안할시 알림창
                     Toast.makeText(ct,"지역을 선택해 주세요.",Toast.LENGTH_LONG).show();
                 }else{ //지역선택
@@ -179,17 +182,24 @@ public class Frag2 extends Fragment {
                         mAdd = spinner1.getSelectedItem().toString();
                         keyword_txt = keyword.getText().toString();
                         CheckTema();
-                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 찾아주삼
+                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
+
+
+                        int img = R.drawable.tema_5;
+                        addItem(img,"테스트 제목","테스트 설명",mAdd);
+                        //임시로 하드코딩
+
+                        mAdapter.notifyDataSetChanged(); //새로고침
                     }else{ //시군 선택했을때
 
                         mAdd = spinner1.getSelectedItem().toString();
                         sAdd = spinner2.getSelectedItem().toString();
                         keyword_txt = keyword.getText().toString();
                         CheckTema();
-                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼
+                        System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
                         int img = R.drawable.tema_5;
-                        addItem(img,"테스트 제목","테스트 설명","테스트 주소");
+                        addItem(img,"테스트 제목","테스트 설명",mAdd + " " + sAdd);
                         //임시로 하드코딩
 
                         mAdapter.notifyDataSetChanged(); //새로고침

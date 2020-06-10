@@ -95,15 +95,6 @@
                 android:text="리뷰"
                 android:textSize="12sp"
                 android:backgroundTint="#F09661"/>
-
-            <Button
-                android:id="@+id/Reservation_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:text="예약하기"
-                android:textSize="12sp"
-                android:backgroundTint="#F09661"/>
         </LinearLayout>
     </LinearLayout>
 
