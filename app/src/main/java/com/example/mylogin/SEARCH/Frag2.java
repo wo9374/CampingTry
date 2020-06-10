@@ -180,6 +180,7 @@ public class Frag2 extends Fragment {
                 }else{ //지역선택
                     if(spinner2.getSelectedItemPosition()==0){ //시군 선택안하면 선택한 도/시로 전체검색
                         mAdd = spinner1.getSelectedItem().toString();
+                        sAdd = "";
                         keyword_txt = keyword.getText().toString();
                         CheckTema();
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
