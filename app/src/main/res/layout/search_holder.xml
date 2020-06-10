@@ -84,7 +84,6 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="상세정보"
-                android:textSize="12sp"
                 android:backgroundTint="#F09661"/>
 
             <Button
@@ -93,7 +92,6 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="리뷰"
-                android:textSize="12sp"
                 android:backgroundTint="#F09661"/>
         </LinearLayout>
     </LinearLayout>

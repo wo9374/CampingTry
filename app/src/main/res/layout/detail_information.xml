@@ -28,6 +28,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:text="추천하기"
+
             />
 
         <Button
