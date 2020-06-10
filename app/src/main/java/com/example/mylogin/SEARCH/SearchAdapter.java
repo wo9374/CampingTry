@@ -1,6 +1,7 @@
 package com.example.mylogin.SEARCH;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
+import com.example.mylogin.SEARCH.Detail.DetailInformation;
+
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
@@ -55,7 +58,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView address;
         Button Detail_btn;
         Button Review_btn;
-        Button Reservation_btn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +69,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             address = itemView.findViewById(R.id.address);
             Detail_btn = itemView.findViewById(R.id.Detail_btn);
             Review_btn = itemView.findViewById(R.id.Review_btn);
-            Reservation_btn = itemView.findViewById(R.id.Reservation_btn);
+
+            Detail_btn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
     }
 }
