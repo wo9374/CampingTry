@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="비밀번호-영문+숫자+특수문자 6~14자"
+        android:hint="비밀번호 (영문+숫자+특수문자 6~14자)"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/email_spinner"
         app:layout_constraintStart_toStartOf="@+id/et_email"
@@ -111,8 +111,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="전 화 번 호"
-        android:inputType="textPersonName"
+        android:hint="전 화 번 호 ( - 빼고 입력해주세요)"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/et_subname"
         app:layout_constraintStart_toStartOf="@+id/et_subname"
         app:layout_constraintTop_toBottomOf="@+id/et_subname" />
@@ -138,9 +138,11 @@
             android:textSize="14sp" />
 
         <RadioGroup
+            android:id="@+id/et_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:checkedButton="@id/et_male"
             android:orientation="horizontal">
 
             <RadioButton

@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,8 +21,9 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText et_id, et_pass, et_pass2, et_subname, et_email;
+    private EditText et_name, et_pass, et_pass2, et_subname, et_email, et_num;
     private Button btn_register;
+    private RadioGroup et_sex;
     private Spinner em_spinner;
 
     @Override
@@ -30,21 +32,28 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         et_email = findViewById(R.id.et_email);
-        et_id = findViewById(R.id.et_id);
         et_pass = findViewById(R.id.et_pass);
         et_pass2 = findViewById(R.id.et_pass2);
+        et_name = findViewById(R.id.et_id);
         et_subname = findViewById(R.id.et_subname);
+        et_num = findViewById(R.id.et_num);
+        et_sex = (RadioGroup)findViewById(R.id.et_sex);
         em_spinner = (Spinner)findViewById(R.id.email_spinner);
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int id = et_sex.getCheckedRadioButtonId();
+                RadioButton rb = (RadioButton) findViewById(id);
+
                 final String userEmail = et_email.getText().toString() + "@" + em_spinner.getSelectedItem().toString();
-                final String userID = et_id.getText().toString();
                 final String userPass = et_pass.getText().toString();
                 final String userPass2 = et_pass2.getText().toString();
+                final String userName = et_name.getText().toString();
                 final String userSubname = et_subname.getText().toString();
+                final int userNum = Integer.parseInt(et_num.getText().toString());
+                final String userSex = rb.getText().toString();
 
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -71,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
                 //실제 서버로 Volley를 이용해서 요청을 함.
-                RegisterRequest registerRequest = new RegisterRequest(userEmail, userID, userPass, userSubname, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(userEmail, userPass, userName, userSubname, userNum, userSex, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
