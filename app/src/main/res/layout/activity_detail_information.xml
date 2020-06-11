@@ -32,7 +32,7 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/textView33"
+                            android:id="@+id/add_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_span="2"
@@ -61,7 +61,7 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/textView31"
+                            android:id="@+id/tel_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_span="2"
@@ -89,7 +89,7 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/textView36"
+                            android:id="@+id/env_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -105,7 +105,7 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/textView37"
+                            android:id="@+id/the_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -133,7 +133,7 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/textView30"
+                            android:id="@+id/day_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_span="2"
@@ -160,10 +160,10 @@
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/image_recycle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
@@ -183,10 +183,10 @@
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/icon_recycle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
@@ -201,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="기타 주요시설"
+                        android:text="위치/주변정보"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -209,8 +209,34 @@
                         android:id='@+id/map'
                         android:name="com.google.android.gms.maps.MapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="가격"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/price_recycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+
             </LinearLayout>
         </ScrollView>
 
