@@ -47,5 +47,12 @@ class ImageViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
 
         image_img = (ImageView) itemView.findViewById(R.id.image_img);
+        image_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 }
