@@ -217,29 +217,36 @@ public class Frag2 extends Fragment {
 
                         mAdapter.notifyDataSetChanged(); //새로고침
                     }
-                } //지역 선택 else 끝
-                final Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
+                    final Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
                                 if (success)//회원등록 성공
                                 {
+                                    String code = jsonObject.getString("code");
+                                    String name = jsonObject.getString("name");
+                                    String addr = jsonObject.getString("addr");
+                                    String price = jsonObject.getString("price");
+                                    String keyword = jsonObject.getString("keyword");
 
+                                    System.out.println(code + name + addr + price + keyword +"142124124124124124124124124124124124124124124124124");
                                 } else { //회원등록 실패
-
+                                    System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                                     return;
                                 }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                };
-                //실제 서버로 Volley를 이용해서 요청을 함.
-                SearchRequest searchRequest = new SearchRequest(mAdd, sAdd, keyword_txt, tema_chk, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(getContext());
-                queue.add(searchRequest);
+                    };
+                    //실제 서버로 Volley를 이용해서 요청을 함.
+                    SearchRequest searchRequest = new SearchRequest(mAdd, sAdd, keyword_txt, tema_chk, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(ct);
+                    queue.add(searchRequest);
+                } //지역 선택 else 끝
+
             }
         });
 
@@ -253,10 +260,10 @@ public class Frag2 extends Fragment {
     }//onCreateView end.
 
     void CheckTema(){
-        tema_chk = null;
+        tema_chk = "";
         for (int y=0; y<chk.length;y++){
             if(chk[y]){
-                if(tema_chk == null){
+                if(tema_chk.equals("")){
                     tema_chk = String.valueOf(y);;
                 }else{
                     tema_chk = tema_chk+","+ y;

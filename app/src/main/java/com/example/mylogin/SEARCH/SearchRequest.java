@@ -22,6 +22,8 @@ public class SearchRequest extends StringRequest {
         map.put("sAdd", sAdd);
         map.put("keyword_txt",keyword_txt);
         map.put("tema_chk",tema_chk);
+        System.out.println("전달완료@@@@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(mAdd+"@@@"+sAdd+"@@@"+keyword_txt+"@@@"+tema_chk +"@@@");
     }
 
     @Override
