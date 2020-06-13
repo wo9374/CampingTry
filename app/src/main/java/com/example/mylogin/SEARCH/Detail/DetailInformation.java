@@ -4,14 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.mylogin.R;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class DetailInformation extends AppCompatActivity {
+public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView add_txt;
     TextView tel_txt;
@@ -32,6 +40,10 @@ public class DetailInformation extends AppCompatActivity {
     LinearLayoutManager image_LayoutManager;
     LinearLayoutManager icon_LayoutManager;
     LinearLayoutManager price_LayoutManager;
+
+    FragmentManager fragmentManager;
+    MapFragment mapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,11 @@ public class DetailInformation extends AppCompatActivity {
 
         price_LayoutManager = new LinearLayoutManager(this); //수직 레이아웃 매니저
         price_LayoutManager.setOrientation(LinearLayoutManager.VERTICAL);//수직으로 지정 (가격 리사이클)
+
+
+        fragmentManager = getFragmentManager(); //구글맵 설정
+        mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.Detail_map);
+        mapFragment.getMapAsync(this);
 
 
 
@@ -111,5 +128,17 @@ public class DetailInformation extends AppCompatActivity {
 
         priceAdapter.setData(price_data); //set data
         price_recycle.setAdapter(priceAdapter);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {//구글맵 마커
+        LatLng location = new LatLng(35.896371, 128.622029);//좌표 : 위도 경도
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.title("영진전문대학교");//위치 명
+        markerOptions.snippet("우리학교");//부가 설명
+        markerOptions.position(location);
+        googleMap.addMarker(markerOptions);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16));//해당 좌표에 해당 수치만큼 확대
     }
 }
