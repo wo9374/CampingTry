@@ -132,7 +132,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onMapReady(GoogleMap googleMap) {//구글맵 마커
-        LatLng location = new LatLng(35.896371, 128.622029);//좌표 : 위도 경도
+        LatLng location = new LatLng(35.896371, 128.622029);//좌표 : 위도,경도
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title("영진전문대학교");//위치 명
         markerOptions.snippet("우리학교");//부가 설명
