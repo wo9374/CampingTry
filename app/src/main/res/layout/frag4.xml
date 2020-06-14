@@ -17,8 +17,12 @@
             android:id="@+id/map_good"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:text="주변 검색" />
+            android:layout_weight="17"
+            android:background="#F09661"
+            android:text="주 변   검 색"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
 </LinearLayout>

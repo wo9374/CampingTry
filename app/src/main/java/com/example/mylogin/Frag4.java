@@ -1,5 +1,6 @@
 package com.example.mylogin;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,12 +44,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import noman.googleplaces.NRPlaces;
 import noman.googleplaces.Place;
+import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -65,6 +71,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest locationRequest;
     private Location mCurrentLocatiion;
+    private LatLng currentPosition;
 
     private final LatLng mDefaultLocation = new LatLng(37.56, 126.97);
     private static final int DEFAULT_ZOOM = 15;
@@ -100,6 +107,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
             mCurrentLocatiion = savedInstanceState.getParcelable(KEY_LOCATION);
             CameraPosition mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+
         View layout = inflater.inflate(R.layout.frag4, container, false);
         mapView = (MapView)layout.findViewById(R.id.map);
         if(mapView != null) {
@@ -107,6 +115,16 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         }
         mapView.getMapAsync(this);
 
+        previous_marker = new ArrayList<Marker>();
+
+        Button button = (Button)layout.findViewById(R.id.map_good);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPlaceInformation(currentPosition);
+                Toast.makeText(mContext,"현재 위치가 표시될 때까지 화면 전환을 자제해주세요!",Toast.LENGTH_LONG).show();
+            }
+        });
 
         return layout;
     }
@@ -209,7 +227,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
             return "해당 위치에 주소 없음" ;
         }
 
-        // 주소를 담는 문자열을 생성하고 리턴
         Address address = addressList.get(0);
         StringBuilder addressStringBuilder = new StringBuilder();
         for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
@@ -230,7 +247,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
             if (locationList.size() > 0) {
                 Location location = locationList.get(locationList.size() - 1);
 
-                LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
 
                 String markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
@@ -364,7 +381,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
 
     @Override
     public void onPlacesSuccess(final List<Place> places) {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 for (noman.googleplaces.Place place : places) {
@@ -379,23 +396,34 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
                     markerOptions.snippet(markerSnippet);
                     Marker item = mMap.addMarker(markerOptions);
                     previous_marker.add(item);
-
                 }
-
                 HashSet<Marker> hashSet = new HashSet<Marker>();
                 hashSet.addAll(previous_marker);
                 previous_marker.clear();
                 previous_marker.addAll(hashSet);
-
             }
         });
-    }
-
-    private void runOnUiThread(Runnable runnable) {
     }
 
     @Override
     public void onPlacesFinished() {
 
+    }
+
+    public void showPlaceInformation(LatLng location)
+    {
+        mMap.clear();
+
+        if (previous_marker != null)
+            previous_marker.clear();
+
+        new NRPlaces.Builder()
+                .listener(Frag4.this)
+                .key("AIzaSyB46jBMhBZZ8oVC7fCqN_l0C0xZSROu3kU")
+                .latlng(location.latitude, location.longitude)
+                .radius(500)
+                .type(PlaceType.RESTAURANT)
+                .build()
+                .execute();
     }
 }
