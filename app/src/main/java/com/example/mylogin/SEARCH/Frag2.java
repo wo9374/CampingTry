@@ -27,6 +27,7 @@ import com.example.mylogin.R;
 import com.example.mylogin.RegisterActivity;
 import com.example.mylogin.RegisterRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,6 +53,12 @@ public class Frag2 extends Fragment {
 
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
     private String mAdd, sAdd; //스피너 값에 따른 주소찾을 쿼리문으로 보낼 스트링 변수
+
+    private ArrayList<String>codeList;
+    private ArrayList<String>nameList;
+    private ArrayList<String>addrList;
+    private ArrayList<String>priceList;
+    private ArrayList<String>keywordList;
 
     public static boolean chk[] = new boolean[6];
     private String tema_chk;
@@ -184,7 +191,11 @@ public class Frag2 extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                codeList = new ArrayList<>();
+                nameList = new ArrayList<>();
+                addrList = new ArrayList<>();
+                priceList = new ArrayList<>();
+                keywordList = new ArrayList<>();
                 mList.clear(); // 검색 버튼 누를때마다 초기화
 
                 if (spinner1.getSelectedItemPosition()==0){ //지역 선택안할시 알림창
@@ -219,20 +230,28 @@ public class Frag2 extends Fragment {
                     }
                     final Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(String responses) {
                             try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                boolean success = jsonObject.getBoolean("success");
-                                if (success)//회원등록 성공
+                                JSONArray jsonArray = new JSONArray(responses);
+                                JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                                boolean success = jsonObjectfirst.getBoolean("success");
+                                if (success)//검색 결과 성공
                                 {
-                                    String code = jsonObject.getString("code");
-                                    String name = jsonObject.getString("name");
-                                    String addr = jsonObject.getString("addr");
-                                    String price = jsonObject.getString("price");
-                                    String keyword = jsonObject.getString("keyword");
-
-                                    System.out.println(code + name + addr + price + keyword +"142124124124124124124124124124124124124124124124124");
-                                } else { //회원등록 실패
+                                    for (int i =0; i<jsonArray.length();i++){
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        String code = jsonObject.getString("code");
+                                        String name = jsonObject.getString("name");
+                                        String addr = jsonObject.getString("addr");
+                                        String price = jsonObject.getString("price");
+                                        String keyword = jsonObject.getString("keyword");
+                                        codeList.add(code);
+                                        nameList.add(name);
+                                        addrList.add(addr);
+                                        priceList.add(price);
+                                        keywordList.add(keyword);
+                                        System.out.println(codeList.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@마지막");
+                                    }
+                                } else { //검색 결과 없음
                                     System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                                     return;
                                 }
