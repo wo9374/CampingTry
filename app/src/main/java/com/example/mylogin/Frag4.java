@@ -1,6 +1,5 @@
 package com.example.mylogin;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -15,8 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,14 +41,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import noman.googleplaces.Place;
+import noman.googleplaces.PlacesException;
+import noman.googleplaces.PlacesListener;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
 
-public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
+public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, PlacesListener {
 
     private FragmentActivity mContext;
 
@@ -75,6 +77,8 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
 
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+
+    List<Marker> previous_marker = null;
 
     public Frag4(){
     }
@@ -102,6 +106,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             mapView.onCreate(savedInstanceState);
         }
         mapView.getMapAsync(this);
+
 
         return layout;
     }
@@ -190,11 +195,8 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(cameraUpdate);
     }
     String getCurrentAddress(LatLng latlng) {
-        // 위치 정보와 지역으로부터 주소 문자열을 구한다.
         List<Address> addressList = null ;
         Geocoder geocoder = new Geocoder( mContext, Locale.getDefault());
-
-        // 지오코더를 이용하여 주소 리스트를 구한다.
         try {
             addressList = geocoder.getFromLocation(latlng.latitude,latlng.longitude,1);
         } catch (IOException e) {
@@ -228,8 +230,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
             if (locationList.size() > 0) {
                 Location location = locationList.get(locationList.size() - 1);
 
-                LatLng currentPosition
-                        = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
 
                 String markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
@@ -349,5 +350,52 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback {
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+    }
+
+    @Override
+    public void onPlacesFailure(PlacesException e) {
+
+    }
+
+    @Override
+    public void onPlacesStart() {
+
+    }
+
+    @Override
+    public void onPlacesSuccess(final List<Place> places) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (noman.googleplaces.Place place : places) {
+
+                    LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
+
+                    String markerSnippet = getCurrentAddress(latLng);
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    markerOptions.title(place.getName());
+                    markerOptions.snippet(markerSnippet);
+                    Marker item = mMap.addMarker(markerOptions);
+                    previous_marker.add(item);
+
+                }
+
+                HashSet<Marker> hashSet = new HashSet<Marker>();
+                hashSet.addAll(previous_marker);
+                previous_marker.clear();
+                previous_marker.addAll(hashSet);
+
+            }
+        });
+    }
+
+    private void runOnUiThread(Runnable runnable) {
+    }
+
+    @Override
+    public void onPlacesFinished() {
+
     }
 }
