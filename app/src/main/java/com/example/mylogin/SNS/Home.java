@@ -26,6 +26,8 @@ public class Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sns_home, container, false);
 
+        mList.clear();
+
         addItem("테스트 이름","2020-06-13","sns게시물 테스트",R.drawable.tema_4);
 
         mRecyclerView = view.findViewById(R.id.home_recycle);
