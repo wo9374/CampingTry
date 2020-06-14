@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
 import java.util.ArrayList;
 
-public class Sns_home extends Fragment {
+public class Home extends Fragment {
     private View view;
     private Context ct;
 

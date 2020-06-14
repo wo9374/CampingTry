@@ -21,11 +21,10 @@ public class Frag1 extends Fragment {
     private FragmentManager fm;
     private FragmentTransaction ft;
 
-    private Sns_home s_frag1;
-    private Sns_search s_frag2;
-    private Sns_photo s_frag3;
-    private Sns_favorite s_frag4;
-    private Sns_account s_frag5;
+    private Home s_frag1;
+    private Sns_photo s_frag2;
+    private Sns_favorite s_frag3;
+    private Sns_account s_frag4;
 
     @Nullable
     @Override
@@ -41,28 +40,24 @@ public class Frag1 extends Fragment {
                     case R.id.action_home:
                         setFrag(0);
                         break;
-                    case R.id.action_searched:
+                    case R.id.action_add_photo:
                         setFrag(1);
                         break;
-                    case R.id.action_add_photo:
+                    case R.id.action_favorite_alarm:
                         setFrag(2);
                         break;
-                    case R.id.action_favorite_alarm:
-                        setFrag(3);
-                        break;
                     case R.id.action_account:
-                        setFrag(4);
+                        setFrag(3);
                         break;
                 }
                 return true;
             }
         });
 
-        s_frag1 = new Sns_home();
-        s_frag2 = new Sns_search();
-        s_frag3 = new Sns_photo();
-        s_frag4 = new Sns_favorite();
-        s_frag5 = new Sns_account();
+        s_frag1 = new Home();
+        s_frag2 = new Sns_photo();
+        s_frag3 = new Sns_favorite();
+        s_frag4 = new Sns_account();
 
         setFrag(0);//첫 프래그먼트 화면 지정
 
@@ -90,10 +85,6 @@ public class Frag1 extends Fragment {
                 break;
             case 3:
                 ft.replace(R.id.main_content, s_frag4);
-                ft.commit();
-                break;
-            case 4:
-                ft.replace(R.id.main_content, s_frag5);
                 ft.commit();
                 break;
         }
