@@ -252,7 +252,7 @@ public class Frag2 extends Fragment {
                                         System.out.println(codeList.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@마지막");
                                     }
                                 } else { //검색 결과 없음
-                                    System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                                    System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                                     return;
                                 }
                             } catch (JSONException e) {
