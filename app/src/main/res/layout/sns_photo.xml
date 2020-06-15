@@ -2,12 +2,19 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/default_bccolor">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
-    <TextView
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_pic"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SNS 사진추가 화면 입니다."
-        android:textSize="40sp"/>
-
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:background="@drawable/icon_takepicture"/>
 </LinearLayout>

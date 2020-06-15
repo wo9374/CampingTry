@@ -52,9 +52,9 @@
                 android:id="@+id/bill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/add_icon"
+                android:layout_below="@+id/content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/image_slide"
                 android:text="$" />
 
@@ -62,9 +62,9 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/add_icon"
+                android:layout_below="@+id/content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/bill"
                 android:text="가격" />
 
@@ -72,9 +72,9 @@
                 android:id="@+id/add_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/price"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/image_slide"
                 android:src="@drawable/icon_place" />
 
@@ -82,12 +82,26 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/price"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/add_icon"
                 android:text="주소" />
 
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No."/>
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:text="캠핑장코드"/>
 
         </RelativeLayout>
 

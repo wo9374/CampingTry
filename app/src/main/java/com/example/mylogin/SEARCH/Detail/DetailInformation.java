@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -49,6 +50,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_information);
+
+        Intent intent = getIntent();
+        String code = intent.getExtras().getString("code"); //코드 불러옴
 
         add_txt = findViewById(R.id.add_txt);
         tel_txt = findViewById(R.id.tel_txt);

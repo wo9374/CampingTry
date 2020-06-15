@@ -45,6 +45,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.title.setText(item.getTitle());
         holder.content.setText(item.getContent());
         holder.address.setText(item.getAddress());
+        holder.price.setText(item.getPrice());
+        holder.code.setText(item.getCode());
     }
 
     @Override
@@ -60,6 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView address;
         TextView bill;
         TextView price;
+        TextView code;
 
         Button Detail_btn;
         Button Review_btn;
@@ -74,7 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             address = itemView.findViewById(R.id.address);
             bill = itemView.findViewById(R.id.bill);
             price = itemView.findViewById(R.id.price);
-
+            code = itemView.findViewById(R.id.code);
 
             Detail_btn = itemView.findViewById(R.id.Detail_btn);
             Review_btn = itemView.findViewById(R.id.Review_btn);
@@ -83,7 +86,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), DetailInformation.class);
+                    intent.putExtra("code",code.getText());
                     v.getContext().startActivity(intent);
+
                 }
             });
         }

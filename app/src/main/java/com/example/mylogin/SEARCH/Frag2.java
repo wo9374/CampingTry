@@ -54,12 +54,6 @@ public class Frag2 extends Fragment {
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
     private String mAdd, sAdd; //스피너 값에 따른 주소찾을 쿼리문으로 보낼 스트링 변수
 
-    private ArrayList<String>codeList;
-    private ArrayList<String>nameList;
-    private ArrayList<String>addrList;
-    private ArrayList<String>priceList;
-    private ArrayList<String>keywordList;
-
     public static boolean chk[] = new boolean[6];
     private String tema_chk;
 
@@ -191,15 +185,12 @@ public class Frag2 extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                codeList = new ArrayList<>();
-                nameList = new ArrayList<>();
-                addrList = new ArrayList<>();
-                priceList = new ArrayList<>();
-                keywordList = new ArrayList<>();
                 mList.clear(); // 검색 버튼 누를때마다 초기화
 
                 if (spinner1.getSelectedItemPosition()==0){ //지역 선택안할시 알림창
                     Toast.makeText(ct,"지역을 선택해 주세요.",Toast.LENGTH_LONG).show();
+                    mAdapter.notifyDataSetChanged(); //새로고침
+
                 }else{ //지역선택
                     if(spinner2.getSelectedItemPosition()==0){ //시군 선택안하면 선택한 도/시로 전체검색
                         mAdd = spinner1.getSelectedItem().toString();
@@ -208,12 +199,6 @@ public class Frag2 extends Fragment {
                         CheckTema();
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
-
-                        int img = R.drawable.tema_4;
-                        addItem(img,"테스트 제목","테스트 설명",mAdd);
-                        //임시로 하드코딩
-
-                        mAdapter.notifyDataSetChanged(); //새로고침
                     }else{ //시군 선택했을때
 
                         mAdd = spinner1.getSelectedItem().toString();
@@ -222,11 +207,6 @@ public class Frag2 extends Fragment {
                         CheckTema();
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
-                        int img = R.drawable.tema_4;
-                        addItem(img,"테스트 제목","테스트 설명",mAdd + " " + sAdd);
-                        //임시로 하드코딩
-
-                        mAdapter.notifyDataSetChanged(); //새로고침
                     }
                     final Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
@@ -237,6 +217,8 @@ public class Frag2 extends Fragment {
                                 boolean success = jsonObjectfirst.getBoolean("success");
                                 if (success)//검색 결과 성공
                                 {
+                                    int img = R.drawable.tema_4;
+
                                     for (int i =0; i<jsonArray.length();i++){
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                                         String code = jsonObject.getString("code");
@@ -244,15 +226,15 @@ public class Frag2 extends Fragment {
                                         String addr = jsonObject.getString("addr");
                                         String price = jsonObject.getString("price");
                                         String keyword = jsonObject.getString("keyword");
-                                        codeList.add(code);
-                                        nameList.add(name);
-                                        addrList.add(addr);
-                                        priceList.add(price);
-                                        keywordList.add(keyword);
-                                        System.out.println(codeList.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@마지막");
+
+                                        addItem(img, name, keyword,price,addr,code);
                                     }
+
+                                    mAdapter.notifyDataSetChanged(); //새로고침
+
                                 } else { //검색 결과 없음
-                                    System.out.println("실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                                    System.out.println("검색결과 없음@@@@@@@@@@@@@@@@@@@@@@@@");
+                                    mAdapter.notifyDataSetChanged(); //새로고침
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -291,13 +273,15 @@ public class Frag2 extends Fragment {
         }
     }
 
-    void addItem(int image, String title,String content,String address){
+    void addItem(int image, String title,String content,String price,String address,String code){
         SearchRecycleItem item = new SearchRecycleItem();
 
         item.setImage(image);
         item.setTitle(title);
         item.setContent(content);
+        item.setPrice(price);
         item.setAddress(address);
+        item.setCode(code);
 
         mList.add(item);
     }

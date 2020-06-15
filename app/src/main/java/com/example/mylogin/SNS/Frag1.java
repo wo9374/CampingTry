@@ -22,7 +22,7 @@ public class Frag1 extends Fragment {
     private FragmentTransaction ft;
 
     private Home s_frag1;
-    private Sns_photo s_frag2;
+    private Photo s_frag2;
     private Sns_favorite s_frag3;
     private Sns_account s_frag4;
 
@@ -55,7 +55,7 @@ public class Frag1 extends Fragment {
         });
 
         s_frag1 = new Home();
-        s_frag2 = new Sns_photo();
+        s_frag2 = new Photo();
         s_frag3 = new Sns_favorite();
         s_frag4 = new Sns_account();
 
