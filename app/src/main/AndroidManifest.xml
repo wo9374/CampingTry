@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- android:allowBackup="false" < 보안강화 -->
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_main"
@@ -20,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SEARCH.Detail.DetailInformation"></activity>
+        <activity android:name=".MyPage.MyPage"></activity>
+        <activity android:name=".SEARCH.Detail.DetailInformation" />
         <activity android:name=".WebView.WebViewActivity" />
         <activity android:name=".SearchIdActivity" />
         <activity android:name=".LoginActivity">
