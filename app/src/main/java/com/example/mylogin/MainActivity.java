@@ -1,6 +1,7 @@
 package com.example.mylogin;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.mylogin.MyPage.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
 import com.example.mylogin.WebView.WebViewActivity;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
+    private String userID, userSubname;
 
     Context context;
 
@@ -90,14 +93,17 @@ public class MainActivity extends AppCompatActivity {
         tv_profile = findViewById(R.id.tv_profile);
 
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
-        String userSubname = intent.getStringExtra("userSubname");
+        userID = intent.getStringExtra("userID");
+        userSubname = intent.getStringExtra("userSubname");
         String photoUrl = intent.getStringExtra("photoUrl");
         context = this.getBaseContext();
 
         tv_id.setText(userID);
         tv_nic.setText(userSubname);
         Glide.with(this).load(photoUrl).into(tv_profile);
+
+
+
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerView = (View)findViewById(R.id.drawer);
@@ -118,6 +124,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button d_mypage = (Button)findViewById(R.id.d_mypage);
+        d_mypage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
+                intent1.putExtra("id", userID);
+                intent1.putExtra("nic", userSubname);
+                startActivity(intent1);
+            }
+        });
+
+
         drawerLayout.setDrawerListener(listener);
         drawerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -128,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkPermissions();
     }
+
+
 
     PermissionListener permissionlistener = new PermissionListener() {
         @Override

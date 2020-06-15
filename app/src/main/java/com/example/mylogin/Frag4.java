@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -43,6 +44,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import noman.googleplaces.NRPlaces;
 import noman.googleplaces.Place;
@@ -57,6 +61,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, PlacesListener {
@@ -101,6 +107,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -125,6 +132,24 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
                 Toast.makeText(mContext,"현재 위치가 표시될 때까지 화면 전환을 자제해주세요!",Toast.LENGTH_LONG).show();
             }
         });
+
+//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+//                getActivity().getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+//
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(@NonNull com.google.android.libraries.places.api.model.Place place) {
+//                mCurrentLocatiion.setLatitude(place.getLatLng().latitude);
+//                mCurrentLocatiion.setLongitude(place.getLatLng().longitude);
+//
+//                setCurrentLocation(mCurrentLocatiion, place.getName().toString(), place.getAddress().toString());
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Status status) {
+//                Log.i(TAG, "An error occurred: "+status);
+//            }
+//        });
 
         return layout;
     }

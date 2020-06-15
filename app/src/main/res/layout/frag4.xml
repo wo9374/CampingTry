@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_bccolor"
@@ -10,14 +10,30 @@
             android:id='@+id/map'
             android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="match_parent" />
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/card_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:cardCornerRadius="4dp">-->
+
+<!--                <fragment-->
+<!--                    android:id="@+id/autocomplete_fragment"-->
+<!--                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+
 
         <Button
             android:id="@+id/map_good"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="17"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
             android:background="#F09661"
             android:text="주 변   검 색"
             android:textColor="@color/white"
@@ -25,4 +41,4 @@
             android:textStyle="bold" />
 
 
-</LinearLayout>
+</RelativeLayout>
