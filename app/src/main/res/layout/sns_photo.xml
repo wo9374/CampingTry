@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_bccolor">
 
-    <com.example.mylogin.SNS.PhotoSurfaceView
-        android:id="@+id/surfaceView"
+    <ImageView
+        android:id="@+id/photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_round" />
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="3"
+        android:background="@drawable/border_round"
+        android:hint="코멘트 작성"
+        android:textSize="14sp" />
 
     <Button
-        android:id="@+id/btn_pic"
-        android:layout_width="wrap_content"
+        android:id="@+id/write_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/icon_takepicture" />
-</RelativeLayout>
+        android:backgroundTint="#F09661"
+        android:text="등록하기" />
+</LinearLayout>

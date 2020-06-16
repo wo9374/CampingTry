@@ -28,7 +28,7 @@ public class Home extends Fragment {
 
         mList.clear();
 
-        addItem("테스트 이름","2020-06-13","sns게시물 테스트",R.drawable.tema_4);
+        addItem("이름","2020-06-13","sns게시물 테스트",R.drawable.tema_4);
 
         mRecyclerView = view.findViewById(R.id.home_recycle);
         mAdapter = new HomeAdapter(mList);

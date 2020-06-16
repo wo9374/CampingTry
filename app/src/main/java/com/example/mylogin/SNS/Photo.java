@@ -1,37 +1,48 @@
 package com.example.mylogin.SNS;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.Camera;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.mylogin.R;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static android.app.Activity.RESULT_OK;
+
 public class Photo extends Fragment {
     private View view;
     private Context ct;
-    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
 
-    private PhotoSurfaceView surfaceView;
-    private Button btn_pic;
+    private static final int REQUEST_IMAGE_CAPTURE = 672;
+    private String imageFilePath;
+    private Uri photoUri;
 
-    private Bitmap bitmap=null;
+    private ImageView photo;
+    private EditText content;
+    private Button write_btn;
+
 
     @Nullable
     @Override
@@ -39,73 +50,94 @@ public class Photo extends Fragment {
         view = inflater.inflate(R.layout.sns_photo, container, false);
         ct = container.getContext();
 
-        surfaceView = view.findViewById(R.id.surfaceView);
 
-        checkPermission();
+        photo = view.findViewById(R.id.photo);
+        content = view.findViewById(R.id.content);
+        write_btn = view.findViewById(R.id.write_btn);
 
+        sendTakePhotoIntent();
 
-        btn_pic = (Button) view.findViewById(R.id.btn_pic);
-        btn_pic.setOnClickListener(new View.OnClickListener() {
+        write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                capture();
-
-                    Intent intent = new Intent(getActivity(), PhotoResult.class);
-                    //intent.putExtra("image",bitmap);
-                    startActivity(intent);
-
+                System.out.println(photo.getDrawable() + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "+ content.getText());
             }
         });
 
         return view;
     }
 
-    private void capture(){
-        surfaceView.capture(new Camera.PictureCallback() {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                System.out.println(bitmap + "      사진 찍힐때 비트맵");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
+            ExifInterface exif = null;
 
-                // 사진을 찍게 되면 미리보기가 중지된다. 다시 미리보기를 시작하려면...
-                camera.startPreview();
+            try {
+                exif = new ExifInterface(imageFilePath);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-    }
 
-    public void checkPermission() {
-        int permssionCheck = ContextCompat.checkSelfPermission(ct, Manifest.permission.CAMERA);
+            int exifOrientation;
+            int exifDegree;
 
-        if (permssionCheck != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
-                Toast.makeText(ct, "사진 촬영을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+            if (exif != null) {
+                exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                exifDegree = exifOrientationToDegrees(exifOrientation);
             } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-                Toast.makeText(ct, "사진 촬영을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                exifDegree = 0;
+            }
 
+            photo.setImageBitmap(rotate(bitmap, exifDegree));
+        }
+    }
+
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+
+    private Bitmap rotate(Bitmap bitmap, float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+
+    private void sendTakePhotoIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+
+            if (photoFile != null) {
+                photoUri = FileProvider.getUriForFile(getContext(), getActivity().getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(ct, "승인이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(ct, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-
-        }
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "TEST_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,      /* prefix */
+                ".jpg",         /* suffix */
+                storageDir          /* directory */
+        );
+        imageFilePath = image.getAbsolutePath();
+        return image;
     }
 }
