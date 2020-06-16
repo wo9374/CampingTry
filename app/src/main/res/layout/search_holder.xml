@@ -68,6 +68,14 @@
                 android:layout_toRightOf="@+id/bill"
                 android:text="가격" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/price"
+                android:text="~" />
+
             <ImageView
                 android:id="@+id/add_icon"
                 android:layout_width="20dp"

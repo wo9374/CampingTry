@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -21,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyPage.MyPage"></activity>
+        <activity android:name=".SNS.PhotoResult"></activity>
+        <activity android:name=".MyPage.MyPage" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
         <activity android:name=".WebView.WebViewActivity" />
         <activity android:name=".SearchIdActivity" />

@@ -1,11 +1,15 @@
 package com.example.mylogin.SNS;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,101 +17,95 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import com.example.mylogin.R;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 
-import java.util.ArrayList;
-
-public class Photo extends Fragment implements SurfaceHolder.Callback{
+public class Photo extends Fragment {
     private View view;
+    private Context ct;
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1001;
 
-    private Camera camera;
-    private SurfaceView surfaceView;
-    private SurfaceHolder surfaceHolder;
+    private PhotoSurfaceView surfaceView;
     private Button btn_pic;
+
+    private Bitmap bitmap=null;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sns_photo, container, false);
+        ct = container.getContext();
 
-        PermissionListener permission=new PermissionListener() {
-            @Override
-            public void onPermissionGranted() { // 퍼미션 허용시
-                camera = Camera.open();
-                camera.setDisplayOrientation(90);
-                surfaceView = (SurfaceView)view.findViewById(R.id.surfaceView);
-                surfaceHolder = surfaceView.getHolder();
-                surfaceHolder.addCallback(Photo.this);
-                surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-            }
+        surfaceView = view.findViewById(R.id.surfaceView);
 
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) { //퍼미션 거부시
-                Toast.makeText(view.getContext(),"권한 거부", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        TedPermission.with(view.getContext())
-                .setPermissionListener(permission)
-                .setRationaleMessage("사진 권한 허용 요구")
-                //권한 묻기
-                .setDeniedMessage("권한이 거부되었습니다. 설정 > 권한에서 허용하시기 바랍니다.")
-                //거부시 메세지
-                .setPermissions(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                //카메라, 쓰기, 녹화 권한
-                .check();
+        checkPermission();
 
 
-        btn_pic = (Button)view.findViewById(R.id.btn_pic);
+        btn_pic = (Button) view.findViewById(R.id.btn_pic);
         btn_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                capture();
+
+                    Intent intent = new Intent(getActivity(), PhotoResult.class);
+                    //intent.putExtra("image",bitmap);
+                    startActivity(intent);
 
             }
         });
 
-
         return view;
     }
 
-    private  void refreshCamera(Camera camera) {
-        if(surfaceHolder.getSurface() == null){
-            return;
+    private void capture(){
+        surfaceView.capture(new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                System.out.println(bitmap + "      사진 찍힐때 비트맵");
+
+                // 사진을 찍게 되면 미리보기가 중지된다. 다시 미리보기를 시작하려면...
+                camera.startPreview();
+            }
+        });
+    }
+
+    public void checkPermission() {
+        int permssionCheck = ContextCompat.checkSelfPermission(ct, Manifest.permission.CAMERA);
+
+        if (permssionCheck != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                Toast.makeText(ct, "사진 촬영을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+                Toast.makeText(ct, "사진 촬영을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+
+            }
         }
-
-        try {
-            camera.stopPreview();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        setCamera(camera);
-    }
-
-    private void setCamera(Camera cam) {
-        camera=cam;
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ct, "승인이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
 
-    }
+                } else {
+                    Toast.makeText(ct, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        refreshCamera(camera);
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        if(camera != null){
-            camera.setPreviewCallback(null);
-            camera.stopPreview();
-            camera.release();
-            camera = null;
         }
     }
 }

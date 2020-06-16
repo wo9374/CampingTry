@@ -1,4 +1,4 @@
-package com.example.mylogin.SNS;
+package com.example.mylogin.SNS.Home;
 
 import android.content.Context;
 import android.view.LayoutInflater;

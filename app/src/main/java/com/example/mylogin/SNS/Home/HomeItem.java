@@ -1,4 +1,4 @@
-package com.example.mylogin.SNS;
+package com.example.mylogin.SNS.Home;
 
 public class HomeItem {
     private String username;
