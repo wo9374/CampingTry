@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SNS.PhotoResult"></activity>
+        <activity android:name=".MyPage.RequestProfile.RequestProfileActivity"></activity>
+        <activity android:name=".SNS.PhotoResult" />
         <activity android:name=".MyPage.MyPage" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
         <activity android:name=".WebView.WebViewActivity" />
