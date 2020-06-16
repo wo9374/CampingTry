@@ -60,7 +60,7 @@ public class Photo extends Fragment {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(photo.getDrawable() + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    "+ content.getText());
+                System.out.println(photo.getDrawable() + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@    "+ content.getText());
             }
         });
 
