@@ -59,6 +59,49 @@
                 android:layout_below="@id/content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="3" />
+
+            <ImageView
+                android:id="@+id/like_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/img_slide"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/icon_like_num"/>
+
+            <TextView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_slide"
+                android:layout_toRightOf="@+id/like_img"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="좋아요 수"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="댓글 "
+                android:layout_toLeftOf="@+id/comment"
+                android:layout_below="@id/img_slide"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_slide"
+
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="댓글 수"
+                />
         </RelativeLayout>
 
         <View
@@ -73,7 +116,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/like"
+                android:id="@+id/like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -84,7 +127,7 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/comment"
+                android:id="@+id/comment_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -95,7 +138,7 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/chat"
+                android:id="@+id/chat_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"

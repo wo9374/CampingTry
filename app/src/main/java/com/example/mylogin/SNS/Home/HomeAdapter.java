@@ -66,9 +66,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             content = itemView.findViewById(R.id.content);
             img_slide = itemView.findViewById(R.id.img_slide);
 
-            like = itemView.findViewById(R.id.like);
-            comment = itemView.findViewById(R.id.comment);
-            chat = itemView.findViewById(R.id.chat);
+            like = itemView.findViewById(R.id.like_btn);
+            comment = itemView.findViewById(R.id.comment_btn);
+            chat = itemView.findViewById(R.id.chat_btn);
+
 
 
         }
