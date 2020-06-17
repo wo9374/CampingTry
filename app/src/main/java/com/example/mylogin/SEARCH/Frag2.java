@@ -64,8 +64,9 @@ public class Frag2 extends Fragment {
 
     public static boolean chk[] = new boolean[6];
     private String tema_chk;
-    Bitmap downimg;
+
     Bitmap img;
+    Drawable drawable;
 
     RecyclerView mRecyclerView = null ;
     SearchAdapter mAdapter = null;
@@ -86,6 +87,7 @@ public class Frag2 extends Fragment {
         spinner1 = view.findViewById(R.id.spinner1);
         spinner2 = view.findViewById(R.id.spinner2);
         spinner3 = view.findViewById(R.id.spinner3);
+        drawable = getResources().getDrawable(R.drawable.tema_4);
 
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             //전체 도 및 광역시 스피너
@@ -241,12 +243,13 @@ public class Frag2 extends Fragment {
                                             public void run(){
                                                 try {
                                                     URL url = new URL("http://3.34.136.232:8080/image/" + imgurl);
+                                                    img = ((BitmapDrawable)drawable).getBitmap();
                                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                                     conn.setDoInput(true);
                                                     conn.connect();
 
                                                     InputStream is = conn.getInputStream();
-                                                    downimg = BitmapFactory.decodeStream(is);
+                                                    img = BitmapFactory.decodeStream(is);
 
                                                 } catch (MalformedURLException e) {
                                                     e.printStackTrace();
@@ -259,7 +262,6 @@ public class Frag2 extends Fragment {
                                         mThread.start();
                                         try {
                                             mThread.join();
-                                            img = downimg;
                                         }catch (InterruptedException e){
                                             e.printStackTrace();
                                         }
