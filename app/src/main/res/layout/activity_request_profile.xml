@@ -80,6 +80,27 @@
         app:layout_constraintTop_toBottomOf="@+id/re_userid" />
 
     <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 비밀번호"
+        app:layout_constraintBottom_toBottomOf="@+id/check_pass"
+        app:layout_constraintEnd_toEndOf="@+id/textView42"
+        app:layout_constraintStart_toStartOf="@+id/textView42"
+        app:layout_constraintTop_toTopOf="@+id/check_pass" />
+
+    <EditText
+        android:id="@+id/check_pass"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/re_email"
+        app:layout_constraintStart_toStartOf="@+id/re_email"
+        app:layout_constraintTop_toBottomOf="@+id/re_email" />
+
+    <TextView
         android:id="@+id/textView44"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,9 +117,9 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/re_email"
-        app:layout_constraintStart_toStartOf="@+id/re_email"
-        app:layout_constraintTop_toBottomOf="@+id/re_email" />
+        app:layout_constraintEnd_toEndOf="@+id/check_pass"
+        app:layout_constraintStart_toStartOf="@+id/check_pass"
+        app:layout_constraintTop_toBottomOf="@+id/check_pass" />
 
     <TextView
         android:id="@+id/textView46"
