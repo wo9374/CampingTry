@@ -3,6 +3,7 @@ package com.example.mylogin.SEARCH;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,6 +34,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
@@ -58,6 +64,8 @@ public class Frag2 extends Fragment {
 
     public static boolean chk[] = new boolean[6];
     private String tema_chk;
+    Bitmap downimg;
+    Bitmap img;
 
     RecyclerView mRecyclerView = null ;
     SearchAdapter mAdapter = null;
@@ -219,9 +227,6 @@ public class Frag2 extends Fragment {
                                 boolean success = jsonObjectfirst.getBoolean("success");
                                 if (success)//검색 결과 성공
                                 {
-                                    Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
-                                    Bitmap img = ((BitmapDrawable)drawable).getBitmap();
-
                                     for (int i =0; i<jsonArray.length();i++){
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                                         String code = jsonObject.getString("code");
@@ -229,6 +234,35 @@ public class Frag2 extends Fragment {
                                         String addr = jsonObject.getString("addr");
                                         String price = jsonObject.getString("price");
                                         String keyword = jsonObject.getString("keyword");
+                                        final String imgurl = jsonObject.getString("imgurl");
+
+                                        Thread mThread = new Thread(){
+                                            @Override
+                                            public void run(){
+                                                try {
+                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurl);
+                                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                                    conn.setDoInput(true);
+                                                    conn.connect();
+
+                                                    InputStream is = conn.getInputStream();
+                                                    downimg = BitmapFactory.decodeStream(is);
+
+                                                } catch (MalformedURLException e) {
+                                                    e.printStackTrace();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+
+                                        mThread.start();
+                                        try {
+                                            mThread.join();
+                                            img = downimg;
+                                        }catch (InterruptedException e){
+                                            e.printStackTrace();
+                                        }
 
                                         addItem(img, name, keyword,price,addr,code);
                                     }
