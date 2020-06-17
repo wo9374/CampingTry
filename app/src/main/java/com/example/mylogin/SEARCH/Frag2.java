@@ -2,6 +2,8 @@ package com.example.mylogin.SEARCH;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -217,7 +219,8 @@ public class Frag2 extends Fragment {
                                 boolean success = jsonObjectfirst.getBoolean("success");
                                 if (success)//검색 결과 성공
                                 {
-                                    int img = R.drawable.tema_4;
+                                    Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
+                                    Bitmap img = ((BitmapDrawable)drawable).getBitmap();
 
                                     for (int i =0; i<jsonArray.length();i++){
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -273,7 +276,7 @@ public class Frag2 extends Fragment {
         }
     }
 
-    void addItem(int image, String title,String content,String price,String address,String code){
+    void addItem(Bitmap image, String title, String content, String price, String address, String code){
         SearchRecycleItem item = new SearchRecycleItem();
 
         item.setImage(image);

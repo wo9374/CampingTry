@@ -41,7 +41,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
         SearchRecycleItem item = mData.get(position);
 
-        holder.image.setImageResource(item.getImage());
+        holder.image.setImageBitmap(item.getImage());
         holder.title.setText(item.getTitle());
         holder.content.setText(item.getContent());
         holder.address.setText(item.getAddress());
