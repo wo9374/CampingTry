@@ -26,7 +26,8 @@
             <ImageView
                 android:id="@+id/image_slide"
                 android:layout_width="140dp"
-                android:layout_height="120dp"/>
+                android:layout_height="120dp"
+                />
 
             <TextView
                 android:id="@+id/title"

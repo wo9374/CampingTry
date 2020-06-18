@@ -32,7 +32,7 @@ public class IconAdapter extends RecyclerView.Adapter<IconViewHolder> {
     public void onBindViewHolder(@NonNull IconViewHolder holder, int position) {
         IconItem data = IconItems.get(position);
 
-        holder.icon_img.setImageResource(data.getIcon_img());
+        holder.icon_img.setImageBitmap(data.getIcon_img());
         holder.icon_txt.setText(data.getIcon_txt());
     }
 

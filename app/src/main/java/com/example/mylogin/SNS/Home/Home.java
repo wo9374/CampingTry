@@ -28,7 +28,7 @@ public class Home extends Fragment {
 
         mList.clear();
 
-        addItem("이름","2020-06-13","sns게시물 테스트",R.drawable.tema_4);
+        addItem("이름","2020-06-13","sns게시물 테스트",R.drawable.tema_4,"0", "0");
 
         mRecyclerView = view.findViewById(R.id.home_recycle);
         mAdapter = new HomeAdapter(mList);
@@ -38,13 +38,15 @@ public class Home extends Fragment {
         return view;
     }
 
-    void addItem(String username, String time, String content, int image){
+    void addItem(String username, String time, String content, int image, String like, String comment){
         HomeItem item = new HomeItem();
 
         item.setUsername(username);
         item.setTime(time);
         item.setContent(content);
         item.setImage(image);
+        item.setLike(like);
+        item.setComment(comment);
 
         mList.add(item);
     }

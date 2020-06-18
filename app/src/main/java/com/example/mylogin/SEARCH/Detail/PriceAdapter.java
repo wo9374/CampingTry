@@ -34,7 +34,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceViewHolder>{
     public void onBindViewHolder(@NonNull PriceViewHolder holder, int position) {
         PriceItem data = PriceItems.get(position);
 
-        holder.price_img.setImageResource(data.getPrice_img());
+        holder.price_img.setImageBitmap(data.getPrice_img());
         holder.zone.setText(data.getZone());
         holder.facility.setText(data.getFacility());
         holder.price.setText(data.getPrice());

@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -87,16 +90,19 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         image_recycle.setLayoutManager(image_LayoutManager);  //레이아웃 매니저 지정
         imageAdapter = new ImageAdapter(); //init 어뎁터
 
+
         ArrayList<ImageItem> img_data = new ArrayList<>();
+
+        Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
+        Bitmap img = ((BitmapDrawable)drawable).getBitmap();
+
         for (int x=0; x<4; x++){
-            img_data.add(new ImageItem(R.drawable.tema_0));
+            img_data.add(new ImageItem(img));
         }
         //임시로 사진 넣음
 
         imageAdapter.setData(img_data);//set data
         image_recycle.setAdapter(imageAdapter);
-
-
 
 
 
@@ -107,8 +113,10 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         ArrayList<IconItem> icon_data = new ArrayList<>();
 
+        Bitmap icon_img = ((BitmapDrawable)drawable).getBitmap();
+
         for (int x = 0; x <10; x++){
-            icon_data.add(new IconItem(R.drawable.tema_4,"테스트"));
+            icon_data.add(new IconItem(icon_img,"테스트"));
         }
         //임시로 아이콘이랑 아이콘 텍스트 넣음
 
@@ -125,9 +133,12 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         ArrayList<PriceItem> price_data = new ArrayList<>();
 
-        price_data.add(new PriceItem(R.drawable.tema_4,"테스트 구역","테스트 시설 정보","50000"));
-        price_data.add(new PriceItem(R.drawable.tema_4,"테스트 구역","테스트 시설 정보","50000"));
-        price_data.add(new PriceItem(R.drawable.tema_4,"테스트 구역","테스트 시설 정보","50000"));
+        Bitmap price_img = ((BitmapDrawable)drawable).getBitmap();
+
+
+        for(int x=0; x<3;x++){
+            price_data.add(new PriceItem(price_img,"테스트 구역","테스트 시설 정보","50000"));
+        }
         //임시로 사진이랑 텍스트 넣음
 
         priceAdapter.setData(price_data); //set data

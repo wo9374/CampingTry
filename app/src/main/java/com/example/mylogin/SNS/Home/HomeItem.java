@@ -5,6 +5,8 @@ public class HomeItem {
     private String time;
     private String content;
     private int image;
+    private String like;
+    private String comment;
 
     public String getUsername() {
         return username;
@@ -36,5 +38,21 @@ public class HomeItem {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

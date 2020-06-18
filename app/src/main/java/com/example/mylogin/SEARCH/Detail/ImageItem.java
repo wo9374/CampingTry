@@ -1,13 +1,21 @@
 package com.example.mylogin.SEARCH.Detail;
 
-public class ImageItem {
-    private int Image_img;
+import android.graphics.Bitmap;
 
-    public ImageItem(int image_img) {
-        Image_img = image_img;
+public class ImageItem {
+    private Bitmap Image_img;
+
+    public ImageItem(Bitmap Image_img) {
+        this.Image_img = Image_img;
     }
 
-    public int getImage_img() {
+    public Bitmap getImage_img() {
         return Image_img;
     }
+
+    public void setImage_img(Bitmap image_img) {
+        this.Image_img = image_img;
+    }
 }
+
+

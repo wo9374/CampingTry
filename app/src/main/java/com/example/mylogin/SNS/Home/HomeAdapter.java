@@ -40,6 +40,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.time.setText(item.getTime());
         holder.content.setText(item.getContent());
         holder.img_slide.setImageResource(item.getImage());
+        holder.like.setText(item.getLike());
+        holder.comment.setText(item.getComment());
     }
 
     @Override
@@ -54,9 +56,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         TextView content;
         ImageView img_slide;
 
-        Button like;
-        Button comment;
-        Button chat;
+        TextView like;
+        TextView comment;
+
+        Button like_btn;
+        Button comment_btn;
+        Button chat_btn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,12 +70,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             time = itemView.findViewById(R.id.time);
             content = itemView.findViewById(R.id.content);
             img_slide = itemView.findViewById(R.id.img_slide);
+            like = itemView.findViewById(R.id.like);
+            comment = itemView.findViewById(R.id.comment);
 
-            like = itemView.findViewById(R.id.like_btn);
-            comment = itemView.findViewById(R.id.comment_btn);
-            chat = itemView.findViewById(R.id.chat_btn);
-
-
+            like_btn = itemView.findViewById(R.id.like_btn);
+            comment_btn = itemView.findViewById(R.id.comment_btn);
+            chat_btn = itemView.findViewById(R.id.chat_btn);
 
         }
     }
