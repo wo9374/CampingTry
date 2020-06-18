@@ -12,8 +12,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SEARCH.SearchRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +26,10 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +67,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
+        int codeint = Integer.parseInt(code);
         final String imgurl = intent.getExtras().getString("url");
 
         name = findViewById(R.id.name); //캠핑장 이름
@@ -130,8 +140,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         image_recycle.setAdapter(imageAdapter);
 
 
-
-
         icon_recycle = findViewById(R.id.icon_recycle); // 아이콘 리사이클러뷰
         icon_recycle.setLayoutManager(icon_LayoutManager); //레이아웃 매니저 지정
         iconAdapter = new IconAdapter(); //init 어뎁터
@@ -149,22 +157,41 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         icon_recycle.setAdapter(iconAdapter);
 
 
-
-
-
         price_recycle = findViewById(R.id.price_recycle); // 가격 리사이클러뷰
         price_recycle.setLayoutManager(price_LayoutManager); //레이아웃 매니저 지정
         priceAdapter = new PriceAdapter(); //init 어뎁터
 
-        ArrayList<PriceItem> price_data = new ArrayList<>();
+        final ArrayList<PriceItem> price_data = new ArrayList<>();
 
-        Bitmap price_img = ((BitmapDrawable)drawable).getBitmap();
-
-
-        for(int x=0; x<3;x++){
-            price_data.add(new PriceItem("테스트 구역","테스트 시설 정보","50000"));
-        }
-        //임시로 사진이랑 텍스트 넣음
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String zone = jsonObject.getString("itemname");
+                            String zonedesc = jsonObject.getString("itemdesc");
+                            String price = jsonObject.getString("price");
+                            System.out.println(zone + zonedesc + price + "@@@@@@@@@@@@@@@@@@@@@@");
+                            price_data.add(new PriceItem(zone,zonedesc,price));
+                        }
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        DetailInformationRequest detailInformationRequest = new DetailInformationRequest(codeint, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(DetailInformation.this);
+        queue.add(detailInformationRequest);
 
         priceAdapter.setData(price_data); //set data
         price_recycle.setAdapter(priceAdapter);
