@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginRight="4dp"
@@ -17,18 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_price"
-            android:layout_width="130dp"
-            android:layout_height="match_parent"/>
-
         <TextView
             android:id="@+id/zone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_price"
             android:layout_marginLeft="10dp"
-            android:text="가격 구역 이름"/>
+            android:text="가격 구역 이름" />
 
         <TextView
             android:id="@+id/facility"
@@ -37,25 +31,22 @@
             android:layout_below="@+id/zone"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/img_price"
             android:text="시설 정보" />
 
         <TextView
             android:id="@+id/pr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_price"
+            android:layout_below="@+id/facility"
             android:layout_marginLeft="10dp"
-            android:text="$"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-            />
+            android:text="$" />
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/facility"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/pr"

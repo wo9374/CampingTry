@@ -61,7 +61,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         final String imgurl = intent.getExtras().getString("url");
 
         name = findViewById(R.id.name); //캠핑장 이름
-        //캠핑장 이름 코드로 찾아서 name.setText()로 이름 부여해주셈
+        name.setText(intent.getExtras().getString("name"));
+
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
         icon_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (사진 리사이클)
@@ -161,7 +162,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
 
         for(int x=0; x<3;x++){
-            price_data.add(new PriceItem(price_img,"테스트 구역","테스트 시설 정보","50000"));
+            price_data.add(new PriceItem("테스트 구역","테스트 시설 정보","50000"));
         }
         //임시로 사진이랑 텍스트 넣음
 
