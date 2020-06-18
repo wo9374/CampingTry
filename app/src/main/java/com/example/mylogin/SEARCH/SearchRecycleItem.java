@@ -9,6 +9,7 @@ public class SearchRecycleItem {
     private String address;
     private String price;
     private String code;
+    private String url;
 
     public Bitmap getImage() {
         return image;
@@ -56,5 +57,13 @@ public class SearchRecycleItem {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

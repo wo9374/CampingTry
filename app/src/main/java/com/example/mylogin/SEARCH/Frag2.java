@@ -266,7 +266,7 @@ public class Frag2 extends Fragment {
                                             e.printStackTrace();
                                         }
 
-                                        addItem(img, name, keyword,price,addr,code);
+                                        addItem(img, name, keyword,price,addr,code,imgurl);
                                     }
 
                                     mAdapter.notifyDataSetChanged(); //새로고침
@@ -312,7 +312,7 @@ public class Frag2 extends Fragment {
         }
     }
 
-    void addItem(Bitmap image, String title, String content, String price, String address, String code){
+    void addItem(Bitmap image, String title, String content, String price, String address, String code,String url){
         SearchRecycleItem item = new SearchRecycleItem();
 
         item.setImage(image);
@@ -321,6 +321,7 @@ public class Frag2 extends Fragment {
         item.setPrice(price);
         item.setAddress(address);
         item.setCode(code);
+        item.setUrl(url);
 
         mList.add(item);
     }

@@ -25,13 +25,6 @@ import java.util.ArrayList;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
-    TextView add_txt;
-    TextView tel_txt;
-    TextView env_txt;
-    TextView the_txt;
-    TextView day_txt;
-
-
     RecyclerView image_recycle;
     ImageAdapter imageAdapter;
 
@@ -56,13 +49,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
-
-        add_txt = findViewById(R.id.add_txt);
-        tel_txt = findViewById(R.id.tel_txt);
-        env_txt = findViewById(R.id.env_txt);
-        the_txt = findViewById(R.id.the_txt);
-        day_txt = findViewById(R.id.day_txt);
-        // 이 찾아준 값에 디비 불러와서 setText 해주삼
+        String url = intent.getExtras().getString("url");
 
 
 
@@ -95,6 +82,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
         Bitmap img = ((BitmapDrawable)drawable).getBitmap();
+
 
         for (int x=0; x<4; x++){
             img_data.add(new ImageItem(img));
