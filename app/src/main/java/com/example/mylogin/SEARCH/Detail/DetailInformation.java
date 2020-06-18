@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,16 +22,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
-    TextView add_txt;
-    TextView tel_txt;
-    TextView env_txt;
-    TextView the_txt;
-    TextView day_txt;
-
+    TextView name;
 
     RecyclerView image_recycle;
     ImageAdapter imageAdapter;
@@ -47,7 +48,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
     FragmentManager fragmentManager;
     MapFragment mapFragment;
-
+    Bitmap img;
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +58,10 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
+        final String imgurl = intent.getExtras().getString("url");
 
-        add_txt = findViewById(R.id.add_txt);
-        tel_txt = findViewById(R.id.tel_txt);
-        env_txt = findViewById(R.id.env_txt);
-        the_txt = findViewById(R.id.the_txt);
-        day_txt = findViewById(R.id.day_txt);
-        // 이 찾아준 값에 디비 불러와서 setText 해주삼
-
-
+        name = findViewById(R.id.name); //캠핑장 이름
+        //캠핑장 이름 코드로 찾아서 name.setText()로 이름 부여해주셈
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
         icon_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (사진 리사이클)
@@ -94,9 +91,36 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         ArrayList<ImageItem> img_data = new ArrayList<>();
 
         Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
-        Bitmap img = ((BitmapDrawable)drawable).getBitmap();
+        final String[] imgurls = imgurl.split(",");
 
-        for (int x=0; x<4; x++){
+        for (int x=0; x<imgurls.length; x++){
+            Thread mThread = new Thread(){
+                @Override
+                public void run(){
+                    try {
+                        URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[i]);
+                        i++;
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+
+                        InputStream is = conn.getInputStream();
+                        img = BitmapFactory.decodeStream(is);
+
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            mThread.start();
+            try {
+                mThread.join();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
             img_data.add(new ImageItem(img));
         }
         //임시로 사진 넣음

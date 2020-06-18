@@ -237,12 +237,13 @@ public class Frag2 extends Fragment {
                                         String price = jsonObject.getString("price");
                                         String keyword = jsonObject.getString("keyword");
                                         final String imgurl = jsonObject.getString("imgurl");
+                                        final String[] imgurls = imgurl.split(",");
 
                                         Thread mThread = new Thread(){
                                             @Override
                                             public void run(){
                                                 try {
-                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurl);
+                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
                                                     img = ((BitmapDrawable)drawable).getBitmap();
                                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                                     conn.setDoInput(true);
@@ -266,7 +267,7 @@ public class Frag2 extends Fragment {
                                             e.printStackTrace();
                                         }
 
-                                        addItem(img, name, keyword,price,addr,code);
+                                        addItem(img, name, keyword,price,addr,code,imgurl, (float) 4);
                                     }
 
                                     mAdapter.notifyDataSetChanged(); //새로고침
@@ -312,7 +313,7 @@ public class Frag2 extends Fragment {
         }
     }
 
-    void addItem(Bitmap image, String title, String content, String price, String address, String code){
+    void addItem(Bitmap image, String title, String content, String price, String address, String code,String url,Float star){
         SearchRecycleItem item = new SearchRecycleItem();
 
         item.setImage(image);
@@ -321,6 +322,8 @@ public class Frag2 extends Fragment {
         item.setPrice(price);
         item.setAddress(address);
         item.setCode(code);
+        item.setUrl(url);
+        item.setStar(star);
 
         mList.add(item);
     }
