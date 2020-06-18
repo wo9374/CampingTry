@@ -10,6 +10,7 @@ public class SearchRecycleItem {
     private String price;
     private String code;
     private String url;
+    private Float star;
 
     public Bitmap getImage() {
         return image;
@@ -65,5 +66,13 @@ public class SearchRecycleItem {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Float getStar() {
+        return star;
+    }
+
+    public void setStar(Float star) {
+        this.star = star;
     }
 }
