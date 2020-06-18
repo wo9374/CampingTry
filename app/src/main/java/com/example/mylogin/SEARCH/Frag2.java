@@ -237,12 +237,13 @@ public class Frag2 extends Fragment {
                                         String price = jsonObject.getString("price");
                                         String keyword = jsonObject.getString("keyword");
                                         final String imgurl = jsonObject.getString("imgurl");
+                                        final String[] imgurls = imgurl.split(",");
 
                                         Thread mThread = new Thread(){
                                             @Override
                                             public void run(){
                                                 try {
-                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurl);
+                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
                                                     img = ((BitmapDrawable)drawable).getBitmap();
                                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                                     conn.setDoInput(true);
