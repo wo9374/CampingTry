@@ -31,6 +31,8 @@ import java.util.ArrayList;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
+    TextView name;
+
     RecyclerView image_recycle;
     ImageAdapter imageAdapter;
 
@@ -57,6 +59,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
         final String imgurl = intent.getExtras().getString("url");
+
+        name = findViewById(R.id.name); //캠핑장 이름
+        //캠핑장 이름 코드로 찾아서 name.setText()로 이름 부여해주셈
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
         icon_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (사진 리사이클)

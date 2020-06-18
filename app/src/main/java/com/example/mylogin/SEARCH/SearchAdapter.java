@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
 import com.example.mylogin.SEARCH.Detail.DetailInformation;
+import com.example.mylogin.SEARCH.Review.Review;
 
 import org.w3c.dom.Text;
 
@@ -49,6 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.price.setText(item.getPrice());
         holder.code.setText(item.getCode());
         holder.url.setText(item.getUrl());
+        holder.star.setRating(item.getStar());
     }
 
     @Override
@@ -66,6 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView price;
         TextView code;
         TextView url;
+        RatingBar star;
 
         Button Detail_btn;
         Button Review_btn;
@@ -83,6 +87,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             code = itemView.findViewById(R.id.code);
             url = itemView.findViewById(R.id.url);
 
+            star = itemView.findViewById(R.id.star);
 
             Detail_btn = itemView.findViewById(R.id.Detail_btn);
             Review_btn = itemView.findViewById(R.id.Review_btn);
@@ -94,6 +99,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     Intent intent = new Intent(v.getContext(), DetailInformation.class);
                     intent.putExtra("code",code.getText());
                     intent.putExtra("url",url.getText());
+
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            Review_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), Review.class);
+                    intent.putExtra("code",code.getText());
 
                     v.getContext().startActivity(intent);
                 }
