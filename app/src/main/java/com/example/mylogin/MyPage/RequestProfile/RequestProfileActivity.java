@@ -37,7 +37,7 @@ public class RequestProfileActivity extends AppCompatActivity {
         re_subname = findViewById(R.id.et_id);
         re_num = findViewById(R.id.et_subname);
 
-        check_pass = findViewById(R.id.check_pass);
+        check_pass = findViewById(R.id.check_pass); //비번 동일한지 확인용
 
         re_fin = findViewById(R.id.re_fin);
         re_fin.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class RequestProfileActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"정보를 수정하였습니다!",Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(RequestProfileActivity.this, MyPage.class);
                                         startActivity(intent);
-                                    } else { //회원등록 실패
+                                    } else { //수정 실패
                                         Toast.makeText(getApplicationContext(),"수정을 실패하였습니다!",Toast.LENGTH_SHORT).show();
                                         return;
                                     }

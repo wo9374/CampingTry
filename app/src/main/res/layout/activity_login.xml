@@ -1,113 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFDF"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <!--테스트-->
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="300dp"
         android:layout_height="160dp"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/campingtry_logo2" />
 
-    <EditText
-        android:id="@+id/et_id"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="아이디"
-        android:inputType="textPersonName"
-        android:text="test12"
-        app:layout_constraintEnd_toEndOf="@+id/logo"
-        app:layout_constraintStart_toStartOf="@+id/logo"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/et_pass"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="아이디"
+                android:inputType="textPersonName"
+                android:text="test12"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/et_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="비밀번호"
+                android:inputType="textPassword"
+                android:text="test12"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#F09661"
+            android:text="로 그 인"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="비밀번호"
-        android:inputType="textPassword"
-        android:text="test12"
-        app:layout_constraintEnd_toEndOf="@+id/et_id"
-        app:layout_constraintStart_toStartOf="@+id/et_id"
-        app:layout_constraintTop_toBottomOf="@+id/et_id" />
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#F09661"
-        android:text="로 그 인"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/et_pass"
-        app:layout_constraintStart_toStartOf="@+id/et_pass"
-        app:layout_constraintTop_toBottomOf="@+id/et_pass" />
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:backgroundTint="#F09661"
-        android:text="회원가입"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintStart_toStartOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_searchlog"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_round"
-        android:text="아이디/비밀번호 찾기"
-        android:textColor="#999999"
-        app:layout_constraintEnd_toEndOf="@+id/btn_register"
-        app:layout_constraintStart_toStartOf="@+id/btn_register"
-        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+        <Button
+            android:id="@+id/btn_searchlog"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="@drawable/button_round"
+            android:text="아이디 / 비밀번호 찾기 / "
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:background="@drawable/button_round"
+            android:text="회원가입"
+            android:textAlignment="textStart"
+            android:textColor="#F09661"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="--------------  "
+            android:textColor="#F09661" />
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="또는"
+            android:textColor="#F09661"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="  --------------"
+            android:textColor="#F09661" />
+    </LinearLayout>
 
     <com.google.android.gms.common.internal.SignInButtonImpl
         android:id="@+id/btn_google"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/fui_ic_googleg_color_24dp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_searchlog"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/btn_searchlog"
-        app:layout_constraintTop_toBottomOf="@+id/btn_searchlog" />
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal" />
 
     <TextView
         android:id="@+id/tv_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:textColor="#F09661"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/btn_searchlog"
-        app:layout_constraintStart_toStartOf="@+id/btn_searchlog"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
+        android:textStyle="bold" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
