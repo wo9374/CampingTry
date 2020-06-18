@@ -1,131 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFDF"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
         android:text="회 원 정 보"
         android:textColor="#F09661"
         android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="80dp"
-        android:ems="10"
-        android:hint="이 메 일"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView30"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/et_email"
-        app:layout_constraintEnd_toStartOf="@+id/email_spinner"
-        app:layout_constraintStart_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="@+id/et_email" />
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/email_spinner"
-        android:layout_width="160dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-        android:entries="@array/email"
-        app:layout_constraintBottom_toBottomOf="@+id/et_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="@+id/et_email"></Spinner>
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="이 메 일"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/email_spinner"
+            android:layout_width="160dp"
+            android:layout_height="45dp"
+            android:entries="@array/email"></Spinner>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/et_pass"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="비밀번호 (영문+숫자+특수문자 6~14자)"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/email_spinner"
-        app:layout_constraintStart_toStartOf="@+id/et_email"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/et_pass2"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="비밀번호 확인"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/et_pass"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_pass"
-        app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/et_id"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="이 름"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_pass2"
-        app:layout_constraintStart_toStartOf="@+id/et_pass2"
-        app:layout_constraintTop_toBottomOf="@+id/et_pass2" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/et_subname"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="닉 네 임"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_id"
-        app:layout_constraintStart_toStartOf="@+id/et_id"
-        app:layout_constraintTop_toBottomOf="@+id/et_id" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/et_num"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="전 화 번 호 ( - 빼고 입력해주세요)"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/et_subname"
-        app:layout_constraintStart_toStartOf="@+id/et_subname"
-        app:layout_constraintTop_toBottomOf="@+id/et_subname" />
+        android:inputType="number" />
 
     <LinearLayout
         android:id="@+id/sex"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/et_num"
-        app:layout_constraintStart_toStartOf="@+id/et_num"
-        app:layout_constraintTop_toBottomOf="@+id/et_num">
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView15"
@@ -163,8 +144,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@+id/sex"
@@ -322,8 +304,9 @@
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="60dp"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:backgroundTint="#F09661"
         android:text="본 인 인 증"
@@ -333,4 +316,4 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
