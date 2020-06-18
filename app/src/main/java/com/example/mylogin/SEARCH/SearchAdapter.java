@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
 import com.example.mylogin.SEARCH.Detail.DetailInformation;
+import com.example.mylogin.SEARCH.Review.Review;
 
 import org.w3c.dom.Text;
 
@@ -98,6 +99,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     Intent intent = new Intent(v.getContext(), DetailInformation.class);
                     intent.putExtra("code",code.getText());
                     intent.putExtra("url",url.getText());
+
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            Review_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), Review.class);
+                    intent.putExtra("code",code.getText());
 
                     v.getContext().startActivity(intent);
                 }
