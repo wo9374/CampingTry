@@ -1,5 +1,7 @@
 package com.example.mylogin.SEARCH.Detail;
 
+import android.graphics.Color;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,14 @@ import com.example.mylogin.R;
 
 import java.util.ArrayList;
 
-public class PriceAdapter extends RecyclerView.Adapter<PriceViewHolder>{
+public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHolder> {
     private ArrayList<PriceItem> PriceItems = null;
 
-    public void setData(ArrayList<PriceItem> list){
+    public void setData(ArrayList<PriceItem> list) {
         this.PriceItems = list;
     }
+
+    public SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
 
     @NonNull
     @Override
@@ -37,27 +41,69 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceViewHolder>{
         holder.zone.setText(data.getZone());
         holder.facility.setText(data.getFacility());
         holder.price.setText(data.getPrice());
+
+        if (isItemSelected(position)) {
+            holder.itemView.setBackgroundColor(Color.GRAY);
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        }
     }
 
     @Override
     public int getItemCount() {
         return PriceItems.size();
     }
-}
-
-class PriceViewHolder extends RecyclerView.ViewHolder{
-    TextView zone;
-    TextView facility;
-    TextView pr;
-    TextView price;
 
 
-    public PriceViewHolder(View itemView){
-        super(itemView);
+    public class PriceViewHolder extends RecyclerView.ViewHolder {
+        TextView zone;
+        TextView facility;
+        TextView pr;
+        TextView price;
 
-        zone = (TextView) itemView.findViewById(R.id.zone);
-        facility = (TextView) itemView.findViewById(R.id.facility);
-        pr = (TextView) itemView.findViewById(R.id.pr);
-        price = (TextView) itemView.findViewById(R.id.price);
+        public PriceViewHolder(View itemView) {
+            super(itemView);
+
+            zone = (TextView) itemView.findViewById(R.id.zone);
+            facility = (TextView) itemView.findViewById(R.id.facility);
+            pr = (TextView) itemView.findViewById(R.id.pr);
+            price = (TextView) itemView.findViewById(R.id.price);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    //if(position  != RecyclerView.NO_POSITION){}
+                    toggleItemSelected(position);
+                }
+            });
+        }
+    }
+
+
+    private void toggleItemSelected(int position) {
+        if (mSelectedItems.get(position, false) == true) {
+            mSelectedItems.delete(position);
+            notifyItemChanged(position);
+        } else {
+            mSelectedItems.put(position, true);
+            notifyItemChanged(position);
+        }
+    }
+
+    public boolean isItemSelected(int position) {
+        return mSelectedItems.get(position, false);
+    }
+
+    public void clearSelectedItem() {
+        int position;
+
+        for (int i = 0; i < mSelectedItems.size(); i++) {
+            position = mSelectedItems.keyAt(i);
+            mSelectedItems.put(position, false);
+            notifyItemChanged(position);
+        }
+
+        mSelectedItems.clear();
     }
 }

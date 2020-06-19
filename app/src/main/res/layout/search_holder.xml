@@ -165,15 +165,8 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/holder_lbtn_round"
-                android:text="상세정보" />
+                android:text="상세정보 및 예약" />
 
-            <Button
-                android:id="@+id/Review_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/holder_rbtn_round"
-                android:text="리뷰보기" />
         </LinearLayout>
     </LinearLayout>
 

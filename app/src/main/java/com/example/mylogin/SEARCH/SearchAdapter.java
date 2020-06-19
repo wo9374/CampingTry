@@ -13,10 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
 import com.example.mylogin.SEARCH.Detail.DetailInformation;
-import com.example.mylogin.SEARCH.Review.Review;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 
@@ -70,9 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView code;
         TextView url;
         RatingBar star;
-
         Button Detail_btn;
-        Button Review_btn;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -90,8 +84,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             star = itemView.findViewById(R.id.star);
 
             Detail_btn = itemView.findViewById(R.id.Detail_btn);
-            Review_btn = itemView.findViewById(R.id.Review_btn);
-
             Detail_btn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -100,16 +92,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     intent.putExtra("code",code.getText());
                     intent.putExtra("url",url.getText());
                     intent.putExtra("name",title.getText());
-
-                    v.getContext().startActivity(intent);
-                }
-            });
-
-            Review_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), Review.class);
-                    intent.putExtra("code",code.getText());
 
                     v.getContext().startActivity(intent);
                 }

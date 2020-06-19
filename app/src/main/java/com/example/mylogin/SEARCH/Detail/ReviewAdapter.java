@@ -1,4 +1,4 @@
-package com.example.mylogin.SEARCH.Review;
+package com.example.mylogin.SEARCH.Detail;
 
 import android.view.LayoutInflater;
 import android.view.View;

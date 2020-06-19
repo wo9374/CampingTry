@@ -1,4 +1,4 @@
-package com.example.mylogin.SEARCH.Review;
+package com.example.mylogin.SEARCH.Detail;
 
 public class ReviewItem {
     private float star;

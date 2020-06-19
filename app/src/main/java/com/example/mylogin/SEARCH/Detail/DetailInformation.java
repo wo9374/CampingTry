@@ -1,7 +1,10 @@
 package com.example.mylogin.SEARCH.Detail;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
@@ -11,13 +14,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.example.mylogin.R;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -34,7 +41,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -59,6 +69,13 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     int i;
 
     ArrayList<PriceItem> price_data = new ArrayList<PriceItem>();
+
+
+    RecyclerView review_recycle;
+    ReviewAdapter reviewAdapter;
+    LinearLayoutManager review_LayoutManager;
+
+    private CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +115,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         image_recycle.setLayoutManager(image_LayoutManager);  //레이아웃 매니저 지정
         imageAdapter = new ImageAdapter(); //init 어뎁터
 
-
         ArrayList<ImageItem> img_data = new ArrayList<>();
 
         Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
@@ -125,7 +141,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     }
                 }
             };
-
             mThread.start();
             try {
                 mThread.join();
@@ -134,35 +149,31 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
             }
             img_data.add(new ImageItem(img));
         }
-        //임시로 사진 넣음
 
-        imageAdapter.setData(img_data);//set data
+        imageAdapter.setData(img_data);
         image_recycle.setAdapter(imageAdapter);
+        //이미지 end
 
 
 
-
+        //아이콘 리사이클러뷰
         icon_recycle = findViewById(R.id.icon_recycle); // 아이콘 리사이클러뷰
         icon_recycle.setLayoutManager(icon_LayoutManager); //레이아웃 매니저 지정
         iconAdapter = new IconAdapter(); //init 어뎁터
 
         ArrayList<IconItem> icon_data = new ArrayList<>();
-
         Bitmap icon_img = ((BitmapDrawable)drawable).getBitmap();
 
         for (int x = 0; x <10; x++){
             icon_data.add(new IconItem(icon_img,"테스트"));
-        }
-        //임시로 아이콘이랑 아이콘 텍스트 넣음
+        }//임시로 아이콘이랑 아이콘 텍스트 넣음
 
         iconAdapter.setData(icon_data); //set data
         icon_recycle.setAdapter(iconAdapter);
 
 
-
-
-
-        price_recycle = findViewById(R.id.price_recycle); // 가격 리사이클러뷰
+        // 가격 리사이클러뷰
+        price_recycle = findViewById(R.id.price_recycle);
         price_recycle.setLayoutManager(price_LayoutManager); //레이아웃 매니저 지정
         priceAdapter = new PriceAdapter(); //init 어뎁터
 
@@ -184,7 +195,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
                             price_data.add(new PriceItem(zone,zonedesc,price));
                         }
-
                         priceAdapter.notifyDataSetChanged(); //새로고침
                     } else { //검색 결과 없음
                         return;
@@ -194,7 +204,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                 }
             }
         };
-
         //실제 서버로 Volley를 이용해서 요청을 함.
         DetailInformationRequest detailInformationRequest = new DetailInformationRequest(codeint, responseListener);
         RequestQueue queue = Volley.newRequestQueue(DetailInformation.this);
@@ -202,7 +211,109 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         priceAdapter.setData(price_data); //set data
         price_recycle.setAdapter(priceAdapter);
+        // 가격 리사이클러뷰 end
+
+
+
+        //리뷰 리사이클러뷰
+        review_recycle = findViewById(R.id.review_recycle);
+        review_LayoutManager = new LinearLayoutManager(this); //수직 레이아웃 매니저
+        review_LayoutManager.setOrientation(LinearLayoutManager.VERTICAL);//수직으로 지정
+        review_recycle.setLayoutManager(review_LayoutManager); //레이아웃 매니저 지정
+        reviewAdapter = new ReviewAdapter(); //init 어뎁터
+
+        final ArrayList<ReviewItem> review_data = new ArrayList<>();
+
+        Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            float score = jsonObject.getInt("score");
+                            String date = jsonObject.getString("date");
+                            String nickname = jsonObject.getString("nickname");
+                            String review = jsonObject.getString("review");
+                            review_data.add(new ReviewItem(score,date,nickname,review));
+                        }
+                        reviewAdapter.notifyDataSetChanged(); //새로고침
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        ReviewRequest reviewRequest = new ReviewRequest(codeint, responseListener2);
+        RequestQueue queue2 = Volley.newRequestQueue(DetailInformation.this);
+        queue2.add(reviewRequest);
+
+        reviewAdapter.setData(review_data); //set data
+        review_recycle.setAdapter(reviewAdapter);
+
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.calendar);
+        setSupportActionBar(toolbar);
+
+        initViews();
     }
+
+    private void initViews() {
+        calendarView = (CalendarView) findViewById(R.id.calendar_view);
+        calendarView.setCalendarOrientation(OrientationHelper.HORIZONTAL);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.calendar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.clear_selections:
+                clearSelectionsMenuClick();
+                return true;
+
+            case R.id.show_selections:
+                List<Calendar> days = calendarView.getSelectedDates();
+
+                String result="";
+                for( int i=0; i<days.size(); i++)
+                {
+                    Calendar calendar = days.get(i);
+                    final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    final int month = calendar.get(Calendar.MONTH);
+                    final int year = calendar.get(Calendar.YEAR);
+                    String week = new SimpleDateFormat("EE").format(calendar.getTime());
+                    String day_full = year + "년 "+ (month+1)  + "월 " + day + "일 " + week + "요일";
+                    result += (day_full + "\n");
+                }
+                Toast.makeText(DetailInformation.this, result, Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void clearSelectionsMenuClick() {
+        calendarView.clearSelections();
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {//구글맵 마커

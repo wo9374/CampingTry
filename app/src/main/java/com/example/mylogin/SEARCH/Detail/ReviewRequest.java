@@ -1,4 +1,4 @@
-package com.example.mylogin.SEARCH.Review;
+package com.example.mylogin.SEARCH.Detail;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
