@@ -7,7 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SEARCH.Detail.DetailInformation;
+import com.example.mylogin.SEARCH.Detail.DetailInformationRequest;
+import com.example.mylogin.SEARCH.Detail.PriceItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -24,7 +34,7 @@ public class Review extends AppCompatActivity {
 
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
-
+        int codeint = Integer.parseInt(code);
 
         review_recycle = findViewById(R.id.review_recycle);
 
@@ -34,12 +44,41 @@ public class Review extends AppCompatActivity {
 
         reviewAdapter = new ReviewAdapter(); //init 어뎁터
 
-        ArrayList<ReviewItem> review_data = new ArrayList<>();
+        final ArrayList<ReviewItem> review_data = new ArrayList<>();
 
-        for(int x=0; x<3;x++){
-            review_data.add(new ReviewItem(4,"2020-06-18","이재범","주옥같다"));
-        }
-        //임시로 사진이랑 텍스트 넣음
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            float score = jsonObject.getInt("score");
+                            String date = jsonObject.getString("date");
+                            String nickname = jsonObject.getString("nickname");
+                            String review = jsonObject.getString("review");
+
+                            review_data.add(new ReviewItem(score,date,nickname,review));
+                        }
+
+                        reviewAdapter.notifyDataSetChanged(); //새로고침
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        ReviewRequest reviewRequest = new ReviewRequest(codeint, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Review.this);
+        queue.add(reviewRequest);
 
         reviewAdapter.setData(review_data); //set data
         review_recycle.setAdapter(reviewAdapter);
