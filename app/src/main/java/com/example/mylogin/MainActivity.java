@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
 
+
+    private long time= 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,6 +235,18 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        if(System.currentTimeMillis()-time>=2000){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 \n로그아웃 됩니다.",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<2000){
+            finish();
         }
     }
 }
