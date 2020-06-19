@@ -24,7 +24,7 @@ public class RequestProfileActivity extends AppCompatActivity {
     private TextView re_userid, re_username;
     private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;
     private Button re_fin, re_close;
-    private String get_userid, get_pass, get_subname, get_num;
+    private String get_userid, get_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,15 @@ public class RequestProfileActivity extends AppCompatActivity {
         check_pass = findViewById(R.id.check_pass); //비번 동일한지 확인용
 
         re_fin = findViewById(R.id.re_fin);
+
+
+
+        Intent intent = getIntent();    //저장된 정보 불러오기
+        get_userid = intent.getStringExtra("userID");
+        get_pass = intent.getStringExtra("userPass");
+
+
+
         re_fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,9 +84,9 @@ public class RequestProfileActivity extends AppCompatActivity {
                         }
                     }
                 };
-                //RegisterRequest registerRequest = new RegisterRequest(userEmail, userPass, userSubname, userNum, responseListener);
+                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(userEmail, userPass, userSubname, userNum, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RequestProfileActivity.this);
-                //queue.add(registerRequest);
+                queue.add(requestProfileRequest);
             }
         });
     }

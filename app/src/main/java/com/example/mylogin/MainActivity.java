@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
-    private String userID, userSubname;
+    private String userID, userSubname, userPass;
 
     Context context;
 
@@ -98,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
         userSubname = intent.getStringExtra("userSubname");
+        userPass = intent.getStringExtra("userPass");
         String photoUrl = intent.getStringExtra("photoUrl");
+
         context = this.getBaseContext();
 
         tv_id.setText(userID);
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
                 intent1.putExtra("id", userID);
                 intent1.putExtra("nic", userSubname);
+                intent1.putExtra("pass", userPass);
                 startActivity(intent1);
             }
         });
