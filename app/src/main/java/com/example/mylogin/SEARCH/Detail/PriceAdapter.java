@@ -14,10 +14,10 @@ import com.example.mylogin.R;
 import java.util.ArrayList;
 
 public class PriceAdapter extends RecyclerView.Adapter<PriceViewHolder>{
-    private ArrayList<PriceItem> PriceItems;
+    private ArrayList<PriceItem> PriceItems = null;
 
     public void setData(ArrayList<PriceItem> list){
-        PriceItems = list;
+        this.PriceItems = list;
     }
 
     @NonNull
@@ -46,10 +46,10 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceViewHolder>{
 }
 
 class PriceViewHolder extends RecyclerView.ViewHolder{
-    public TextView zone;
-    public TextView facility;
-    public TextView pr;
-    public TextView price;
+    TextView zone;
+    TextView facility;
+    TextView pr;
+    TextView price;
 
 
     public PriceViewHolder(View itemView){

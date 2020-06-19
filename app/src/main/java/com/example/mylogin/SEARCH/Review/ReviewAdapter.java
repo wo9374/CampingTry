@@ -32,10 +32,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         ReviewItem data = ReviewItems.get(position);
 
+        holder.time.setText(data.getTime());
         holder.star.setRating(data.getStar());
         holder.name.setText(data.getName());
         holder.content.setText(data.getContent());
-        holder.content.setText(data.getTime());
+
     }
 
     @Override

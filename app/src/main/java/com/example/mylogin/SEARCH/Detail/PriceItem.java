@@ -1,7 +1,5 @@
 package com.example.mylogin.SEARCH.Detail;
 
-import android.graphics.Bitmap;
-
 public class PriceItem {
     private String zone;
     private String facility;
