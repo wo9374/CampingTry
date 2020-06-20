@@ -23,6 +23,7 @@ public class RequestProfileRequest extends StringRequest {
         map.put("userPassword", userPassword);
         map.put("userSubname", userSubname);
         map.put("userNum", userNum + "");
+        map.put("userEmail", userEmail + "");
     }
 
     @Override

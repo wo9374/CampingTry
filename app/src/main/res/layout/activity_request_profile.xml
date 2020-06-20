@@ -95,9 +95,10 @@
 
         <TextView
             android:id="@+id/textView41"
-            android:layout_width="56dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="현재 암호"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/check_pass"
             app:layout_constraintEnd_toEndOf="@+id/textView42"
             app:layout_constraintStart_toStartOf="@+id/textView42"

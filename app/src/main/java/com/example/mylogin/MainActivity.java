@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
-    private String userID, userSubname, userPass;
+    private String userID, userSubname, userPass, userName, userEmail;
 
     Context context;
 
@@ -91,25 +91,33 @@ public class MainActivity extends AppCompatActivity {
         setFrag(0);//첫 프래그먼트 화면 지정
 
 
+
         tv_id = findViewById(R.id.tv_id);
         tv_nic = findViewById(R.id.tv_nic);
         tv_profile = findViewById(R.id.tv_profile);
 
+
+
+        //넘겨받은 계정 정보
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
         userSubname = intent.getStringExtra("userSubname");
         userPass = intent.getStringExtra("userPass");
-        String photoUrl = intent.getStringExtra("photoUrl");
+        userName = intent.getStringExtra("userName");
+        userEmail = intent.getStringExtra("userEmail");
+        String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
+
+
 
         context = this.getBaseContext();
 
         tv_id.setText(userID);
         tv_nic.setText(userSubname);
-        Glide.with(this).load(photoUrl).into(tv_profile);
+        Glide.with(this).load(photoUrl).into(tv_profile);   //프로필 이미지 표시
 
 
 
-
+        //사이드 바
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerView = (View)findViewById(R.id.drawer);
 
@@ -129,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        //마이페이지 버튼
         Button d_mypage = (Button)findViewById(R.id.d_mypage);
         d_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
                 intent1.putExtra("id", userID);
                 intent1.putExtra("nic", userSubname);
                 intent1.putExtra("pass", userPass);
+                intent1.putExtra("name", userName);
                 startActivity(intent1);
+                finish();
             }
         });
 

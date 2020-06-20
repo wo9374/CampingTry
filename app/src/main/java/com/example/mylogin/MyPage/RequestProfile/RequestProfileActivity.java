@@ -24,29 +24,34 @@ public class RequestProfileActivity extends AppCompatActivity {
     private TextView re_userid, re_username;
     private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;
     private Button re_fin, re_close;
-    private String get_userid, get_pass;
+    private String get_userid, get_pass, get_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_profile);
 
-        re_email = findViewById(R.id.et_email);
-        re_pass = findViewById(R.id.et_pass);
-        re_pass2 = findViewById(R.id.et_pass2);
-        re_subname = findViewById(R.id.et_id);
-        re_num = findViewById(R.id.et_subname);
+        re_email = findViewById(R.id.re_email);
+        re_pass = findViewById(R.id.re_pass);
+        re_pass2 = findViewById(R.id.re_pass2);
+        re_subname = findViewById(R.id.re_subname);
+        re_num = findViewById(R.id.re_num);
 
+        re_userid = findViewById(R.id.re_userid);
         check_pass = findViewById(R.id.check_pass); //비번 동일한지 확인용
+        re_username = findViewById(R.id.re_username);
 
         re_fin = findViewById(R.id.re_fin);
 
 
 
         Intent intent = getIntent();    //저장된 정보 불러오기
-        get_userid = intent.getStringExtra("userID");
-        get_pass = intent.getStringExtra("userPass");
+        get_userid = intent.getStringExtra("id");
+        get_pass = intent.getStringExtra("pass");
+        get_name = intent.getStringExtra("name");
 
+        re_userid.setText(get_userid);
+        re_username.setText(get_name);
 
 
         re_fin.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +61,7 @@ public class RequestProfileActivity extends AppCompatActivity {
                 final String userPass = re_pass.getText().toString();
                 final String userPass2 = re_pass2.getText().toString();
                 final String userSubname = re_subname.getText().toString();
+                final String Checkpass = check_pass.getText().toString();
                 final int userNum = Integer.parseInt(re_num.getText().toString());
 
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -64,7 +70,7 @@ public class RequestProfileActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if (check_pass.getText().toString().equals(get_pass))
+                            if (Checkpass.equals(get_pass))
                             {
                                 if (userPass.equals(userPass2))
                                 {

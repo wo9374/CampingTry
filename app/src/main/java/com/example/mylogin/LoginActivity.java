@@ -125,12 +125,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String userID = jsonObject.getString("userID");
                                 String userPass = jsonObject.getString("userPassword");
                                 String userSubname = jsonObject.getString("userSubname");
+                                String userName = jsonObject.getString("userName");
 
                                 Toast.makeText(getApplicationContext(),"로그인에 성공하셨습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("userID", userID);
+                                intent.putExtra("userID", userID);  //로그인한 정보를 넘겨줌
                                 intent.putExtra("userPass", userPass);
                                 intent.putExtra("userSubname", userSubname);
+                                intent.putExtra("userName", userName);
                                 startActivity(intent);
                             } else { //로그인 실패
                                 Toast.makeText(getApplicationContext(),"로그인에 실패하셨습니다.",Toast.LENGTH_SHORT).show();
@@ -171,7 +173,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Toast.makeText(LoginActivity.this, "구글 로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("userSubname", account.getDisplayName());//닉네임 들고오기
-                            intent.putExtra("userID", account.getEmail());//아이디 들고오기
+                            intent.putExtra("userID", account.getId());//아이디 들고오기
+                            intent.putExtra("userEmail", account.getEmail());//이메일 들고오기
+                            intent.putExtra("userPass", account.getId());//이메일 들고오기
                             intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); //String.valueOf() : 특정 자료형을 스트링으로 변환할때
                             startActivity(intent);
                         } else {
