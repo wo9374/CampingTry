@@ -54,7 +54,6 @@ public class MyPage extends AppCompatActivity {
                 intent.putExtra("name", d_name);
                 intent.putExtra("pass", d_pass);
                 startActivity(intent);
-                finish();
             }
         });
 

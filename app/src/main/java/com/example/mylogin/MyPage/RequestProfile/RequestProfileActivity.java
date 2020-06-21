@@ -53,18 +53,17 @@ public class RequestProfileActivity extends AppCompatActivity {
         re_userid.setText(get_userid);
         re_username.setText(get_name);
 
-
         re_fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String userEmail = re_email.getText().toString();
+                String userEmail = re_email.getText().toString();
                 final String userPass = re_pass.getText().toString();
                 final String userPass2 = re_pass2.getText().toString();
-                final String userSubname = re_subname.getText().toString();
+                String userSubname = re_subname.getText().toString();
                 final String Checkpass = check_pass.getText().toString();
-                final int userNum = Integer.parseInt(re_num.getText().toString());
+                int userNum = Integer.parseInt(re_num.getText().toString());
 
-                final Response.Listener<String> responseListener = new Response.Listener<String>() {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -88,6 +87,7 @@ public class RequestProfileActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 };
                 RequestProfileRequest requestProfileRequest = new RequestProfileRequest(userEmail, userPass, userSubname, userNum, responseListener);

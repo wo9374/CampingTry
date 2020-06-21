@@ -1,7 +1,6 @@
 package com.example.mylogin.MyPage.RequestProfile;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -16,14 +15,13 @@ public class RequestProfileRequest extends StringRequest {
 
     public RequestProfileRequest(String userEmail, String userPassword, String userSubname, int userNum, Response.Listener<String> listener)
     {
-        super(Request.Method.POST, URL, listener, null);
+        super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("userEmail", userEmail + "");
         map.put("userPassword", userPassword);
         map.put("userSubname", userSubname);
         map.put("userNum", userNum + "");
-        map.put("userEmail", userEmail + "");
     }
 
     @Override
