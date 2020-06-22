@@ -21,10 +21,10 @@ import org.json.JSONObject;
 
 public class RequestProfileActivity extends AppCompatActivity {
 
-    private TextView re_userid, re_username;
-    private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;
-    private Button re_fin, re_close;
-    private String get_userid, get_pass, get_name;
+    private TextView re_userid, re_username;    //수정불가 정보
+    private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;   //수정 정보
+    private Button re_fin;
+    private String get_userid, get_pass, get_name;  //Intent정보 저장
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class RequestProfileActivity extends AppCompatActivity {
 
 
 
-        Intent intent = getIntent();    //저장된 정보 불러오기
+        Intent intent = getIntent();
         get_userid = intent.getStringExtra("id");
         get_pass = intent.getStringExtra("pass");
         get_name = intent.getStringExtra("name");
