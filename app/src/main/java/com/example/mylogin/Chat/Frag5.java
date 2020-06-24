@@ -76,7 +76,7 @@ public class Frag5 extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         chatList = new ArrayList<>();
-        //mAdapter = new ChatAdapter(chatList, Frag5.this, nick);
+        //mAdapter = new ChatAdapter(chatList, Context.this, nick);
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -86,9 +86,7 @@ public class Frag5 extends Fragment {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ChatData chat = snapshot.getValue(ChatData.class);
-                ((ChatAdapter) mAdapter).addChat(chat); //리스너 안에서는 인식이 안되니까 괄호 두번
-                Log.d("Test", snapshot.getValue().toString());
+
             }
 
             @Override

@@ -19,13 +19,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     private String myNickName;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView TextView_nickname;
-        public TextView TextView_msg;
+        public TextView nickname;
+        public TextView msg;
         public View rootView;
         public MyViewHolder(View v){
             super(v);
-            TextView_nickname = v.findViewById(R.id.TextView_nickname);
-            TextView_msg = v.findViewById(R.id.TextView_msg);
+            nickname = v.findViewById(R.id.T_nickname);
+            msg = v.findViewById(R.id.T_msg);
             rootView = v;
         }
     }
@@ -47,6 +47,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
     }
 
     @Override
