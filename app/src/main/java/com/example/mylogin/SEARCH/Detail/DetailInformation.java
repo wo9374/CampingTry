@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
     ArrayList<PriceItem> price_data = new ArrayList<PriceItem>();
 
+    String select_price = null;
+
 
     RecyclerView review_recycle;
     ReviewAdapter reviewAdapter;
@@ -77,6 +80,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
     private CalendarView calendarView;
 
+
+    String firDay = null;
+    String endDay = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,6 +217,13 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         priceAdapter.setData(price_data); //set data
         price_recycle.setAdapter(priceAdapter);
+        priceAdapter.setOnItemClickListener(new PriceAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                select_price = Integer.toString(position);
+                System.out.println(select_price + "@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            }
+        });
         // 가격 리사이클러뷰 end
 
 
@@ -294,15 +307,32 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                 String result="";
                 for( int i=0; i<days.size(); i++)
                 {
+
                     Calendar calendar = days.get(i);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     final int month = calendar.get(Calendar.MONTH);
                     final int year = calendar.get(Calendar.YEAR);
                     String week = new SimpleDateFormat("EE").format(calendar.getTime());
-                    String day_full = year + "년 "+ (month+1)  + "월 " + day + "일 " + week + "요일";
+                    //String day_full = year + (month+1) + day  + week;
+                    String day_full = Integer.toString(year);
+                    day_full = day_full + 0 +(month+1);
+                    day_full = day_full + day;
+                    //day_full = day_full + week;
                     result += (day_full + "\n");
+
+
+                    if(i==0){
+                        firDay = day_full;
+                    }
+
+                    if(i==days.size()-1){
+                        endDay = day_full;
+                    }
                 }
                 Toast.makeText(DetailInformation.this, result, Toast.LENGTH_LONG).show();
+
+                System.out.println("체크인 날짜 : "+firDay);
+                System.out.println("체크아웃 날짜 : "+endDay);
                 return true;
 
             default:

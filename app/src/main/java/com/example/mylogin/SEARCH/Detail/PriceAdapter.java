@@ -5,7 +5,6 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +22,9 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
     }
 
     public SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
+
+
+    private OnItemClickListener mListner = null;
 
     @NonNull
     @Override
@@ -54,6 +56,14 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
         return PriceItems.size();
     }
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    public  void setOnItemClickListener(OnItemClickListener listener){
+        this.mListner = listener;
+    }
+
 
     public class PriceViewHolder extends RecyclerView.ViewHolder {
         TextView zone;
@@ -75,6 +85,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
                     int position = getAdapterPosition();
                     //if(position  != RecyclerView.NO_POSITION){}
                     toggleItemSelected(position);
+
+                    mListner.onItemClick(v,position);
                 }
             });
         }
@@ -82,6 +94,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
 
 
     private void toggleItemSelected(int position) {
+        clearSelectedItem();
+
         if (mSelectedItems.get(position, false) == true) {
             mSelectedItems.delete(position);
             notifyItemChanged(position);
@@ -90,6 +104,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
             notifyItemChanged(position);
         }
     }
+
 
     public boolean isItemSelected(int position) {
         return mSelectedItems.get(position, false);
