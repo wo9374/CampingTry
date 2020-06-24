@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 intent.putExtra("userID", userID);  //로그인한 정보를 넘겨줌
                                 intent.putExtra("userPass", userPass);
                                 intent.putExtra("userSubname", userSubname);
-                                intent.putExtra("userName", userName);
+                                //intent.putExtra("userName", userName);
                                 startActivity(intent);
                             } else { //로그인 실패
                                 Toast.makeText(getApplicationContext(),"로그인에 실패하셨습니다.",Toast.LENGTH_SHORT).show();
