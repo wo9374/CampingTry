@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +34,7 @@ public class Frag5 extends Fragment {
     public  RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ChatData> chatList;
-    private String nick = "nick2";  //임시
+    private String nick;  //임시
 
     private EditText EditText_chat;
     private Button Button_send;
@@ -55,6 +56,10 @@ public class Frag5 extends Fragment {
         Button_send = view.findViewById(R.id.Button_send);
         EditText_chat = view.findViewById(R.id.EditText_chat);
 
+        if (getArguments() != null) {
+            nick = getArguments().getString("nic");
+        }
+
         Button_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +69,9 @@ public class Frag5 extends Fragment {
                     ChatData chat = new ChatData();
                     chat.setNickname(nick);
                     chat.setMsg(msg);
+                    EditText_chat.setText("");
                     myRef.push().setValue(chat);    //push로 묶어준다
                 }
-
             }
         });
 
@@ -76,7 +81,7 @@ public class Frag5 extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         chatList = new ArrayList<>();
-        //mAdapter = new ChatAdapter(chatList, Context.this, nick);
+        mAdapter = new ChatAdapter(chatList, Frag5.this, nick);
 
         mRecyclerView.setAdapter(mAdapter);
 
@@ -86,7 +91,9 @@ public class Frag5 extends Fragment {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                ChatData chat = snapshot.getValue(ChatData.class);
+                ((ChatAdapter) mAdapter).addChat(chat); //리스너 안에서는 인식이 안되니까 괄호 두번
+                Log.d("Test", snapshot.getValue().toString());
             }
 
             @Override

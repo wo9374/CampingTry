@@ -24,6 +24,7 @@ import com.example.mylogin.Chat.Frag5;
 import com.example.mylogin.MyPage.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
+import com.example.mylogin.Shop.ShopFrag;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
@@ -250,6 +251,10 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 4:
+                Bundle bundle = new Bundle();
+                bundle.putString("nic",userSubname);
+                Frag5 frag5 = new Frag5();
+                frag5.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
                 break;
