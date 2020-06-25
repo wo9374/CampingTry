@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,40 +50,42 @@ import java.util.List;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
-    TextView name;
+    TextView name; //캠핑장 이름
 
-    RecyclerView image_recycle;
+    RecyclerView image_recycle; //이미지 수평 리사이클
     ImageAdapter imageAdapter;
 
-    RecyclerView icon_recycle;
+    RecyclerView icon_recycle; //아이콘 수평 리사이클
     IconAdapter iconAdapter;
 
-    RecyclerView price_recycle;
+    RecyclerView price_recycle; //가격 수직 리사이클
     PriceAdapter priceAdapter;
+
+    RecyclerView review_recycle; //리뷰 수직 리사이클
+    ReviewAdapter reviewAdapter;
 
     LinearLayoutManager image_LayoutManager;
     LinearLayoutManager icon_LayoutManager;
     LinearLayoutManager price_LayoutManager;
+    LinearLayoutManager review_LayoutManager;
+    //각 리사이클에 대한 레이아웃 매니저
+
 
     FragmentManager fragmentManager;
     MapFragment mapFragment;
     Bitmap img;
-    int i;
+    //구글맵
 
-    ArrayList<PriceItem> price_data = new ArrayList<PriceItem>();
+    int i; //이미지 불러올때 배열증가에 쓰인 변수
 
-    String select_price = null;
+    ArrayList<PriceItem> price_data = new ArrayList<PriceItem>(); //가격표시할 배열
+    String select_price = null; //구역 선택시 구역코드 넣어줄 변수
 
+    private CalendarView calendarView; //달력
+    String firDay = null; //체크인 날짜
+    String endDay = null; //체크아웃 날짜
 
-    RecyclerView review_recycle;
-    ReviewAdapter reviewAdapter;
-    LinearLayoutManager review_LayoutManager;
-
-    private CalendarView calendarView;
-
-
-    String firDay = null;
-    String endDay = null;
+    Button reservation_btn; //예약하기 버튼
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,16 +117,12 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
 
 
-
-
-
         image_recycle = findViewById(R.id.image_recycle); // 이미지 리사이클러뷰
         image_recycle.setLayoutManager(image_LayoutManager);  //레이아웃 매니저 지정
         imageAdapter = new ImageAdapter(); //init 어뎁터
 
         ArrayList<ImageItem> img_data = new ArrayList<>();
-
-        Drawable drawable = getResources().getDrawable(R.drawable.tema_4);
+        Drawable drawable = getResources().getDrawable(R.drawable.tema_4); //기본 사진
         final String[] imgurls = imgurl.split(",");
 
         for (int x=0; x<imgurls.length; x++){
@@ -139,7 +138,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
                         InputStream is = conn.getInputStream();
                         img = BitmapFactory.decodeStream(is);
-
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -158,7 +156,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         imageAdapter.setData(img_data);
         image_recycle.setAdapter(imageAdapter);
-        //이미지 end
+        //이미지 데이터 지정, 리사이클에 어뎁터 지정
 
 
 
@@ -222,11 +220,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onItemClick(View v, int position) {
                 select_price = Integer.toString(position);
-                System.out.println(select_price + "@@@@@@@@@@@@@@@@@@@@@@@@@@");
             }
         });
         // 가격 리사이클러뷰 end
-
 
 
         //리뷰 리사이클러뷰
@@ -272,19 +268,27 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         reviewAdapter.setData(review_data); //set data
         review_recycle.setAdapter(reviewAdapter);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.calendar);
         setSupportActionBar(toolbar);
 
         initViews();
+
+        reservation_btn = findViewById(R.id.reservation_btn);
+        reservation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //예약하기 클릭시
+                //code //캠필장 코드
+                //select_price //선택한 구역코드
+                //firDay //체크인 날짜
+                //endDay //체크아웃 날짜
+            }
+        });
     }
 
     private void initViews() {
         calendarView = (CalendarView) findViewById(R.id.calendar_view);
         calendarView.setCalendarOrientation(OrientationHelper.HORIZONTAL);
-
     }
 
     @Override
