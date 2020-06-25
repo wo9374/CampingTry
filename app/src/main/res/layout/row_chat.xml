@@ -6,14 +6,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:textSize="12sp"
         android:id="@+id/T_nickname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="5dp"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
     <TextView
-        android:textSize="20sp"
         android:id="@+id/T_msg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp" />
 
 </LinearLayout>

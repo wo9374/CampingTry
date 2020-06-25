@@ -1,6 +1,5 @@
 package com.example.mylogin.Chat;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         }
     }
 
-    public ChatAdapter(List<ChatData> myDataset, Context context, String myNickName){
+    public ChatAdapter(List<ChatData> myDataset, Frag5 context, String myNickName){
         mDataset = myDataset;
         this.myNickName = myNickName;
     }
@@ -47,7 +46,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        ChatData chat = mDataset.get(position);
 
+        holder.nickname.setText(chat.getNickname());
+        holder.msg.setText(chat.getMsg());
+
+        if(chat.getNickname().equals(this.myNickName)) {    //본인이면 오른쪽정렬 아니면 왼쪽
+            holder.msg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            holder.nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            holder.nickname.setTextColor(0xAAef484a);
+        }
+        else {
+            holder.msg.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            holder.nickname.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            holder.nickname.setTextColor(0xAA6d36d8);
+        }
     }
 
     @Override
