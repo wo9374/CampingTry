@@ -17,6 +17,7 @@ public class Comment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
+        // 사이즈 조절
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         // 윈도우 매니저 객체 얻어오고 디스플레이 객체 얻어오기
 

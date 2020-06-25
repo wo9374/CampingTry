@@ -33,7 +33,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".SNS.Home.Comment"></activity>
+        <activity android:name=".SNS.Home.Comment"/>
         <activity android:name=".MyPage.MyPage" />
         <activity android:name=".MyPage.RequestProfile.RequestProfileActivity" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
