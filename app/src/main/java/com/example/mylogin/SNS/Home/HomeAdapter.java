@@ -1,6 +1,7 @@
 package com.example.mylogin.SNS.Home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.username.setText(item.getUsername());
         holder.time.setText(item.getTime());
         holder.content.setText(item.getContent());
-        holder.img_slide.setImageResource(item.getImage());
+        holder.img_slide.setImageBitmap(item.getImage());
         holder.like.setText(item.getLike());
         holder.comment.setText(item.getComment());
+        holder.snscode.setText(item.getSnscode());
     }
 
     @Override
@@ -59,6 +61,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         TextView like;
         TextView comment;
 
+        TextView snscode;
+
         Button like_btn;
         Button comment_btn;
         Button chat_btn;
@@ -73,10 +77,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
 
+            snscode = itemView.findViewById(R.id.snscode);
+
             like_btn = itemView.findViewById(R.id.like_btn);
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
+            comment_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), Comment.class);
+
+                    intent.putExtra("snscode",snscode.getText());
+
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

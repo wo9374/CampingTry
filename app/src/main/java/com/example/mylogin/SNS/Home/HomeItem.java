@@ -1,12 +1,16 @@
 package com.example.mylogin.SNS.Home;
 
+import android.graphics.Bitmap;
+
 public class HomeItem {
     private String username;
     private String time;
     private String content;
-    private int image;
     private String like;
     private String comment;
+    private Bitmap image;
+
+    private String snscode;
 
     public String getUsername() {
         return username;
@@ -20,9 +24,6 @@ public class HomeItem {
         return content;
     }
 
-    public int getImage() {
-        return image;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -34,10 +35,6 @@ public class HomeItem {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getLike() {
@@ -54,5 +51,21 @@ public class HomeItem {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
+    public String getSnscode() {
+        return snscode;
+    }
+
+    public void setSnscode(String snscode) {
+        this.snscode = snscode;
     }
 }

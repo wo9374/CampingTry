@@ -298,7 +298,7 @@ public class Frag2 extends Fragment {
                                             e.printStackTrace();
                                         }
                                         System.out.println(score + "!!!!!!!!!!!값삽입스코어!!!!!!!" + hap);
-                                        addItem(img, name, keyword,price,addr,code,imgurl, (float) score/hap);
+                                        addItem(img, name, keyword,price,addr,code,imgurl, (float)4);
                                         score = 0;
                                         hap = 0;
                                     }
