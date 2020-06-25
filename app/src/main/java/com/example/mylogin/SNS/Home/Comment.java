@@ -3,6 +3,7 @@ package com.example.mylogin.SNS.Home;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -27,5 +28,8 @@ public class Comment extends AppCompatActivity {
         getWindow().getAttributes().width = width; //댓글 레이아웃의 폭을 width로 지정
         getWindow().getAttributes().height = height; //댓글 레이아웃의 폭을 height 지정
         getWindow().setGravity(Gravity.CENTER); //댓글 레이아웃 센터지정
+
+        Intent intent = getIntent();
+        String snscode = intent.getExtras().getString("snscode"); //코드 불러옴
     }
 }

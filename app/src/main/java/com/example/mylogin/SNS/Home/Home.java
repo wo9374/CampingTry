@@ -64,6 +64,7 @@ public class Home extends Fragment {
                     {
                         for (int i =0; i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String snscode = jsonObject.getString("snscode");
                             String name = jsonObject.getString("name");
                             String date = jsonObject.getString("date");
                             String desc = jsonObject.getString("desc");
@@ -97,8 +98,7 @@ public class Home extends Fragment {
                             }catch (InterruptedException e){
                                 e.printStackTrace();
                             }
-                            System.out.println("값입력 중@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                            addItem(name,date,desc,img,like, "0","snscode");
+                            addItem(name,date,desc,img,like, "0",snscode);
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         mAdapter.notifyDataSetChanged(); //새로고침

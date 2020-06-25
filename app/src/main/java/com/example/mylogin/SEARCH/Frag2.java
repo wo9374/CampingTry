@@ -65,8 +65,6 @@ public class Frag2 extends Fragment {
     public static boolean chk[] = new boolean[6];
     private String tema_chk;
 
-    float score;
-    int hap;
     Bitmap img;
     Drawable drawable;
 
@@ -241,35 +239,6 @@ public class Frag2 extends Fragment {
                                         String keyword = jsonObject.getString("keyword");
                                         final String imgurl = jsonObject.getString("imgurl");
                                         final String[] imgurls = imgurl.split(",");
-                                        final Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String responses) {
-                                                try {
-                                                    JSONArray jsonArray = new JSONArray(responses);
-                                                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
-                                                    boolean success = jsonObjectfirst.getBoolean("success");
-                                                    if (success)//검색 결과 성공
-                                                    {
-                                                        for (int i =0; i<jsonArray.length();i++){
-                                                            hap++;
-                                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                                            score = jsonObject.getInt("score");
-                                                            score += score;
-                                                            System.out.println(score + "@@@@@@@@@@포문스코어@@@@@@@@@@@@" + hap);
-                                                        }
-                                                        mAdapter.notifyDataSetChanged(); //새로고침
-                                                    } else { //검색 결과 없음
-                                                        return;
-                                                    }
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        };
-                                        //실제 서버로 Volley를 이용해서 요청을 함.
-                                        ScoreRequest scoreRequest = new ScoreRequest(code, responseListener);
-                                        RequestQueue queue = Volley.newRequestQueue(ct);
-                                        queue.add(scoreRequest);
                                         Thread mThread = new Thread(){
                                             @Override
                                             public void run(){
@@ -290,17 +259,13 @@ public class Frag2 extends Fragment {
                                                 }
                                             }
                                         };
-
                                         mThread.start();
                                         try {
                                             mThread.join();
                                         }catch (InterruptedException e){
                                             e.printStackTrace();
                                         }
-                                        System.out.println(score + "!!!!!!!!!!!값삽입스코어!!!!!!!" + hap);
                                         addItem(img, name, keyword,price,addr,code,imgurl, (float)4);
-                                        score = 0;
-                                        hap = 0;
                                     }
 
                                     mAdapter.notifyDataSetChanged(); //새로고침
