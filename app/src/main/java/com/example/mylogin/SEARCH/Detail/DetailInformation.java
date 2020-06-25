@@ -93,7 +93,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         Intent intent = getIntent();
         String code = intent.getExtras().getString("code"); //코드 불러옴
-        int codeint = Integer.parseInt(code);
+        final int codeint = Integer.parseInt(code);
         final String imgurl = intent.getExtras().getString("url");
 
         name = findViewById(R.id.name); //캠핑장 이름
@@ -192,12 +192,13 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     {
                         for (int i =0; i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String campitemcode = jsonObject.getString("campitemcode");
                             String zone = jsonObject.getString("itemname");
                             String zonedesc = jsonObject.getString("itemdesc");
                             String price = jsonObject.getString("price");
                             System.out.println(zone + zonedesc + price + "@@@@@@@@@@@@@@@@@@@@@@");
 
-                            price_data.add(new PriceItem(zone,zonedesc,price,"임시코드"));
+                            price_data.add(new PriceItem(zone,zonedesc,price,campitemcode));
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         priceAdapter.notifyDataSetChanged(); //새로고침
@@ -278,10 +279,55 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         reservation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //예약하기 클릭시
-                //code //캠필장 코드
-                //select_price //선택한 구역코드
-                //firDay //체크인 날짜
-                //endDay //체크아웃 날짜
+                int campitemcode = Integer.parseInt(select_price);
+                List<Calendar> days = calendarView.getSelectedDates();
+
+                String result="";
+                for( int i=0; i<days.size(); i++)
+                {
+                    Calendar calendar = days.get(i);
+                    final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    final int month = calendar.get(Calendar.MONTH);
+                    final int year = calendar.get(Calendar.YEAR);
+                    String week = new SimpleDateFormat("EE").format(calendar.getTime());
+                    //String day_full = year + (month+1) + day  + week;
+                    String day_full = Integer.toString(year);
+                    day_full = day_full + 0 +(month+1);
+                    day_full = day_full + day;
+                    //day_full = day_full + week;
+                    result += (day_full + "\n");
+
+                    if(i==0){
+                        firDay = day_full;
+                    }
+
+                    if(i==days.size()-1){
+                        endDay = day_full;
+                    }
+                }
+                Toast.makeText(DetailInformation.this, result, Toast.LENGTH_LONG).show();
+                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                                System.out.println("저장성공@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                            } else { //검색 결과 없음
+                                System.out.println("저장실패@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                ReserveRequest reserveRequest = new ReserveRequest(codeint,campitemcode,firDay,endDay, responseListener3);
+                RequestQueue queue3 = Volley.newRequestQueue(DetailInformation.this);
+                queue3.add(reserveRequest);
             }
         });
     }
@@ -312,7 +358,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                 String result="";
                 for( int i=0; i<days.size(); i++)
                 {
-
                     Calendar calendar = days.get(i);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     final int month = calendar.get(Calendar.MONTH);
