@@ -219,7 +219,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         priceAdapter.setOnItemClickListener(new PriceAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                select_price = Integer.toString(position);
+                select_price = Integer.toString(position+1);
             }
         });
         // 가격 리사이클러뷰 end

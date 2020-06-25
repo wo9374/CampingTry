@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static com.android.volley.VolleyLog.TAG;
@@ -53,6 +54,7 @@ public class Photo extends Fragment {
 
     String mCurrentPhotoPath;
     final static int REQUEST_TAKE_PHOTO  = 1;
+    final static int REQUEST_TAKE_ALBUM  = 2;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,18 +62,49 @@ public class Photo extends Fragment {
         ct = container.getContext();
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
-        OpenCamera();
+        Diaglog();
 
         photo = view.findViewById(R.id.photo);
+
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Diaglog();
+            }
+        });
+
         content = view.findViewById(R.id.content);
         write_btn = view.findViewById(R.id.write_btn);
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //photo.getDrawable();
+                //content.getText();
             }
         });
         return view;
+    }
+
+    public void Diaglog(){
+        DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                OpenCamera();
+            }
+        };
+
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getAlbum();
+            }
+        };
+
+        new AlertDialog.Builder(ct)   //프로필 알림창 표시
+                .setTitle("업로드할 이미지 선택")
+                .setPositiveButton("사진 촬영", cameraListener)
+                .setNeutralButton("앨범 선택", albumListener)
+                .show();
     }
 
     public void OpenCamera(){
@@ -83,20 +116,23 @@ public class Photo extends Fragment {
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(ct,
-                        "com.example.mylogin",
-                        photoFile);
+                Uri photoURI = FileProvider.getUriForFile(ct,"com.example.mylogin",photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
     }
 
-    //파일저장 메소드
+    private void getAlbum() {
+        Intent getAlbumintent = new Intent(Intent.ACTION_PICK);
+        getAlbumintent.setType("image/*");
+        getAlbumintent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(getAlbumintent, REQUEST_TAKE_ALBUM);
+    }
+
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -108,9 +144,19 @@ public class Photo extends Fragment {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    public void galleryAddPic(){
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+
+        ct.sendBroadcast(mediaScanIntent);
+        Toast.makeText(ct,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -158,8 +204,16 @@ public class Photo extends Fragment {
                             default:
                                 rotatedBitmap = bitmap;
                         }
+                        galleryAddPic();
                         photo.setImageBitmap(rotatedBitmap);
                     }
+                }
+                break;
+            }
+
+            case REQUEST_TAKE_ALBUM:{
+                if (resultCode == RESULT_OK) {
+
                 }
                 break;
             }
