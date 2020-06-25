@@ -4,11 +4,13 @@ public class PriceItem {
     private String zone;
     private String facility;
     private String price;
+    private String pricecode;
 
-    public PriceItem( String zone, String facility, String price) {
+    public PriceItem( String zone, String facility, String price , String pricecode) {
         this.zone = zone;
         this.facility = facility;
         this.price = price;
+        this.pricecode = pricecode;
     }
 
     public String getZone() {
@@ -21,5 +23,9 @@ public class PriceItem {
 
     public String getPrice() {
         return price;
+    }
+
+    public String getPricecode() {
+        return pricecode;
     }
 }

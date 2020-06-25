@@ -53,5 +53,16 @@
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/pr"
             android:text="가격" />
+
+
+        <TextView
+            android:id="@+id/pricecode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:text="가격코드"
+            android:visibility="invisible"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

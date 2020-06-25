@@ -30,7 +30,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
     @Override
     public PriceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 사용할 아이템의 뷰를 생성해준다.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_price_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_detail_price, parent, false);
 
         PriceViewHolder holder = new PriceViewHolder(view);
         return holder;
@@ -43,6 +43,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
         holder.zone.setText(data.getZone());
         holder.facility.setText(data.getFacility());
         holder.price.setText(data.getPrice());
+        holder.pricecode.setText(data.getPricecode());
 
         if (isItemSelected(position)) {
             holder.itemView.setBackgroundColor(Color.GRAY);
@@ -70,6 +71,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
         TextView facility;
         TextView pr;
         TextView price;
+        TextView pricecode;
 
         public PriceViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +80,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
             facility = (TextView) itemView.findViewById(R.id.facility);
             pr = (TextView) itemView.findViewById(R.id.pr);
             price = (TextView) itemView.findViewById(R.id.price);
+            pricecode = (TextView) itemView.findViewById(R.id.pricecode);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

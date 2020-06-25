@@ -26,7 +26,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
 
         Context context =parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.sns_holder,parent,false);
+        View view = inflater.inflate(R.layout.holder_sns,parent,false);
         HomeAdapter.ViewHolder vh = new HomeAdapter.ViewHolder(view);
 
         return vh;

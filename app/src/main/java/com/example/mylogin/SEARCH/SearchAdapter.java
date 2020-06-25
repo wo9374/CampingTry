@@ -30,7 +30,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         Context context =parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.search_holder,parent,false);
+        View view = inflater.inflate(R.layout.holder_search,parent,false);
         SearchAdapter.ViewHolder vh = new SearchAdapter.ViewHolder(view);
 
         return vh;

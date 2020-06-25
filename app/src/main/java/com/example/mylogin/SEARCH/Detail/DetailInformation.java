@@ -199,7 +199,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                             String price = jsonObject.getString("price");
                             System.out.println(zone + zonedesc + price + "@@@@@@@@@@@@@@@@@@@@@@");
 
-                            price_data.add(new PriceItem(zone,zonedesc,price));
+                            price_data.add(new PriceItem(zone,zonedesc,price,"임시코드"));
+                            //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         priceAdapter.notifyDataSetChanged(); //새로고침
                     } else { //검색 결과 없음

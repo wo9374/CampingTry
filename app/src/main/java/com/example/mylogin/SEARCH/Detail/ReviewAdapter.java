@@ -22,7 +22,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 사용할 아이템의 뷰를 생성해준다.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_reciew, parent, false);
 
         ReviewViewHolder holder = new ReviewViewHolder(view);
         return holder;
