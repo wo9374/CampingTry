@@ -56,6 +56,8 @@ public class Photo extends Fragment {
     final static int REQUEST_TAKE_PHOTO  = 1;
     final static int REQUEST_TAKE_ALBUM  = 2;
 
+    private Uri photoURI;
+
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sns_photo, container, false);
@@ -148,17 +150,6 @@ public class Photo extends Fragment {
         return image;
     }
 
-    public void galleryAddPic(){
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-
-        ct.sendBroadcast(mediaScanIntent);
-        Toast.makeText(ct,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -204,7 +195,6 @@ public class Photo extends Fragment {
                             default:
                                 rotatedBitmap = bitmap;
                         }
-                        galleryAddPic();
                         photo.setImageBitmap(rotatedBitmap);
                     }
                 }
@@ -213,7 +203,15 @@ public class Photo extends Fragment {
 
             case REQUEST_TAKE_ALBUM:{
                 if (resultCode == RESULT_OK) {
-
+                    if (intent.getData()!=null){
+                        try{
+                            photoURI = intent.getData();
+                            photo.setImageURI(photoURI);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Log.v("알림","앨범에서 가져오기 에러");
+                        }
+                    }
                 }
                 break;
             }

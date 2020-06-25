@@ -325,7 +325,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     //day_full = day_full + week;
                     result += (day_full + "\n");
 
-
                     if(i==0){
                         firDay = day_full;
                     }

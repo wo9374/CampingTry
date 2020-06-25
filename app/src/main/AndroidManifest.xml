@@ -33,6 +33,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".SNS.Home.Comment"></activity>
         <activity android:name=".MyPage.MyPage" />
         <activity android:name=".MyPage.RequestProfile.RequestProfileActivity" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
@@ -58,6 +59,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
     </application>
 
 </manifest>

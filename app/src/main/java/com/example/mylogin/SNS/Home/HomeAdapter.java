@@ -1,6 +1,7 @@
 package com.example.mylogin.SNS.Home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
+            comment_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), Comment.class);
+
+                    //intent.putExtra("code",code.getText());
+
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

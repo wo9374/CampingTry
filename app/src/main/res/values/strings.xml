@@ -4,7 +4,7 @@
     <!-- SNS Navigation View -->
     <string name="home">피드</string>
     <string name="search">게시물 검색</string>
-    <string name="gallery">사진 추가</string>
+    <string name="gallery">게시물 추가</string>
     <string name="favorite">활동 및 알림</string>
     <string name="account">계정</string>
 
