@@ -40,7 +40,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.username.setText(item.getUsername());
         holder.time.setText(item.getTime());
         holder.content.setText(item.getContent());
-        holder.img_slide.setImageResource(item.getImage());
+        holder.img_slide.setImageBitmap(item.getImage());
         holder.like.setText(item.getLike());
         holder.comment.setText(item.getComment());
     }
@@ -83,7 +83,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), Comment.class);
 
-                    //intent.putExtra("code",code.getText());
+                    //intent.putExtra("code",code.getText()); //이거 아직 아님
 
                     v.getContext().startActivity(intent);
                 }
