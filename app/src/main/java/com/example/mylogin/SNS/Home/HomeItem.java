@@ -10,6 +10,8 @@ public class HomeItem {
     private String comment;
     private Bitmap image;
 
+    private String snscode;
+
     public String getUsername() {
         return username;
     }
@@ -57,5 +59,13 @@ public class HomeItem {
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+
+    public String getSnscode() {
+        return snscode;
+    }
+
+    public void setSnscode(String snscode) {
+        this.snscode = snscode;
     }
 }

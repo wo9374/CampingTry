@@ -98,7 +98,7 @@ public class Home extends Fragment {
                                 e.printStackTrace();
                             }
                             System.out.println("값입력 중@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                            addItem(name,date,desc,img,like, "0");
+                            addItem(name,date,desc,img,like, "0","snscode");
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         mAdapter.notifyDataSetChanged(); //새로고침
@@ -123,7 +123,7 @@ public class Home extends Fragment {
         return view;
     }
 
-    void addItem(String username, String time, String content, Bitmap image, String like, String comment){
+    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode){
         HomeItem item = new HomeItem();
 
         item.setUsername(username);
@@ -132,6 +132,7 @@ public class Home extends Fragment {
         item.setImage(image);
         item.setLike(like);
         item.setComment(comment);
+        item.setSnscode(snscode);
 
         mList.add(item);
     }

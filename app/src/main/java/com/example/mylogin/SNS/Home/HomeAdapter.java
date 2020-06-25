@@ -43,6 +43,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.img_slide.setImageBitmap(item.getImage());
         holder.like.setText(item.getLike());
         holder.comment.setText(item.getComment());
+        holder.snscode.setText(item.getSnscode());
     }
 
     @Override
@@ -60,6 +61,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         TextView like;
         TextView comment;
 
+        TextView snscode;
+
         Button like_btn;
         Button comment_btn;
         Button chat_btn;
@@ -74,6 +77,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
 
+            snscode = itemView.findViewById(R.id.snscode);
+
             like_btn = itemView.findViewById(R.id.like_btn);
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
@@ -83,7 +88,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), Comment.class);
 
-                    //intent.putExtra("code",code.getText()); //이거 아직 아님
+                    intent.putExtra("snscode",snscode.getText());
 
                     v.getContext().startActivity(intent);
                 }
