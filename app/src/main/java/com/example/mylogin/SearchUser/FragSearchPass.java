@@ -1,4 +1,4 @@
-package com.example.mylogin;
+package com.example.mylogin.SearchUser;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,20 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class FragSearchID  extends Fragment {
+import com.example.mylogin.R;
+
+public class FragSearchPass extends Fragment {
     private View view;
 
-    public static FragSearchID newInstance()
+    public static FragSearchPass newInstance()
     {
-        FragSearchID fragSearchID = new FragSearchID();
-        return fragSearchID;
+        FragSearchPass fragSearchPass = new FragSearchPass();
+        return fragSearchPass;
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_searchid, container, false);
+        view = inflater.inflate(R.layout.frag_searchpass, container, false);
 
         return view;
     }

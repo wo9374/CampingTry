@@ -1,4 +1,4 @@
-package com.example.mylogin;
+package com.example.mylogin.SearchUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -6,6 +6,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.example.mylogin.R;
+import com.example.mylogin.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class SearchIdActivity extends AppCompatActivity {
