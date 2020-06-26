@@ -12,16 +12,16 @@ import java.util.Map;
 public class FragSIDRequest extends StringRequest {
 
     //서버 URL 설정 (php파일 연동)
-    final static private String URL = "";
+    final static private String URL = "http://hwi4011.dothome.co.kr/Register.php";
     private Map<String, String> map;
 
 
-    public FragSIDRequest(String userName, String userNum, Response.Listener<String> listener) {
+    public FragSIDRequest(String userName, int userNum, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("userName", userName);
-        map.put("userNum", userNum);
+        map.put("userNum", userNum + "");
     }
 
     @Override
