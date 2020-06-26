@@ -21,10 +21,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mylogin.Chat.Frag5;
-import com.example.mylogin.MyPage.MyPage;
+import com.example.mylogin.MyPage.User.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
-import com.example.mylogin.Shop.ShopFrag;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                             android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             android.Manifest.permission.CAMERA,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                     })
+                    })
                     .check();
 
         } else {
