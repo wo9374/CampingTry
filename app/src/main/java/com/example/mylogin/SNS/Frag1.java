@@ -37,6 +37,11 @@ public class Frag1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag1, container, false);
 
+        if (getArguments() != null) {
+            userid = getArguments().getString("userid");
+            nic = getArguments().getString("nic");
+        }
+
         bottom_navView = view.findViewById(R.id.top_navigation);
         bottom_navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -66,13 +71,6 @@ public class Frag1 extends Fragment {
         s_frag4 = new Sns_account();
 
         setFrag(0);//첫 프래그먼트 화면 지정
-
-
-        if (getArguments() != null) {
-            userid = getArguments().getString("userid");
-            nic = getArguments().getString("nic");
-        }
-        System.out.println(userid + "프레그1에서 유저 아이디 확인!");
 
         return view;
     }

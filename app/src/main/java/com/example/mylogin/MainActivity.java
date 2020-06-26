@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         userEmail = intent.getStringExtra("userEmail");
         usercheck = intent.getStringExtra("usercheck");//사업자?
 
-        String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
+        String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기///////////
 
 
 
