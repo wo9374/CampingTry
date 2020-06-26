@@ -130,6 +130,9 @@ public class Photo extends Fragment {
                         Map<String, String> params = new HashMap<>();
                         String imageData = imamgeToString(bitmap);
                         params.put("image", imageData);
+
+
+
                         params.put("userid", imageFileName);
 
                         return params;
@@ -220,6 +223,10 @@ public class Photo extends Fragment {
         getAlbumintent.setType("image/*");
         getAlbumintent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(getAlbumintent, REQUEST_TAKE_ALBUM);
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        imageFileName = userid + "_" + timeStamp;
+        imageFileNamePlus = imageFileName + ".jpg";
     }
 
 
@@ -228,6 +235,8 @@ public class Photo extends Fragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         imageFileName = userid + "_" + timeStamp;
         imageFileNamePlus = imageFileName + ".jpg";
+
+        System.out.println(imageFileNamePlus + "사진 이름 생성");
         File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
