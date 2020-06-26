@@ -76,7 +76,7 @@ public class Home extends Fragment {
                                 @Override
                                 public void run(){
                                     try {
-                                        URL url = new URL("http://3.34.136.232:8080/image/" + imgurl);
+                                        URL url = new URL("http://3.34.136.232:8080/image/sns/" + imgurl);
                                         img = ((BitmapDrawable)drawable).getBitmap();
                                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                         conn.setDoInput(true);
