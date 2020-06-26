@@ -11,7 +11,14 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.WindowManager;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -37,16 +44,40 @@ public class Comment extends AppCompatActivity {
         getWindow().getAttributes().height = height; //댓글 레이아웃의 폭을 height 지정
         getWindow().setGravity(Gravity.CENTER); //댓글 레이아웃 센터지정
 
-
-
-
-
         Intent intent = getIntent();
-        String snscode = intent.getExtras().getString("snscode"); //코드 불러옴
+        final int snscode = Integer.parseInt(intent.getExtras().getString("snscode")); //코드 불러옴
 
-
-
-        addItem("상원이", "와아아아웅!!!", "2020-06-26");
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    System.out.println(snscode + "@@@@@@@@@@@@@@@@@");
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String name = jsonObject.getString("name");
+                            String comment = jsonObject.getString("comment");
+                            String date = jsonObject.getString("date");
+                            addItem(name, comment, date);
+                        }
+                        mAdapter.notifyDataSetChanged(); //새로고침
+                    } else { //검색 결과 없음
+                        mAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        CommentRequest commentRequest = new CommentRequest(snscode, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Comment.this);
+        queue.add(commentRequest);
 
         mRecyclerView = findViewById(R.id.comment_recycle);
         mAdapter = new CommentAdapter(mList);
