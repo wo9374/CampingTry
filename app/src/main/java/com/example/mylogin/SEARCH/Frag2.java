@@ -58,6 +58,7 @@ public class Frag2 extends Fragment {
     private String[] tema = {"오토캠핑","글램핑","카라반","펜션","피크닉"};
     private int[] temaImgs= new int[5]; //테마 선택 그림 넣을 배열변수
     private EditText keyword;
+    public static String userid;
 
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
     private String mAdd, sAdd; //스피너 값에 따른 주소찾을 쿼리문으로 보낼 스트링 변수
@@ -81,6 +82,10 @@ public class Frag2 extends Fragment {
         for(j=0; j<chk.length;j++){
             chk[j]= false;
         }
+        if (getArguments() != null) {
+            userid = getArguments().getString("userid");
+        }
+        System.out.println(userid);
 
         keyword = view.findViewById(R.id.keyword); //키워드 창
 

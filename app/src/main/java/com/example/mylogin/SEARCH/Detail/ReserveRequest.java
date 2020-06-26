@@ -13,13 +13,14 @@ public class ReserveRequest extends StringRequest {
     final static private String URL = "http://3.34.136.232/Reserve.php";
     private Map<String, String> map;
 
-    public ReserveRequest(int code, int campitemcode, String firDay, String endDay, Response.Listener<String> listener)
+    public ReserveRequest(int code, int campitemcode, String userid ,String firDay, String endDay, Response.Listener<String> listener)
     {
         super(Request.Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("campcode", code + "");
         map.put("campitemcode", campitemcode + "");
+        map.put("userid", userid);
         map.put("checkindate", firDay);
         map.put("checkoutdate", endDay);
     }

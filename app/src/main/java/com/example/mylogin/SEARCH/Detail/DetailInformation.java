@@ -95,6 +95,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         String code = intent.getExtras().getString("code"); //코드 불러옴
         final int codeint = Integer.parseInt(code);
         final String imgurl = intent.getExtras().getString("url");
+        final String userid = intent.getExtras().getString("userid");
 
         name = findViewById(R.id.name); //캠핑장 이름
         name.setText(intent.getExtras().getString("name"));
@@ -196,7 +197,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                             String zone = jsonObject.getString("itemname");
                             String zonedesc = jsonObject.getString("itemdesc");
                             String price = jsonObject.getString("price");
-                            System.out.println(zone + zonedesc + price + "@@@@@@@@@@@@@@@@@@@@@@");
 
                             price_data.add(new PriceItem(zone,zonedesc,price,campitemcode));
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
@@ -314,9 +314,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//검색 결과 성공
                             {
-                                System.out.println("저장성공@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
                             } else { //검색 결과 없음
-                                System.out.println("저장실패@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
                                 return;
                             }
                         } catch (JSONException e) {
@@ -325,7 +325,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     }
                 };
                 //실제 서버로 Volley를 이용해서 요청을 함.
-                ReserveRequest reserveRequest = new ReserveRequest(codeint,campitemcode,firDay,endDay, responseListener3);
+                ReserveRequest reserveRequest = new ReserveRequest(codeint,campitemcode,userid,firDay,endDay, responseListener3);
                 RequestQueue queue3 = Volley.newRequestQueue(DetailInformation.this);
                 queue3.add(reserveRequest);
             }
