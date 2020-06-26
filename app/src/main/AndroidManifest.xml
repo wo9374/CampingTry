@@ -38,7 +38,7 @@
         <activity android:name=".MyPage.RequestProfile.RequestProfileActivity" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
         <activity android:name=".WebView.WebViewActivity" />
-        <activity android:name=".SearchIdActivity" />
+        <activity android:name=".SearchUser.SearchIdActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter> <!-- 처음 엑티비티 설정하는 목록1 -->
                 <action android:name="android.intent.action.MAIN" />
