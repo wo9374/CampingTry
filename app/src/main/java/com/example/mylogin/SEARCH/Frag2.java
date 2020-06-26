@@ -1,7 +1,6 @@
 package com.example.mylogin.SEARCH;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,27 +20,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.mylogin.LoginActivity;
 import com.example.mylogin.R;
-import com.example.mylogin.RegisterActivity;
-import com.example.mylogin.RegisterRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Frag2 extends Fragment {
 
@@ -85,7 +76,7 @@ public class Frag2 extends Fragment {
         if (getArguments() != null) {
             userid = getArguments().getString("userid");
         }
-        System.out.println(userid);
+        System.out.println(userid + "프레그2에서 유저아이디 확인");
 
         keyword = view.findViewById(R.id.keyword); //키워드 창
 
