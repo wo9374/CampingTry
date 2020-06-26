@@ -257,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 Bundle bundle = new Bundle();
                 bundle.putString("nic",userSubname);
+
                 Frag5 frag5 = new Frag5();
                 frag5.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag5);
