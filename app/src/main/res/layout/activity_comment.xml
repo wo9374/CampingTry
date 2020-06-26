@@ -29,9 +29,10 @@
             android:layout_marginLeft="5dp"/>
 
         <ImageButton
+            android:id="@+id/comment_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-           android:layout_margin="10dp"
+            android:layout_margin="10dp"
             android:layout_weight="5"
             android:background="@drawable/icon_up_comment"
             android:scaleType="fitCenter" />

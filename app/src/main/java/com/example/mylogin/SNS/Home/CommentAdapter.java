@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView time;
         TextView comment;
 
+        ImageButton comment_btn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -57,6 +60,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             comment = itemView.findViewById(R.id.comment);
             time = itemView.findViewById(R.id.time);
 
+            comment_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //username
+                    //comment
+                    //time
+                }
+            });
         }
     }
 }
