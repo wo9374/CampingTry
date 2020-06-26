@@ -35,6 +35,7 @@
 
         <activity android:name=".SNS.Home.Comment"/>
         <activity android:name=".MyPage.User.MyPage" />
+        <activity android:name=".MyPage.Master.MyPage_m" />
         <activity android:name=".MyPage.RequestProfile.RequestProfileActivity" />
         <activity android:name=".SEARCH.Detail.DetailInformation" />
         <activity android:name=".WebView.WebViewActivity" />

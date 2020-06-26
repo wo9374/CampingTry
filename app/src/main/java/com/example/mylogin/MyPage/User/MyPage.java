@@ -36,8 +36,8 @@ public class MyPage extends AppCompatActivity {
         String s_name = intent.getStringExtra("name");
         String s_pass = intent.getStringExtra("pass");
 
-        d_myid.setText(s_id);
-        d_mynic.setText("("+s_nic+")님 반갑습니다!");
+        d_myid.setText("("+s_id+") 님 반갑습니다!");
+        d_mynic.setText(s_nic);
 
         d_nic = s_nic;  //닉네임 원본
 
