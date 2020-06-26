@@ -233,33 +233,33 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
 
-        Bundle bundle2 = new Bundle();
-        bundle2.putString("userid", userID);
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", userID);
+        bundle.putString("nic",userSubname);
 
         switch (n)
         {
             case 0:
-                frag1.setArguments(bundle2);
+                frag1.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag1);
                 ft.commit();
                 break;
             case 1:
-                frag2.setArguments(bundle2);
+                frag2.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag2);
                 ft.commit();
                 break;
             case 2:
+                frag3.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag3);
                 ft.commit();
                 break;
             case 3:
+                frag4.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag4);
                 ft.commit();
                 break;
             case 4:
-                Bundle bundle = new Bundle();
-                bundle.putString("nic",userSubname);
-
                 frag5.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
