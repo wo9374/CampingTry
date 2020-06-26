@@ -59,6 +59,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //넘겨받은 계정 정보
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("userID");
+        userSubname = intent.getStringExtra("userSubname");
+        userPass = intent.getStringExtra("userPass");
+        userName = intent.getStringExtra("userName");
+        userEmail = intent.getStringExtra("userEmail");
+        usercheck = intent.getStringExtra("usercheck");//사업자?
+
+        String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
+
+
+
         bottomNavigationView = findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,20 +110,6 @@ public class MainActivity extends AppCompatActivity {
         tv_id = findViewById(R.id.tv_id);
         tv_nic = findViewById(R.id.tv_nic);
         tv_profile = findViewById(R.id.tv_profile);
-
-
-
-        //넘겨받은 계정 정보
-        Intent intent = getIntent();
-        userID = intent.getStringExtra("userID");
-        userSubname = intent.getStringExtra("userSubname");
-        userPass = intent.getStringExtra("userPass");
-        userName = intent.getStringExtra("userName");
-        userEmail = intent.getStringExtra("userEmail");
-        usercheck = intent.getStringExtra("usercheck");
-
-        String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
-
 
 
         context = this.getBaseContext();

@@ -234,11 +234,10 @@
 
             <ImageView
                 android:id="@+id/imageView6"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                app:srcCompat="@drawable/m_myprofile" />
+                app:srcCompat="@drawable/add_camping" />
 
             <Button
                 android:id="@+id/button2"

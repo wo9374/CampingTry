@@ -42,7 +42,6 @@ public class Frag1 extends Fragment {
             nic = getArguments().getString("nic");
         }
 
-
         bottom_navView = view.findViewById(R.id.top_navigation);
         bottom_navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
