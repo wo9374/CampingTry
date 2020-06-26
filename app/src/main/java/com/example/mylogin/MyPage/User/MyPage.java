@@ -1,4 +1,4 @@
-package com.example.mylogin.MyPage;
+package com.example.mylogin.MyPage.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
