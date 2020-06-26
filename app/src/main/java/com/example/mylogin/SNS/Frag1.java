@@ -14,6 +14,8 @@ import com.example.mylogin.R;
 import com.example.mylogin.SNS.Home.Home;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class Frag1 extends Fragment {
 
     private View view;
@@ -27,8 +29,9 @@ public class Frag1 extends Fragment {
     private Sns_favorite s_frag3;
     private Sns_account s_frag4;
 
-    public static String userid;
+    public static String userid, nic;
 
+    public static ArrayList likelist;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class Frag1 extends Fragment {
 
         if (getArguments() != null) {
             userid = getArguments().getString("userid");
+            nic = getArguments().getString("nic");
         }
 
 
@@ -80,6 +84,7 @@ public class Frag1 extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putString("userid", userid);
+        bundle.putString("nic",nic);
 
         switch (n)
         {

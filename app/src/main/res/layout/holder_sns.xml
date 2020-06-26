@@ -126,34 +126,34 @@
 
             <Button
                 android:id="@+id/like_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/icon_like"
-                android:paddingLeft="30dp"
+                android:drawableStart="@drawable/icon_like"
+                android:paddingStart="30dp"
                 android:text="좋아요"
                 android:textSize="12sp" />
 
             <Button
                 android:id="@+id/comment_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/icon_comments"
-                android:paddingLeft="30dp"
+                android:drawableStart="@drawable/icon_comments"
+                android:paddingStart="30dp"
                 android:text="댓글 달기"
                 android:textSize="12sp" />
 
             <Button
                 android:id="@+id/chat_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:drawableLeft="@drawable/icon_chattting"
-                android:paddingLeft="30dp"
+                android:drawableStart="@drawable/icon_chattting"
+                android:paddingStart="30dp"
                 android:text="채팅"
                 android:textSize="12sp" />
         </LinearLayout>

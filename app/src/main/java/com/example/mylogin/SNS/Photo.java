@@ -10,12 +10,14 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +32,28 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -57,11 +72,19 @@ public class Photo extends Fragment {
     final static int REQUEST_TAKE_ALBUM  = 2;
 
     private Uri photoURI;
+    Bitmap bitmap;
+    String urlUpload = "http://3.34.136.232/SnsPhotoUpload.php";
+    String userid;
+    String imageFileName;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sns_photo, container, false);
         ct = container.getContext();
+
+        if (getArguments() != null) {
+            userid = getArguments().getString("userid");
+        }
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
         Diaglog();
@@ -80,11 +103,44 @@ public class Photo extends Fragment {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //photo.getDrawable();
+                bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
                 //content.getText();
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(ct,response, Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ct,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        String imageData = imamgeToString(bitmap);
+                        params.put("image", imageData);
+                        params.put("userid", imageFileName);
+                        System.out.println(imageFileName);
+
+                        return params;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(ct);
+                requestQueue.add(stringRequest);
             }
         });
         return view;
+    }
+
+    private  String imamgeToString(Bitmap bitmap){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+
+        String encodedImage = Base64.encodeToString(imageBytes,Base64.DEFAULT);
+        return  encodedImage;
     }
 
     public void Diaglog(){
@@ -138,7 +194,7 @@ public class Photo extends Fragment {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        imageFileName = userid + timeStamp;
         File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */

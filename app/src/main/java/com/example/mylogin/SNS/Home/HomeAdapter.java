@@ -2,15 +2,21 @@ package com.example.mylogin.SNS.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Frag1;
+
 import java.util.ArrayList;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
@@ -67,6 +73,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         Button comment_btn;
         Button chat_btn;
 
+        private boolean like_on=false;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -84,11 +92,24 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
 
+            for( int i =0; i<Frag1.likelist.size(); i++){
+                if(snscode == Frag1.likelist.get(i)){
+                    like_btn.setText("좋아요 취소");
+                    like_on = true;
+                }
+            }
 
             like_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(like_on==true){ //좋아요가 눌러져 있을 때
+                        like_btn.setText("좋아요");
+                        //여기서 좋아요 취소 쿼리문
 
+                    }else{ //좋아요 안눌러져 있을 때
+                        like_btn.setText("좋아요 취소");
+                        //여기서 좋아요 증가 쿼리문
+                    }
                 }
             });
 
