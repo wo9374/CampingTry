@@ -48,9 +48,10 @@ public class Home extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sns_home, container, false);
-
         mList.clear();
         ct = container.getContext();
+
+
 
         drawable = getResources().getDrawable(R.drawable.tema_4);
         Response.Listener<String> responseListener = new Response.Listener<String>() {
