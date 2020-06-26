@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class PhotoRequest extends StringRequest {
     //서버 URL 설정 (php파일 연동)
-    final static private String URL = "http://3.34.136.232/SnsInsert.php1";
+    final static private String URL = "http://3.34.136.232/SnsInsert.php";
     private Map<String, String> map;
 
     public PhotoRequest(String usernickname, String comment, String imgurl, Response.Listener<String> listener)
