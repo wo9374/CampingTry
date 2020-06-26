@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="댓글을 입력하세요."
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:id="@+id/comment_txt"/>
 
         <ImageButton
             android:id="@+id/comment_btn"

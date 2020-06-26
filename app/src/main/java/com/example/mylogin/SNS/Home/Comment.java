@@ -12,11 +12,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.PhotoRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,13 +33,16 @@ public class Comment extends AppCompatActivity {
     ArrayList<CommentItem> mList = new ArrayList<CommentItem>();
 
     ImageButton comment_btn;
+    TextView commenttxt;
+    String comment;
 
-    static int snscode;
-    static String nic,userid;
+    int snscode;
+    String nickname,userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        commenttxt = findViewById(R.id.comment_txt);
 
         // 사이즈 조절
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -52,14 +57,13 @@ public class Comment extends AppCompatActivity {
 
         Intent intent = getIntent();
         snscode = Integer.parseInt(intent.getExtras().getString("snscode")); //코드 불러옴
-        nic = intent.getExtras().getString("nic");
+        nickname = intent.getExtras().getString("nic");
         userid = intent.getExtras().getString("userid");
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String responses) {
                 try {
-                    System.out.println(snscode + "@@@@@@@@@@@@@@@@@");
                     JSONArray jsonArray = new JSONArray(responses);
                     JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
                     boolean success = jsonObjectfirst.getBoolean("success");
@@ -97,8 +101,30 @@ public class Comment extends AppCompatActivity {
         comment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //nic
-                //userid
+                comment = commenttxt.getText().toString();
+                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            } else { //검색 결과 없음
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                CommentInsertRequest commentInsertRequest = new CommentInsertRequest(snscode, nickname, comment, responseListener3);
+                RequestQueue queue3 = Volley.newRequestQueue(Comment.this);
+                queue3.add(commentInsertRequest);
             }
         });
     }
