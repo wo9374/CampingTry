@@ -21,10 +21,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mylogin.Chat.Frag5;
-import com.example.mylogin.MyPage.MyPage;
+import com.example.mylogin.MyPage.User.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
-import com.example.mylogin.Shop.ShopFrag;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                             android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             android.Manifest.permission.CAMERA,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                     })
+                    })
                     .check();
 
         } else {
@@ -233,33 +232,33 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
 
-        Bundle bundle2 = new Bundle();
-        bundle2.putString("userid", userID);
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", userID);
+        bundle.putString("nic",userSubname);
 
         switch (n)
         {
             case 0:
-                frag1.setArguments(bundle2);
+                frag1.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag1);
                 ft.commit();
                 break;
             case 1:
-                frag2.setArguments(bundle2);
+                frag2.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag2);
                 ft.commit();
                 break;
             case 2:
+                frag3.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag3);
                 ft.commit();
                 break;
             case 3:
+                frag4.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag4);
                 ft.commit();
                 break;
             case 4:
-                Bundle bundle = new Bundle();
-                bundle.putString("nic",userSubname);
-
                 frag5.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
