@@ -44,6 +44,8 @@ public class Home extends Fragment {
     HomeAdapter mAdapter= null;
     ArrayList<HomeItem> mList = new ArrayList<HomeItem>();
 
+
+    public static String userid, nic; //아이디, 닉네임
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,7 +53,10 @@ public class Home extends Fragment {
         mList.clear();
         ct = container.getContext();
 
-
+        if (getArguments() != null) {
+            userid = getArguments().getString("userid");
+            nic = getArguments().getString("nic");
+        }
 
         drawable = getResources().getDrawable(R.drawable.tema_4);
         Response.Listener<String> responseListener = new Response.Listener<String>() {
