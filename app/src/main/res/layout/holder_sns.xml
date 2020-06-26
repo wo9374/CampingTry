@@ -37,9 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="업로드 시간"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@+id/username"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/username"
                 android:textSize="12sp"/>
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SNS 본문"
-                android:layout_below="@+id/time"
+                android:layout_below="@+id/username"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
@@ -55,10 +55,11 @@
             <ImageView
                 android:id="@+id/img_slide"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="3" />
+                android:layout_weight="3"
+                android:scaleType="fitCenter"/>
 
             <ImageView
                 android:id="@+id/like_img"
