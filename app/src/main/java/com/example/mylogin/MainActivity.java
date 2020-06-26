@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mylogin.Chat.Frag5;
+import com.example.mylogin.MyPage.Master.MyPage_m;
 import com.example.mylogin.MyPage.User.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
-    private String userID, userSubname, userPass, userName, userEmail;
+    private String userID, userSubname, userPass, userName, userEmail, usercheck;
 
     Context context;
 
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         userPass = intent.getStringExtra("userPass");
         userName = intent.getStringExtra("userName");
         userEmail = intent.getStringExtra("userEmail");
+        usercheck = intent.getStringExtra("usercheck");
+
         String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
 
 
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         context = this.getBaseContext();
 
         tv_id.setText(userID);
-        tv_nic.setText(userSubname);
+        tv_nic.setText(usercheck);
         Glide.with(this).load(photoUrl).into(tv_profile);   //프로필 이미지 표시
 
 
@@ -145,12 +148,22 @@ public class MainActivity extends AppCompatActivity {
         d_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
-                intent1.putExtra("id", userID);
-                intent1.putExtra("nic", userSubname);
-                intent1.putExtra("pass", userPass);
-                intent1.putExtra("name", userName);
-                startActivity(intent1);
+                if (usercheck.equals("1")){
+                    Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
+                    intent1.putExtra("id", userID);
+                    intent1.putExtra("nic", userSubname);
+                    intent1.putExtra("pass", userPass);
+                    intent1.putExtra("name", userName);
+                    startActivity(intent1);
+                }
+                if (usercheck.equals("2")){
+                    Intent intent1 = new Intent(getApplicationContext(), MyPage_m.class);
+                    intent1.putExtra("id", userID);
+                    intent1.putExtra("nic", userSubname);
+                    intent1.putExtra("pass", userPass);
+                    intent1.putExtra("name", userName);
+                    startActivity(intent1);
+                }
             }
         });
 
