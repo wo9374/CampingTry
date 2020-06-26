@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String userName = et_name.getText().toString();
                 final String userSubname = et_subname.getText().toString();
                 final int userNum = Integer.parseInt(et_num.getText().toString());
-                final String userSex = rb.getText().toString();
+                final int userSex = Integer.parseInt(rb.getText().toString());
 
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override

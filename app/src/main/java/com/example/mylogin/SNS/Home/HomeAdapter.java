@@ -92,7 +92,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
 
-            for( int i =0; i<Frag1.likelist.size(); i++){
+            /*for( int i =0; i<Frag1.likelist.size(); i++){
                 if(snscode == Frag1.likelist.get(i)){
                     like_btn.setText("좋아요 취소");
                     like_on = true;
@@ -111,7 +111,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                         //여기서 좋아요 증가 쿼리문
                     }
                 }
-            });
+            });*/
 
 
             comment_btn.setOnClickListener(new View.OnClickListener() {

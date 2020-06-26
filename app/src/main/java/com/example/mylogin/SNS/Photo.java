@@ -41,8 +41,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SEARCH.Detail.DetailInformation;
+import com.example.mylogin.SEARCH.Detail.ReserveRequest;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,6 +81,9 @@ public class Photo extends Fragment {
     String urlUpload = "http://3.34.136.232/SnsPhotoUpload.php";
     String userid;
     String imageFileName;
+    String comment;
+    String usernickname;
+    String imageFileNamePlus;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,6 +92,7 @@ public class Photo extends Fragment {
 
         if (getArguments() != null) {
             userid = getArguments().getString("userid");
+            usernickname = getArguments().getString("nic");
         }
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
@@ -104,7 +113,7 @@ public class Photo extends Fragment {
             @Override
             public void onClick(View v) {
                 bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
-                //content.getText();
+                comment = content.getText().toString();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -122,13 +131,36 @@ public class Photo extends Fragment {
                         String imageData = imamgeToString(bitmap);
                         params.put("image", imageData);
                         params.put("userid", imageFileName);
-                        System.out.println(imageFileName);
 
                         return params;
                     }
                 };
                 RequestQueue requestQueue = Volley.newRequestQueue(ct);
                 requestQueue.add(stringRequest);
+
+                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                                System.out.println("성공@@@@@@@@@@@@@@@@@");
+                            } else { //검색 결과 없음
+                                System.out.println("실패@@@@@@@@@@@@@");
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                PhotoRequest photoRequest = new PhotoRequest(usernickname, comment, imageFileNamePlus, responseListener3);
+                RequestQueue queue3 = Volley.newRequestQueue(ct);
+                queue3.add(photoRequest);
+
             }
         });
         return view;
@@ -194,7 +226,8 @@ public class Photo extends Fragment {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        imageFileName = userid + timeStamp;
+        imageFileName = userid + "_" + timeStamp;
+        imageFileNamePlus = imageFileName + ".jpg";
         File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
