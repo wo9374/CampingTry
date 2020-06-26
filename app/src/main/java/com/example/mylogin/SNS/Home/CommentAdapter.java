@@ -51,23 +51,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView time;
         TextView comment;
 
-        ImageButton comment_btn;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
             time = itemView.findViewById(R.id.time);
-
-            comment_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //username
-                    //comment
-                    //time
-                }
-            });
         }
     }
 }
