@@ -28,69 +28,68 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이름"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:text="이름" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="업로드 시간"
-                android:layout_marginTop="12dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
                 android:layout_toRightOf="@+id/username"
-                android:textSize="12sp"/>
+                android:text="업로드 시간"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SNS 본문"
                 android:layout_below="@+id/username"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="SNS 본문" />
 
             <ImageView
                 android:id="@+id/img_slide"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="3"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/like_img"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_below="@id/img_slide"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/icon_like_num"/>
+                android:background="@drawable/icon_like_num" />
 
             <TextView
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_slide"
-                android:layout_toRightOf="@+id/like_img"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:text="좋아요 수"/>
+                android:layout_toRightOf="@+id/like_img"
+                android:text="좋아요 수" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="댓글 "
-                android:layout_toLeftOf="@+id/comment"
                 android:layout_below="@id/img_slide"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                />
+                android:layout_toLeftOf="@+id/comment"
+                android:text="댓글 " />
 
             <TextView
                 android:id="@+id/comment"
@@ -99,11 +98,10 @@
                 android:layout_below="@id/img_slide"
 
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="댓글 수"
-                />
+                android:text="댓글 수" />
 
             <TextView
                 android:id="@+id/snscode"

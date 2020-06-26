@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mylogin.Chat.Frag5;
-import com.example.mylogin.MyPage.Master.MyPage_m;
-import com.example.mylogin.MyPage.User.MyPage;
+import com.example.mylogin.MyPage.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
+import com.example.mylogin.Shop.ShopFrag;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gun0912.tedpermission.PermissionListener;
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_id, tv_nic;
     private ImageView tv_profile;
     private String userID, userSubname, userPass, userName, userEmail;
-    private int usercheck = 0;
 
     Context context;
 
@@ -108,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         userPass = intent.getStringExtra("userPass");
         userName = intent.getStringExtra("userName");
         userEmail = intent.getStringExtra("userEmail");
-        //usercheck = intent.get
         String photoUrl = intent.getStringExtra("photoUrl");    //프로필 이미지 가져오기
 
 
@@ -148,22 +146,12 @@ public class MainActivity extends AppCompatActivity {
         d_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (usercheck == 1){
-                    Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
-                    intent1.putExtra("id", userID);
-                    intent1.putExtra("nic", userSubname);
-                    intent1.putExtra("pass", userPass);
-                    intent1.putExtra("name", userName);
-                    startActivity(intent1);
-                }
-                else {
-                    Intent intent1 = new Intent(getApplicationContext(), MyPage_m.class);
-                    intent1.putExtra("id", userID);
-                    intent1.putExtra("nic", userSubname);
-                    intent1.putExtra("pass", userPass);
-                    intent1.putExtra("name", userName);
-                    startActivity(intent1);
-                }
+                Intent intent1 = new Intent(getApplicationContext(), MyPage.class);
+                intent1.putExtra("id", userID);
+                intent1.putExtra("nic", userSubname);
+                intent1.putExtra("pass", userPass);
+                intent1.putExtra("name", userName);
+                startActivity(intent1);
             }
         });
 
@@ -239,41 +227,39 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     //프래그먼트 교체가 일어나는 실행문
     private void setFrag(int n)
     {
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putString("userid", userID);
-        bundle1.putString("nic",userSubname);
-
         switch (n)
         {
             case 0:
-                frag1.setArguments(bundle1);
                 ft.replace(R.id.main_frame, frag1);
                 ft.commit();
                 break;
             case 1:
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("userid", userID);
+                Frag2 frag2 = new Frag2();
                 frag2.setArguments(bundle1);
                 ft.replace(R.id.main_frame, frag2);
                 ft.commit();
                 break;
             case 2:
-                frag3.setArguments(bundle1);
                 ft.replace(R.id.main_frame, frag3);
                 ft.commit();
                 break;
             case 3:
-                frag4.setArguments(bundle1);
                 ft.replace(R.id.main_frame, frag4);
                 ft.commit();
                 break;
             case 4:
-                frag5.setArguments(bundle1);
+                Bundle bundle = new Bundle();
+                bundle.putString("nic",userSubname);
+
+                Frag5 frag5 = new Frag5();
+                frag5.setArguments(bundle);
                 ft.replace(R.id.main_frame, frag5);
                 ft.commit();
                 break;

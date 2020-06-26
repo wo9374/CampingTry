@@ -27,10 +27,17 @@ public class Frag1 extends Fragment {
     private Sns_favorite s_frag3;
     private Sns_account s_frag4;
 
+    public static String userid;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag1, container, false);
+
+        if (getArguments() != null) {
+            userid = getArguments().getString("userid");
+        }
+
 
         bottom_navView = view.findViewById(R.id.top_navigation);
         bottom_navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -70,21 +77,29 @@ public class Frag1 extends Fragment {
     {
         fm = getActivity().getSupportFragmentManager();
         ft = fm.beginTransaction();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", userid);
+
         switch (n)
         {
             case 0:
+                s_frag1.setArguments(bundle);
                 ft.replace(R.id.main_content, s_frag1);
                 ft.commit();
                 break;
             case 1:
+                s_frag2.setArguments(bundle);
                 ft.replace(R.id.main_content, s_frag2);
                 ft.commit();
                 break;
             case 2:
+                s_frag3.setArguments(bundle);
                 ft.replace(R.id.main_content, s_frag3);
                 ft.commit();
                 break;
             case 3:
+                s_frag4.setArguments(bundle);
                 ft.replace(R.id.main_content, s_frag4);
                 ft.commit();
                 break;
