@@ -121,6 +121,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                     Intent intent = new Intent(v.getContext(), Comment.class);
 
                     intent.putExtra("snscode",snscode.getText());
+                    intent.putExtra("nic",Home.nic);
+                    intent.putExtra("userid", Home.userid);
 
                     v.getContext().startActivity(intent);
                 }

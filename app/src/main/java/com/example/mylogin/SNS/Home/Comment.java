@@ -31,6 +31,9 @@ public class Comment extends AppCompatActivity {
     ArrayList<CommentItem> mList = new ArrayList<CommentItem>();
 
     ImageButton comment_btn;
+
+    static int snscode;
+    static String nic,userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,9 @@ public class Comment extends AppCompatActivity {
         getWindow().setGravity(Gravity.CENTER); //댓글 레이아웃 센터지정
 
         Intent intent = getIntent();
-        final int snscode = Integer.parseInt(intent.getExtras().getString("snscode")); //코드 불러옴
+        snscode = Integer.parseInt(intent.getExtras().getString("snscode")); //코드 불러옴
+        nic = intent.getExtras().getString("nic");
+        userid = intent.getExtras().getString("userid");
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -92,7 +97,8 @@ public class Comment extends AppCompatActivity {
         comment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //nic
+                //userid
             }
         });
     }
