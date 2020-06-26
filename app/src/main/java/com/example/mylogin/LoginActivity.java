@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mylogin.SearchUser.SearchIdActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String userID = jsonObject.getString("userID");
                                 String userPass = jsonObject.getString("userPassword");
                                 String userSubname = jsonObject.getString("userSubname");
+                                String usercheck = jsonObject.getString("usercheck");
                                 //String userName = jsonObject.getString("userName");
 
                                 Toast.makeText(getApplicationContext(),"로그인에 성공하셨습니다.",Toast.LENGTH_SHORT).show();
@@ -132,6 +134,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 intent.putExtra("userID", userID);  //로그인한 정보를 넘겨줌
                                 intent.putExtra("userPass", userPass);
                                 intent.putExtra("userSubname", userSubname);
+                                intent.putExtra("usercheck", usercheck);
                                 //intent.putExtra("userName", userName);
                                 startActivity(intent);
                             } else { //로그인 실패

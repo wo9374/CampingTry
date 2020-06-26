@@ -34,7 +34,7 @@ public class Frag5 extends Fragment {
     public  RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ChatData> chatList;
-    private String nick;  //임시
+    private String nick;
 
     private EditText EditText_chat;
     private Button Button_send;

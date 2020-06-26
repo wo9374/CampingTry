@@ -58,7 +58,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/sid_name"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -82,7 +82,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/sid_num"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -91,7 +91,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Searchpass_btn"
+        android:id="@+id/Searchid_btn"
         android:layout_width="360dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
