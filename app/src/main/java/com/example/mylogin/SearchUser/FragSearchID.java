@@ -1,7 +1,6 @@
 package com.example.mylogin.SearchUser;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.LoginActivity;
-import com.example.mylogin.LoginRequest;
-import com.example.mylogin.MainActivity;
 import com.example.mylogin.R;
 
 import org.json.JSONException;
@@ -61,7 +57,7 @@ public class FragSearchID  extends Fragment {
             @Override
             public void onClick(View view) {
                 final String userName = Myname.getText().toString();
-                String userNum = Mynum.getText().toString();
+                int userNum = Integer.parseInt(Mynum.getText().toString());
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -72,8 +68,7 @@ public class FragSearchID  extends Fragment {
                             if (success)//로그인 성공
                             {
                                 String userID = jsonObject.getString("userID");
-
-                                Intent intent = new Intent(mContext, MainActivity.class);
+                                Intent intent = new Intent(mContext, LoginActivity.class);
                                 intent.putExtra("userID", userID);  //로그인한 정보를 넘겨줌
                                 startActivity(intent);
                             } else { //로그인 실패
