@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn_register;
     private RadioGroup et_sex;
     private Spinner em_spinner;
+    private int userSex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
                 final String userName = et_name.getText().toString();
                 final String userSubname = et_subname.getText().toString();
                 final int userNum = Integer.parseInt(et_num.getText().toString());
-                final int userSex = Integer.parseInt(rb.getText().toString());
+                final String Sex = rb.getText().toString();
+
+                if (Sex.equals("남 성")) {userSex = 1;}
+                if (Sex.equals("여 성")) {userSex = 2;}
 
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
