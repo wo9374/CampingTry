@@ -46,7 +46,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailInformation extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -79,13 +81,14 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     int i; //이미지 불러올때 배열증가에 쓰인 변수
 
     ArrayList<PriceItem> price_data = new ArrayList<PriceItem>(); //가격표시할 배열
-    String select_price = null; //구역 선택시 구역코드 넣어줄 변수
 
     private CalendarView calendarView; //달력
     String firDay = null; //체크인 날짜
     String endDay = null; //체크아웃 날짜
 
     Button reservation_btn; //예약하기 버튼
+
+    int campitemcode = 0; //구역 선택시 구역코드 넣어줄 변수
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,7 +223,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         priceAdapter.setOnItemClickListener(new PriceAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                select_price = Integer.toString(position+1);
+                campitemcode = position+1;
             }
         });
         // 가격 리사이클러뷰 end
@@ -279,7 +282,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         reservation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //예약하기 클릭시
-                int campitemcode = Integer.parseInt(select_price);
                 List<Calendar> days = calendarView.getSelectedDates();
 
                 String result="";
@@ -305,29 +307,48 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                         endDay = day_full;
                     }
                 }
-                Toast.makeText(DetailInformation.this, result, Toast.LENGTH_LONG).show();
-                Response.Listener<String> responseListener3 = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success)//검색 결과 성공
-                            {
 
-                            } else { //검색 결과 없음
 
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                if(firDay != null){
+                    Date now_current = Calendar.getInstance().getTime();
+                    SimpleDateFormat now_dateFor= new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+                    String now_date = now_dateFor.format(now_current);
+                    int today = Integer.parseInt(now_date);
+                    int selday = Integer.parseInt(firDay);
+
+                    if(selday >= today){
+                        if(campitemcode != 0){
+                            Response.Listener<String> responseListener3 = new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        boolean success = jsonObject.getBoolean("success");
+                                        if (success)//검색 결과 성공
+                                        {
+
+                                        } else { //검색 결과 없음
+
+                                            return;
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            };
+                            //실제 서버로 Volley를 이용해서 요청을 함.
+                            ReserveRequest reserveRequest = new ReserveRequest(codeint,campitemcode,userid,firDay,endDay, responseListener3);
+                            RequestQueue queue3 = Volley.newRequestQueue(DetailInformation.this);
+                            queue3.add(reserveRequest);
+                        }else{
+                            Toast.makeText(DetailInformation.this, "예약할 구역을 선택해 주세요.", Toast.LENGTH_LONG).show();
                         }
+                    }else{
+                        Toast.makeText(DetailInformation.this, "체크인 날짜는 오늘 날짜부터 가능합니다.", Toast.LENGTH_LONG).show();
                     }
-                };
-                //실제 서버로 Volley를 이용해서 요청을 함.
-                ReserveRequest reserveRequest = new ReserveRequest(codeint,campitemcode,userid,firDay,endDay, responseListener3);
-                RequestQueue queue3 = Volley.newRequestQueue(DetailInformation.this);
-                queue3.add(reserveRequest);
+                }else{
+                    Toast.makeText(DetailInformation.this, "체크인 날짜를 선택해 주세요.", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -362,12 +383,10 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     final int month = calendar.get(Calendar.MONTH);
                     final int year = calendar.get(Calendar.YEAR);
-                    String week = new SimpleDateFormat("EE").format(calendar.getTime());
-                    //String day_full = year + (month+1) + day  + week;
+
                     String day_full = Integer.toString(year);
                     day_full = day_full + 0 +(month+1);
                     day_full = day_full + day;
-                    //day_full = day_full + week;
                     result += (day_full + "\n");
 
                     if(i==0){
@@ -379,7 +398,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     }
                 }
                 Toast.makeText(DetailInformation.this, result, Toast.LENGTH_LONG).show();
-
                 System.out.println("체크인 날짜 : "+firDay);
                 System.out.println("체크아웃 날짜 : "+endDay);
                 return true;
