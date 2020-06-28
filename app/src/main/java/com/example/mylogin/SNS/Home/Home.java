@@ -19,9 +19,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
-import com.example.mylogin.SEARCH.Detail.DetailInformation;
-import com.example.mylogin.SEARCH.Detail.PriceItem;
-import com.example.mylogin.SEARCH.Detail.ReserveRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

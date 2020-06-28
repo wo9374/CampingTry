@@ -27,7 +27,7 @@ public class Frag1 extends Fragment {
     private Home s_frag1;
     private Photo s_frag2;
     private Sns_favorite s_frag3;
-    private Sns_account s_frag4;
+    private Account s_frag4;
 
     public static String userid, nic;
 
@@ -68,7 +68,7 @@ public class Frag1 extends Fragment {
         s_frag1 = new Home();
         s_frag2 = new Photo();
         s_frag3 = new Sns_favorite();
-        s_frag4 = new Sns_account();
+        s_frag4 = new Account();
 
         setFrag(0);//첫 프래그먼트 화면 지정
 

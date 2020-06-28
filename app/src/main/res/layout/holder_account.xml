@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="2dp"
-    app:cardMaxElevation="2dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -143,19 +138,9 @@
                 android:background="@color/white"
                 android:drawableStart="@drawable/icon_comments"
                 android:paddingStart="30dp"
-                android:text="댓글 달기"
+                android:text="댓글 보기"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/chat_btn"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:drawableStart="@drawable/icon_chattting"
-                android:paddingStart="30dp"
-                android:text="채팅"
-                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
