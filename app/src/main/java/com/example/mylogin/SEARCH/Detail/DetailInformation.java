@@ -80,6 +80,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     MapFragment mapFragment;
     Bitmap img;
     String addr1;
+    String nameii;
     List<Address> list1 = null;
     //구글맵
 
@@ -105,8 +106,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         final String imgurl = intent.getExtras().getString("url");
         final String userid = intent.getExtras().getString("userid");
         addr1 = intent.getExtras().getString("addr");
+        nameii = intent.getExtras().getString("name");
 
-                name = findViewById(R.id.name); //캠핑장 이름
+        name = findViewById(R.id.name); //캠핑장 이름
         name.setText(intent.getExtras().getString("name"));
 
 
@@ -429,14 +431,14 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
             e.printStackTrace();
             Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생1");
         }
-        Address addr = list1.get(0);
-        double lat = addr.getLatitude();
-        double lon = addr.getLongitude();
+        Address addrr = list1.get(0);
+        double lat = addrr.getLatitude();
+        double lon = addrr.getLongitude();
 
         LatLng location = new LatLng(lat, lon);//좌표 : 위도,경도
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.title("영진전문대학교");//위치 명
-        markerOptions.snippet("우리학교");//부가 설명
+        markerOptions.title(nameii);//위치 명
+        markerOptions.snippet(addr1);//부가 설명
         markerOptions.position(location);
         googleMap.addMarker(markerOptions);
 
