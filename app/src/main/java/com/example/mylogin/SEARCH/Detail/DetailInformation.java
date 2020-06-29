@@ -427,7 +427,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                             10); // 읽을 개수
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
+            Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생1");
         }
         Address addr = list1.get(0);
         double lat = addr.getLatitude();
