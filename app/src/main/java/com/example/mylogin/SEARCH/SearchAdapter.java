@@ -94,6 +94,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     intent.putExtra("url",url.getText());
                     intent.putExtra("name",title.getText());
                     intent.putExtra("userid", Frag2.userid);
+                    intent.putExtra("addr",address.getText());
                     v.getContext().startActivity(intent);
                 }
             });
