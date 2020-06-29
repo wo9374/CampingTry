@@ -71,9 +71,10 @@ public class Home extends Fragment {
                             String name = jsonObject.getString("name");
                             String date = jsonObject.getString("date");
                             String desc = jsonObject.getString("desc");
+                            String campcode = jsonObject.getString("campcode");
                             final String imgurl = jsonObject.getString("imgurl");
                             String like = jsonObject.getString("like");
-                            System.out.println(name + date + desc + imgurl + like);
+                            String campname = jsonObject.getString("campname");
                             Thread mThread = new Thread(){
                                 @Override
                                 public void run(){
@@ -101,7 +102,7 @@ public class Home extends Fragment {
                             }catch (InterruptedException e){
                                 e.printStackTrace();
                             }
-                            addItem(name,date,desc,img,like, "0",snscode,"캠핑장이름","0");
+                            addItem(name,date,desc,img,like, "0",snscode,campname,campcode);
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         mAdapter.notifyDataSetChanged(); //새로고침

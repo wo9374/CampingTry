@@ -68,9 +68,9 @@ public class ReviewWrite extends AppCompatActivity {
         setContentView(R.layout.activity_review_write);
 
         Intent intent = getIntent();
-        String code = intent.getExtras().getString("code"); //코드 불러옴
+        final String code = intent.getExtras().getString("code"); //코드 불러옴
         String userid = intent.getExtras().getString("userid");
-        String nic = intent.getExtras().getString("nic");
+        final String nic = intent.getExtras().getString("nic");
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
         Diaglog();
@@ -109,9 +109,6 @@ public class ReviewWrite extends AppCompatActivity {
                         Map<String, String> params = new HashMap<>();
                         String imageData = imamgeToString(bitmap);
                         params.put("image", imageData);
-
-
-
                         params.put("userid", imageFileName);
 
                         return params;
@@ -139,7 +136,7 @@ public class ReviewWrite extends AppCompatActivity {
                     }
                 };
                 //실제 서버로 Volley를 이용해서 요청을 함.
-                PhotoRequest photoRequest = new PhotoRequest(usernickname, comment, imageFileNamePlus, responseListener3);
+                PhotoRequest photoRequest = new PhotoRequest(nic, comment, imageFileNamePlus, Integer.parseInt(code), responseListener3);
                 RequestQueue queue3 = Volley.newRequestQueue(ReviewWrite.this);
                 queue3.add(photoRequest);
 
@@ -213,7 +210,6 @@ public class ReviewWrite extends AppCompatActivity {
         imageFileName = userid + "_" + timeStamp;
         imageFileNamePlus = imageFileName + ".jpg";
 
-        System.out.println(imageFileNamePlus + "사진 이름 생성");
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
