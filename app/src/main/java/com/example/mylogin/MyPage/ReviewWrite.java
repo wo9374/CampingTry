@@ -48,7 +48,6 @@ public class ReviewWrite extends AppCompatActivity {
     private ImageView photo;
     private EditText content;
     private Button write_btn;
-    private TextView campcode;
 
     String mCurrentPhotoPath;
     final static int REQUEST_TAKE_PHOTO  = 1;
@@ -84,7 +83,6 @@ public class ReviewWrite extends AppCompatActivity {
         });
 
         content = findViewById(R.id.content);
-        campcode=findViewById(R.id.campcode);
 
         write_btn = findViewById(R.id.write_btn);
         write_btn.setOnClickListener(new View.OnClickListener() {

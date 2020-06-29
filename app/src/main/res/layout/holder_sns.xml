@@ -127,6 +127,7 @@
                 android:layout_toLeftOf="@id/snscode"
                 android:text="campcode"
                 android:visibility="invisible" />
+
         </RelativeLayout>
 
         <View

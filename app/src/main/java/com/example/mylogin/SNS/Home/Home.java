@@ -75,7 +75,6 @@ public class Home extends Fragment {
                             final String imgurl = jsonObject.getString("imgurl");
                             String like = jsonObject.getString("like");
                             String campname = jsonObject.getString("campname");
-                            String capmimgurl = jsonObject.getString("capmimgurl");
                             Thread mThread = new Thread(){
                                 @Override
                                 public void run(){
@@ -140,7 +139,6 @@ public class Home extends Fragment {
         item.setSnscode(snscode);
         item.setTitle(title);
         item.setCampcode(campcode);
-
 
         mList.add(item);
     }

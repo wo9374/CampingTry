@@ -14,6 +14,7 @@ public class HomeItem {
     private String campcode;
 
     private String title;
+    private String url;
 
     public String getUsername() {
         return username;
@@ -86,5 +87,13 @@ public class HomeItem {
 
     public void setCampcode(String campcode) {
         this.campcode = campcode;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

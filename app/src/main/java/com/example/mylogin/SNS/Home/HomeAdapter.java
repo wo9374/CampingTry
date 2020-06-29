@@ -15,6 +15,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylogin.R;
+import com.example.mylogin.SEARCH.Detail.DetailInformation;
+import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
 
 import java.util.ArrayList;
@@ -139,6 +141,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), DetailInformation.class);
+                    intent.putExtra("code",campcode.getText());
 
                 }
             });
