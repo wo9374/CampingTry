@@ -60,7 +60,6 @@ public class ReviewWrite extends AppCompatActivity {
     String userid;
     String imageFileName;
     String comment;
-    String usernickname;
     String imageFileNamePlus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +68,7 @@ public class ReviewWrite extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String code = intent.getExtras().getString("code"); //코드 불러옴
-        String userid = intent.getExtras().getString("userid");
+        userid = intent.getExtras().getString("userid");
         final String nic = intent.getExtras().getString("nic");
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
