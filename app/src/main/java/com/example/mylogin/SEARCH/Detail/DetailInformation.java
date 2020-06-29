@@ -13,7 +13,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -76,6 +79,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     FragmentManager fragmentManager;
     MapFragment mapFragment;
     Bitmap img;
+    String addr1;
+    List<Address> list1 = null;
     //구글맵
 
     int i; //이미지 불러올때 배열증가에 쓰인 변수
@@ -99,8 +104,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         final int codeint = Integer.parseInt(code);
         final String imgurl = intent.getExtras().getString("url");
         final String userid = intent.getExtras().getString("userid");
+        addr1 = intent.getExtras().getString("addr");
 
-        name = findViewById(R.id.name); //캠핑장 이름
+                name = findViewById(R.id.name); //캠핑장 이름
         name.setText(intent.getExtras().getString("name"));
 
 
@@ -414,7 +420,20 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onMapReady(GoogleMap googleMap) {//구글맵 마커
-        LatLng location = new LatLng(35.896371, 128.622029);//좌표 : 위도,경도
+        try {
+            Geocoder geocoder = new Geocoder(this);
+            list1 = geocoder.getFromLocationName
+                    (addr1, // 지역 이름
+                            10); // 읽을 개수
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
+        }
+        Address addr = list1.get(0);
+        double lat = addr.getLatitude();
+        double lon = addr.getLongitude();
+
+        LatLng location = new LatLng(lat, lon);//좌표 : 위도,경도
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title("영진전문대학교");//위치 명
         markerOptions.snippet("우리학교");//부가 설명
