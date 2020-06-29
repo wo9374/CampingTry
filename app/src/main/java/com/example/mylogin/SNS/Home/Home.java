@@ -101,7 +101,7 @@ public class Home extends Fragment {
                             }catch (InterruptedException e){
                                 e.printStackTrace();
                             }
-                            addItem(name,date,desc,img,like, "0",snscode);
+                            addItem(name,date,desc,img,like, "0",snscode,"캠핑장이름","0");
                             //*********가격코드 넣어둠 스트링으로 xml에 안보이게 해둠  변수만들어서 넣어면 댐
                         }
                         mAdapter.notifyDataSetChanged(); //새로고침
@@ -126,7 +126,7 @@ public class Home extends Fragment {
         return view;
     }
 
-    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode){
+    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode,String title,String campcode){
         HomeItem item = new HomeItem();
 
         item.setUsername(username);
@@ -136,6 +136,9 @@ public class Home extends Fragment {
         item.setLike(like);
         item.setComment(comment);
         item.setSnscode(snscode);
+        item.setTitle(title);
+        item.setCampcode(campcode);
+
 
         mList.add(item);
     }

@@ -50,6 +50,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.like.setText(item.getLike());
         holder.comment.setText(item.getComment());
         holder.snscode.setText(item.getSnscode());
+        holder.title.setText(item.getTitle());
+        holder.campcode.setText(item.getCampcode());
     }
 
     @Override
@@ -68,6 +70,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         TextView comment;
 
         TextView snscode;
+        TextView campcode;
+
+        TextView title;
 
         Button like_btn;
         Button comment_btn;
@@ -86,6 +91,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             comment = itemView.findViewById(R.id.comment);
 
             snscode = itemView.findViewById(R.id.snscode);
+            campcode = itemView.findViewById(R.id.campcode);
+
+            title = itemView.findViewById(R.id.title);
 
             like_btn = itemView.findViewById(R.id.like_btn);
             comment_btn = itemView.findViewById(R.id.comment_btn);
@@ -125,6 +133,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                     intent.putExtra("userid", Home.userid);
 
                     v.getContext().startActivity(intent);
+                }
+            });
+
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
                 }
             });
         }

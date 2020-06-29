@@ -11,6 +11,9 @@ public class HomeItem {
     private Bitmap image;
 
     private String snscode;
+    private String campcode;
+
+    private String title;
 
     public String getUsername() {
         return username;
@@ -67,5 +70,21 @@ public class HomeItem {
 
     public void setSnscode(String snscode) {
         this.snscode = snscode;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCampcode() {
+        return campcode;
+    }
+
+    public void setCampcode(String campcode) {
+        this.campcode = campcode;
     }
 }

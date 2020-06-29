@@ -81,6 +81,14 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
 
             like_btn = itemView.findViewById(R.id.like_btn);
             comment_btn = itemView.findViewById(R.id.comment_btn);
+
+
+            comment_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 }

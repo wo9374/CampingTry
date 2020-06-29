@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/default_bccolor">
-
-    <ImageView
-        android:id="@+id/photo"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/border_round" />
+        android:orientation="vertical"
+        android:background="@color/default_bccolor">
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_round" />
 
-    <EditText
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="3"
-        android:background="@drawable/border_round"
-        android:hint="코멘트 작성"
-        android:textSize="14sp" />
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:background="@drawable/border_round"
+            android:hint="코멘트 작성"
+            android:textSize="14sp" />
+        <Button
+            android:id="@+id/write_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F09661"
+            android:text="등록하기" />
 
-    <Button
-        android:id="@+id/write_btn"
-        android:layout_width="match_parent"
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/campcode"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F09661"
-        android:text="등록하기" />
-</LinearLayout>
+        android:text="캠핑장코드"/>
+</RelativeLayout>
