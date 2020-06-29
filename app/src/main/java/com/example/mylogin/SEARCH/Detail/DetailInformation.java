@@ -421,7 +421,6 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {//구글맵 마커
         try {
-
             Geocoder geocoder = new Geocoder(this);
             list1 = geocoder.getFromLocationName
                     (addr1, // 지역 이름
