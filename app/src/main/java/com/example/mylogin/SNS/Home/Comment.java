@@ -18,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
-import com.example.mylogin.SNS.PhotoRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -58,6 +58,8 @@ public class MyPage extends AppCompatActivity {
         });
 
 
+
+
         //닫기
         d_close.setOnClickListener(new View.OnClickListener() {
             @Override

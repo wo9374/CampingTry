@@ -1,4 +1,4 @@
-package com.example.mylogin.SNS;
+package com.example.mylogin.MyPage;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

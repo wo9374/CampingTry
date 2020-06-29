@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mylogin.Chat.Frag5;
 import com.example.mylogin.MyPage.Master.MyPage_m;
+import com.example.mylogin.MyPage.Reserving;
 import com.example.mylogin.MyPage.User.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
@@ -161,8 +162,19 @@ public class MainActivity extends AppCompatActivity {
                     intent1.putExtra("nic", userSubname);
                     intent1.putExtra("pass", userPass);
                     intent1.putExtra("name", userName);
-                    startActivity(intent1);
+
                 }
+            }
+        });
+
+        Button d_reservation =  (Button)findViewById(R.id.d_reservation);
+        d_reservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Reserving.class);
+                intent.putExtra("id", userID);
+                intent.putExtra("nic", userSubname);
+                startActivity(intent);
             }
         });
 

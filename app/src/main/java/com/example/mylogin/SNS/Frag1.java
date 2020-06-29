@@ -25,9 +25,8 @@ public class Frag1 extends Fragment {
     private FragmentTransaction ft;
 
     private Home s_frag1;
-    private Photo s_frag2;
-    private Sns_favorite s_frag3;
-    private Account s_frag4;
+    private Sns_favorite s_frag2;
+    private Account s_frag3;
 
     public static String userid, nic;
 
@@ -51,14 +50,11 @@ public class Frag1 extends Fragment {
                     case R.id.action_home:
                         setFrag(0);
                         break;
-                    case R.id.action_add_photo:
+                    case R.id.action_favorite_alarm:
                         setFrag(1);
                         break;
-                    case R.id.action_favorite_alarm:
-                        setFrag(2);
-                        break;
                     case R.id.action_account:
-                        setFrag(3);
+                        setFrag(2);
                         break;
                 }
                 return true;
@@ -66,9 +62,8 @@ public class Frag1 extends Fragment {
         });
 
         s_frag1 = new Home();
-        s_frag2 = new Photo();
-        s_frag3 = new Sns_favorite();
-        s_frag4 = new Account();
+        s_frag2 = new Sns_favorite();
+        s_frag3 = new Account();
 
         setFrag(0);//첫 프래그먼트 화면 지정
 
@@ -100,11 +95,6 @@ public class Frag1 extends Fragment {
             case 2:
                 s_frag3.setArguments(bundle);
                 ft.replace(R.id.main_content, s_frag3);
-                ft.commit();
-                break;
-            case 3:
-                s_frag4.setArguments(bundle);
-                ft.replace(R.id.main_content, s_frag4);
                 ft.commit();
                 break;
         }

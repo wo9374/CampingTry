@@ -1,37 +1,27 @@
-package com.example.mylogin.SNS;
+package com.example.mylogin.MyPage;
 
-import android.Manifest;
-import android.app.Activity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,33 +31,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
-import com.example.mylogin.SEARCH.Detail.DetailInformation;
-import com.example.mylogin.SEARCH.Detail.ReserveRequest;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static android.app.Activity.RESULT_OK;
-import static com.android.volley.VolleyLog.TAG;
-
-public class Photo extends Fragment {
-    private View view;
-    private Context ct;
-
+public class ReviewWrite extends AppCompatActivity {
     private ImageView photo;
     private EditText content;
     private Button write_btn;
@@ -84,21 +60,20 @@ public class Photo extends Fragment {
     String comment;
     String usernickname;
     String imageFileNamePlus;
-
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.sns_photo, container, false);
-        ct = container.getContext();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_review_write);
 
-        if (getArguments() != null) {
-            userid = getArguments().getString("userid");
-            usernickname = getArguments().getString("nic");
-        }
+        Intent intent = getIntent();
+        String code = intent.getExtras().getString("code"); //코드 불러옴
+        String userid = intent.getExtras().getString("userid");
+        String nic = intent.getExtras().getString("nic");
 
         //카메라 권한부분은 MainActivity에서 미리 받고 있음
         Diaglog();
 
-        photo = view.findViewById(R.id.photo);
+        photo = findViewById(R.id.photo);
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +82,8 @@ public class Photo extends Fragment {
             }
         });
 
-        content = view.findViewById(R.id.content);
-        write_btn = view.findViewById(R.id.write_btn);
+        content = findViewById(R.id.content);
+        write_btn = findViewById(R.id.write_btn);
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,12 +92,12 @@ public class Photo extends Fragment {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ct,response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(ReviewWrite.this,response, Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ct,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(ReviewWrite.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
                     @Override
@@ -138,7 +113,7 @@ public class Photo extends Fragment {
                         return params;
                     }
                 };
-                RequestQueue requestQueue = Volley.newRequestQueue(ct);
+                RequestQueue requestQueue = Volley.newRequestQueue(ReviewWrite.this);
                 requestQueue.add(stringRequest);
 
                 Response.Listener<String> responseListener3 = new Response.Listener<String>() {
@@ -161,14 +136,12 @@ public class Photo extends Fragment {
                 };
                 //실제 서버로 Volley를 이용해서 요청을 함.
                 PhotoRequest photoRequest = new PhotoRequest(usernickname, comment, imageFileNamePlus, responseListener3);
-                RequestQueue queue3 = Volley.newRequestQueue(ct);
+                RequestQueue queue3 = Volley.newRequestQueue(ReviewWrite.this);
                 queue3.add(photoRequest);
 
             }
         });
-        return view;
     }
-
     private  String imamgeToString(Bitmap bitmap){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
@@ -193,7 +166,7 @@ public class Photo extends Fragment {
             }
         };
 
-        new AlertDialog.Builder(ct)   //프로필 알림창 표시
+        new AlertDialog.Builder(this)   //프로필 알림창 표시
                 .setTitle("업로드할 이미지 선택")
                 .setPositiveButton("사진 촬영", cameraListener)
                 .setNeutralButton("앨범 선택", albumListener)
@@ -203,7 +176,7 @@ public class Photo extends Fragment {
     public void OpenCamera(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
             try {
@@ -211,7 +184,7 @@ public class Photo extends Fragment {
             } catch (IOException ex) {
             }
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(ct,"com.example.mylogin",photoFile);
+                Uri photoURI = FileProvider.getUriForFile(this,"com.example.mylogin",photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -237,7 +210,7 @@ public class Photo extends Fragment {
         imageFileNamePlus = imageFileName + ".jpg";
 
         System.out.println(imageFileNamePlus + "사진 이름 생성");
-        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -257,7 +230,7 @@ public class Photo extends Fragment {
                     File file = new File(mCurrentPhotoPath);
                     Bitmap bitmap = null;
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.fromFile(file));
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

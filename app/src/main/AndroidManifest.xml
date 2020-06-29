@@ -22,6 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MyPage.ReviewWrite"></activity>
+        <activity android:name=".MyPage.Reserving" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,7 +35,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".SNS.Home.Comment"/>
+        <activity android:name=".SNS.Home.Comment" />
         <activity android:name=".MyPage.User.MyPage" />
         <activity android:name=".MyPage.Master.MyPage_m" />
         <activity android:name=".MyPage.RequestProfile.RequestProfileActivity" />
@@ -60,8 +62,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-
     </application>
 
 </manifest>

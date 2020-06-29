@@ -1,4 +1,4 @@
-package com.example.mylogin.SEARCH;
+package com.example.mylogin.MyPage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,33 +9,35 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mylogin.R;
-import com.example.mylogin.SEARCH.Detail.DetailInformation;
+
 import java.util.ArrayList;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class ReservingAdapter extends RecyclerView.Adapter<ReservingAdapter.ViewHolder>{
 
-    private ArrayList<SearchRecycleItem> mData = null;
+    private ArrayList<ReservingItem> mData = null;
 
-    public SearchAdapter(ArrayList<SearchRecycleItem> list) {
+    public ReservingAdapter(ArrayList<ReservingItem> list) {
         this.mData = list;
     }
     @NonNull
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context =parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.holder_search,parent,false);
-        SearchAdapter.ViewHolder vh = new SearchAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.holder_reserving,parent,false);
+        ReservingAdapter.ViewHolder vh = new ReservingAdapter.ViewHolder(view);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
-        SearchRecycleItem item = mData.get(position);
+    public void onBindViewHolder(@NonNull ReservingAdapter.ViewHolder holder, int position) {
+        ReservingItem item = mData.get(position);
 
         holder.image.setImageBitmap(item.getImage());
         holder.title.setText(item.getTitle());
@@ -63,7 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView code;
         TextView url;
         RatingBar star;
-        Button Detail_btn;
+        Button Review_btn;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -80,16 +82,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             star = itemView.findViewById(R.id.star);
 
-            Detail_btn = itemView.findViewById(R.id.Detail_btn);
-            Detail_btn.setOnClickListener(new View.OnClickListener(){
+            Review_btn = itemView.findViewById(R.id.Review_btn);
+            Review_btn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(v.getContext(), DetailInformation.class);
-                    intent.putExtra("code",code.getText());
-                    intent.putExtra("url",url.getText());
-                    intent.putExtra("name",title.getText());
-                    intent.putExtra("userid", Frag2.userid);
+                    Intent intent = new Intent(v.getContext(), ReviewWrite.class);
+                    intent.putExtra("code",code.getText()); //캠핑장코드
+                    intent.putExtra("userid", Reserving.userId); //유저 아이디
+                    intent.putExtra("nic", Reserving.nic); //닉네임
+
                     v.getContext().startActivity(intent);
                 }
             });
