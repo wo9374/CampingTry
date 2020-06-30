@@ -109,14 +109,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
+            System.out.println(snscode.getText() + " sns코드@@@@@@@ㄹㄹㄹㄹㄹ@@@@@@");
+            System.out.println(Frag1.likelist.get(0)+ "@@@@@@@@@@@KKKKKK@@@@@@@@@@@@@");
+            for( int i =0; i<Frag1.likelist.size(); i++){
+                if(snscode.getText().equals(Frag1.likelist.get(i))){
+                    like_btn.setText("좋아요 취소");
+                    like_on = true;
+                }
+            }
 
-
-            //for( int i =0; i<Frag1.likelist.size(); i++){
-                //if(snscode == Frag1.likelist.get(i)){
-                   // like_btn.setText("좋아요 취소");
-                 //   like_on = true;
-               // }
-           // }
 
             like_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

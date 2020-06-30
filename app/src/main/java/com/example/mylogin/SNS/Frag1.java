@@ -1,5 +1,6 @@
 package com.example.mylogin.SNS;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,15 +11,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Home.Comment;
+import com.example.mylogin.SNS.Home.CommentRequest;
 import com.example.mylogin.SNS.Home.Home;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class Frag1 extends Fragment {
 
     private View view;
+    private Context ct;
 
     private BottomNavigationView bottom_navView;
     private FragmentManager fm;
@@ -30,16 +42,45 @@ public class Frag1 extends Fragment {
 
     public static String userid, nic;
 
-    public static ArrayList likelist;
+    public static ArrayList<String> likelist;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag1, container, false);
-
+        ct = container.getContext();
+        likelist = new ArrayList<>();
         if (getArguments() != null) {
             userid = getArguments().getString("userid");
             nic = getArguments().getString("nic");
         }
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String snscode = jsonObject.getString("snscode");
+                            System.out.println(snscode + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                            likelist.add(snscode);
+                        }
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        LikeCheck likeCheck = new LikeCheck(userid, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(ct);
+        queue.add(likeCheck);
 
         bottom_navView = view.findViewById(R.id.top_navigation);
         bottom_navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){

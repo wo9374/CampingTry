@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Frag1;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -129,6 +131,7 @@ public class Home extends Fragment {
                                                     commentcount1 = commentcountList.get(x);
                                                 }
                                             }
+                                            System.out.println("값들어가요@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                                             addItem(name, date, desc, img, like, commentcount1, snscode, campname, campcode);
                                             commentcount1 = "0";
                                         }

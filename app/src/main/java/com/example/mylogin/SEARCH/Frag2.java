@@ -82,7 +82,6 @@ public class Frag2 extends Fragment {
         if (getArguments() != null) {
             userid = getArguments().getString("userid");
         }
-        System.out.println(userid + "프레그2에서 유저아이디 확인");
 
         keyword = view.findViewById(R.id.keyword); //키워드 창
 

@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mylogin.MainActivity;
 import com.example.mylogin.R;
 
 import org.json.JSONException;
@@ -93,7 +94,7 @@ public class ReviewWrite extends AppCompatActivity {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ReviewWrite.this,response, Toast.LENGTH_LONG).show();
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -122,7 +123,11 @@ public class ReviewWrite extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//검색 결과 성공
                             {
-
+                                Toast.makeText(getApplicationContext(),"후기가 등록되었습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ReviewWrite.this, MainActivity.class);
+                                intent.putExtra("userID", userid);  //로그인한 정보를 넘겨줌
+                                intent.putExtra("userSubname", nic);
+                                startActivity(intent);
                             } else { //검색 결과 없음
 
                                 return;
