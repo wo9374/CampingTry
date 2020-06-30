@@ -150,7 +150,6 @@
                 android:background="@color/white"
                 android:drawableStart="@drawable/icon_like"
                 android:paddingStart="30dp"
-                android:text="좋아요"
                 android:textSize="12sp" />
 
             <Button

@@ -62,6 +62,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         holder.snscode.setText(item.getSnscode());
         holder.title.setText(item.getTitle());
         holder.campcode.setText(item.getCampcode());
+        holder.like_btn.setText(item.getLike_text());
     }
 
     @Override
@@ -69,7 +70,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         return mData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView username;
         TextView time;
@@ -88,9 +89,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
         Button comment_btn;
         Button chat_btn;
 
-        private boolean like_on=false;
+        public static boolean like_on=false;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
@@ -109,14 +110,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
-            System.out.println(snscode.getText() + " sns코드@@@@@@@ㄹㄹㄹㄹㄹ@@@@@@");
-            System.out.println(Frag1.likelist.get(0)+ "@@@@@@@@@@@KKKKKK@@@@@@@@@@@@@");
-            for( int i =0; i<Frag1.likelist.size(); i++){
-                if(snscode.getText().equals(Frag1.likelist.get(i))){
-                    like_btn.setText("좋아요 취소");
-                    like_on = true;
-                }
-            }
+
 
 
             like_btn.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +118,97 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                 public void onClick(View v) {
                     if(like_on==true){ //좋아요가 눌러져 있을 때
                         like_btn.setText("좋아요");
+                        like_on=false;
+                        String userid = Home.userid;
+                        String snscode1 = snscode.getText().toString();
                         //여기서 좋아요 취소 쿼리문
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    {
+                                    } else {
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        LikeCancle loginRequest = new LikeCancle(userid, snscode1, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(itemView.getContext());
+                        queue.add(loginRequest);
+                        String snscode2 = snscode.getText().toString();
+                        int liked = Integer.parseInt(like.getText().toString());
+                        Response.Listener<String> responseListener1 = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    {
 
+                                    } else {
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        LikeMinus likeMinus = new LikeMinus(snscode2, liked, responseListener1);
+                        RequestQueue queue1 = Volley.newRequestQueue(itemView.getContext());
+                        queue1.add(likeMinus);
                     }else{ //좋아요 안눌러져 있을 때
-                        like_btn.setText("좋아요 취소");
+                        like_btn.setText("취소");
+                        like_on=true;
+                        String userid = Home.userid;
+                        String snscode1 = snscode.getText().toString();
                         //여기서 좋아요 증가 쿼리문
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    {
+                                    } else {
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        Liked liked = new Liked(userid, snscode1, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(itemView.getContext());
+                        queue.add(liked);
+                        String snscode3 = snscode.getText().toString();
+                        int liked1 = Integer.parseInt(like.getText().toString());
+                        Response.Listener<String> responseListener1 = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    {
+                                    } else {
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        LikePlus likePlus = new LikePlus(snscode3, liked1, responseListener1);
+                        RequestQueue queue1 = Volley.newRequestQueue(itemView.getContext());
+                        queue1.add(likePlus);
                     }
                 }
             });

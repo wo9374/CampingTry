@@ -49,6 +49,7 @@ public class Home extends Fragment {
 
     public static String userid, nic; //아이디, 닉네임
 
+    String liked;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -131,8 +132,15 @@ public class Home extends Fragment {
                                                     commentcount1 = commentcountList.get(x);
                                                 }
                                             }
-                                            System.out.println("값들어가요@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                                            addItem(name, date, desc, img, like, commentcount1, snscode, campname, campcode);
+                                            liked = "좋아요";
+                                            HomeAdapter.ViewHolder.like_on = false;
+                                            for( int x =0; x<Frag1.likelist.size(); x++){
+                                                if(snscode.equals(Frag1.likelist.get(x))){
+                                                    liked = "취소";
+                                                    HomeAdapter.ViewHolder.like_on = true;
+                                                }
+                                            }
+                                            addItem(name, date, desc, img, like, commentcount1, snscode, campname, campcode,liked);
                                             commentcount1 = "0";
                                         }
                                         mAdapter.notifyDataSetChanged(); //새로고침
@@ -169,7 +177,7 @@ public class Home extends Fragment {
         return view;
     }
 
-    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode, String title, String campcode) {
+    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode, String title, String campcode,String like_text) {
         HomeItem item = new HomeItem();
 
         item.setUsername(username);
@@ -181,7 +189,7 @@ public class Home extends Fragment {
         item.setSnscode(snscode);
         item.setTitle(title);
         item.setCampcode(campcode);
-
+        item.setLike_text(like_text);
 
         mList.add(item);
     }

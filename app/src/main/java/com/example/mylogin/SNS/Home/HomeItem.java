@@ -16,6 +16,8 @@ public class HomeItem {
     private String title;
     private String url;
 
+    private String like_text;
+
     public String getUsername() {
         return username;
     }
@@ -95,5 +97,13 @@ public class HomeItem {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getLike_text() {
+        return like_text;
+    }
+
+    public void setLike_text(String like_text) {
+        this.like_text = like_text;
     }
 }
