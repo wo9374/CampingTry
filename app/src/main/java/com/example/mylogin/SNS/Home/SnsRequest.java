@@ -16,7 +16,6 @@ public class SnsRequest extends StringRequest {
     public SnsRequest(Response.Listener<String> listener)
     {
         super(Request.Method.POST, URL, listener, null);
-
         map = new HashMap<>();
     }
 

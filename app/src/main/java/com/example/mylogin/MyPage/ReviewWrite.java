@@ -133,7 +133,7 @@ public class ReviewWrite extends AppCompatActivity {
                     }
                 };
                 //실제 서버로 Volley를 이용해서 요청을 함.
-                PhotoRequest photoRequest = new PhotoRequest(nic, comment, imageFileNamePlus, Integer.parseInt(code), responseListener3);
+                PhotoRequest photoRequest = new PhotoRequest(nic, comment, imageFileNamePlus, Integer.parseInt(code), userid, responseListener3);
                 RequestQueue queue3 = Volley.newRequestQueue(ReviewWrite.this);
                 queue3.add(photoRequest);
 
