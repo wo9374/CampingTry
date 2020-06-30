@@ -25,6 +25,14 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             />
+        <TextView
+            android:id="@+id/usernicname"
+            android:text="닉네임"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            />
     </LinearLayout>
 
     <LinearLayout

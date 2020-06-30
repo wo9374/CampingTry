@@ -2,7 +2,6 @@ package com.example.mylogin.Chat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mylogin.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRoom extends Fragment {
+public class Start_Chat extends Fragment {
     private FragmentActivity mContext;
 
     private RecyclerView mRecyclerView;
@@ -35,6 +35,10 @@ public class ChatRoom extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ChatData> chatList;
     private String nick;
+
+    private String uid;
+    private String chatRoomUid;
+    private String destinatonUid;
 
     private EditText EditText_chat;
     private Button Button_send;
@@ -52,6 +56,9 @@ public class ChatRoom extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_chat_room, container, false);
+
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();  //채팅을 요구 하는 아아디 즉 단말기에 로그인된 UID
+        //destinatonUid = getIntent().getStringExtra("destinationUid"); // 채팅을 당하는 아이디
 
         Button_send = view.findViewById(R.id.Button_send);
         EditText_chat = view.findViewById(R.id.EditText_chat);
@@ -81,7 +88,7 @@ public class ChatRoom extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         chatList = new ArrayList<>();
-        mAdapter = new ChatAdapter(chatList, ChatRoom.this, nick);
+        mAdapter = new ChatAdapter(chatList, Start_Chat.this, nick);
 
         mRecyclerView.setAdapter(mAdapter);
 

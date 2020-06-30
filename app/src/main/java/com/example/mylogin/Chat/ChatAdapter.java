@@ -29,7 +29,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         }
     }
 
-    public ChatAdapter(List<ChatData> myDataset, ChatRoom context, String myNickName){
+    public ChatAdapter(List<ChatData> myDataset, Start_Chat context, String myNickName){
         mDataset = myDataset;
         this.myNickName = myNickName;
     }
