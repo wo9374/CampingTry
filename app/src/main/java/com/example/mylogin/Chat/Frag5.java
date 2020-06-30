@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,11 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Account;
+import com.example.mylogin.SNS.Home.Home;
+import com.example.mylogin.SNS.Sns_favorite;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,94 +34,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frag5 extends Fragment {
-    private FragmentActivity mContext;
-
-    private RecyclerView mRecyclerView;
-    public  RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private List<ChatData> chatList;
-    private String nick;
-
-    private EditText EditText_chat;
-    private Button Button_send;
-    private DatabaseReference myRef;
 
     private View view;
 
-    @Override
-    public void onAttach(@NonNull Activity activity) {
-        mContext = (FragmentActivity) activity;
-        super.onAttach(activity);
-    }
+    private BottomNavigationView bottom_navView;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+
+    public static String userid, nic;
+
+    private Chat_People c_frag1;
+    private Chat_Room c_frag2;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag5, container, false);
 
-        Button_send = view.findViewById(R.id.Button_send);
-        EditText_chat = view.findViewById(R.id.EditText_chat);
-
-        if (getArguments() != null) {
-            nick = getArguments().getString("nic");
-        }
-
-        Button_send.setOnClickListener(new View.OnClickListener() {
+        bottom_navView = view.findViewById(R.id.top_navigation);
+        bottom_navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public void onClick(View v) {
-                String msg = EditText_chat.getText().toString();
-
-                if(msg != null) {
-                    ChatData chat = new ChatData();
-                    chat.setNickname(nick);
-                    chat.setMsg(msg);
-                    EditText_chat.setText("");
-                    myRef.push().setValue(chat);    //push로 묶어준다
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.chat_people:
+                        setFrag(0);
+                        break;
+                    case R.id.chat_room:
+                        setFrag(1);
+                        break;
                 }
+                return true;
             }
         });
 
-        mRecyclerView = view.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        c_frag1 = new Chat_People();
+        c_frag2 = new Chat_Room();
 
-        chatList = new ArrayList<>();
-        mAdapter = new ChatAdapter(chatList, Frag5.this, nick);
+        setFrag(0);//첫 프래그먼트 화면 지정
 
-        mRecyclerView.setAdapter(mAdapter);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ChatData chat = snapshot.getValue(ChatData.class);
-                ((ChatAdapter) mAdapter).addChat(chat); //리스너 안에서는 인식이 안되니까 괄호 두번
-                Log.d("Test", snapshot.getValue().toString());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         return view;
+    }
+
+    //프래그먼트 교체가 일어나는 실행문
+    private void setFrag(int n)
+    {
+        fm = getActivity().getSupportFragmentManager();
+        ft = fm.beginTransaction();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userid", userid);
+        bundle.putString("nic",nic);
+
+        switch (n)
+        {
+            case 0:
+                c_frag1.setArguments(bundle);
+                ft.replace(R.id.main_content, c_frag1);
+                ft.commit();
+                break;
+            case 1:
+                c_frag2.setArguments(bundle);
+                ft.replace(R.id.main_content, c_frag2);
+                ft.commit();
+                break;
+        }
     }
 }

@@ -6,6 +6,9 @@
     <string name="search">게시물 검색</string>
     <string name="favorite">활동 및 알림</string>
     <string name="account">내 후기</string>
+    <string name="chat">유저 목록</string>
+    <string name="chat_view">채팅 목록</string>
+    <string name="rc_color">splash_background</string>
 
     <string name="hint_image_content">Image description</string>
     <string name="upload_image">PHOTO UPLOAD</string>

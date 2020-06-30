@@ -3,6 +3,7 @@ package com.example.mylogin.SearchUser;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,12 @@ import com.example.mylogin.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class FragSearchID  extends Fragment {
     private View view;
     private FragmentActivity mContext;
 
-    private EditText Myname, Mynum;
+    private EditText sid_name, sid_num;
     private Button Search_btn;
 
     public static FragSearchID newInstance()
@@ -39,9 +39,9 @@ public class FragSearchID  extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Activity context) {
-        mContext = (FragmentActivity) context;
-        super.onAttach(context);
+    public void onAttach(@NonNull Activity activity) {
+        mContext = (FragmentActivity) activity;
+        super.onAttach(activity);
     }
 
     @Nullable
@@ -49,15 +49,15 @@ public class FragSearchID  extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_searchid, container, false);
 
-        Myname = view.findViewById(R.id.sid_name);
-        Mynum = view.findViewById(R.id.sid_num);
+        sid_name = view.findViewById(R.id.sid_name);
+        sid_num = view.findViewById(R.id.sid_num);
         Search_btn = view.findViewById(R.id.Searchid_btn);
 
         Search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String userName = Myname.getText().toString();
-                int userNum = Integer.parseInt(Mynum.getText().toString());
+                final String userName = sid_name.getText().toString();
+                final int userNum = Integer.parseInt(sid_num.getText().toString());
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -67,9 +67,12 @@ public class FragSearchID  extends Fragment {
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//로그인 성공
                             {
-                                String userID = jsonObject.getString("userID");
+                                String userEmail = jsonObject.getString("userEmail");
                                 Intent intent = new Intent(mContext, LoginActivity.class);
-                                intent.putExtra("userID", userID);  //로그인한 정보를 넘겨줌
+                                intent.putExtra("userEmail", userEmail);  //로그인한 정보를 넘겨줌
+                                intent.putExtra("userName", userName);  //로그인한 정보를 넘겨줌
+                                intent.putExtra("userNum", userNum);  //로그인한 정보를 넘겨줌
+                                Log.d("성공함", userEmail);
                                 startActivity(intent);
                             } else { //로그인 실패
                                 return;
@@ -80,7 +83,7 @@ public class FragSearchID  extends Fragment {
                     }
                 };
                 FragSIDRequest fragSIDRequest = new FragSIDRequest(userName, userNum, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(mContext);
+                RequestQueue queue = Volley.newRequestQueue(view.getContext());
                 queue.add(fragSIDRequest);
             }
         });

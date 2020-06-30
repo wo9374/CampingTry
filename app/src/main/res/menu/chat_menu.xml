@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/chat_people"
+        android:icon="@drawable/icon_account"
+        android:enabled="true"
+        android:title="@string/chat"/>
+
+    <item
+        android:id="@+id/chat_room"
+        android:enabled="true"
+        android:icon="@drawable/icon_chat"
+        android:title="@string/chat_view" />
+</menu>
