@@ -64,11 +64,17 @@ public class Frag2 extends Fragment {
     SearchAdapter mAdapter = null;
     ArrayList<SearchRecycleItem> mList =  new ArrayList<SearchRecycleItem>();
 
+    private ArrayList<String> campcodeList;
+    private ArrayList<Float> reviewList;
+    float avg = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag2, container, false);
         ct = container.getContext();
+        campcodeList = new ArrayList<>();
+        reviewList = new ArrayList<>();
         int j;
         for(j=0; j<chk.length;j++){
             chk[j]= false;
@@ -217,7 +223,7 @@ public class Frag2 extends Fragment {
                         System.out.println(tema_chk); //구해진 tema_chk 스트링으로 테마 참아주삼 테마 체크한거 없으면 모든테마로 쿼리 ㄱㄱ
 
                     }
-                    final Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    Response.Listener<String> responseListener1 = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String responses) {
                             try {
@@ -226,49 +232,84 @@ public class Frag2 extends Fragment {
                                 boolean success = jsonObjectfirst.getBoolean("success");
                                 if (success)//검색 결과 성공
                                 {
-                                    for (int i =0; i<jsonArray.length();i++){
+                                    for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                        String code = jsonObject.getString("code");
-                                        String name = jsonObject.getString("name");
-                                        String addr = jsonObject.getString("addr");
-                                        String price = jsonObject.getString("price");
-                                        String keyword = jsonObject.getString("keyword");
-                                        final String imgurl = jsonObject.getString("imgurl");
-                                        final String[] imgurls = imgurl.split(",");
-                                        Thread mThread = new Thread(){
-                                            @Override
-                                            public void run(){
-                                                try {
-                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
-                                                    img = ((BitmapDrawable)drawable).getBitmap();
-                                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                                    conn.setDoInput(true);
-                                                    conn.connect();
-
-                                                    InputStream is = conn.getInputStream();
-                                                    img = BitmapFactory.decodeStream(is);
-
-                                                } catch (MalformedURLException e) {
-                                                    e.printStackTrace();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        };
-                                        mThread.start();
-                                        try {
-                                            mThread.join();
-                                        }catch (InterruptedException e){
-                                            e.printStackTrace();
-                                        }
-                                        addItem(img, name, keyword,price,addr,code,imgurl, (float)4);
+                                        String campcode = jsonObject.getString("campcode");
+                                        String avgreview = jsonObject.getString("avgreview");
+                                        float floatavg = Float.parseFloat(avgreview);
+                                        campcodeList.add(campcode);
+                                        reviewList.add(floatavg);
                                     }
+                                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String responses) {
+                                            try {
+                                                JSONArray jsonArray = new JSONArray(responses);
+                                                JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                                                boolean success = jsonObjectfirst.getBoolean("success");
+                                                if (success)//검색 결과 성공
+                                                {
+                                                    for (int i =0; i<jsonArray.length();i++){
+                                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                                        String code = jsonObject.getString("code");
+                                                        String name = jsonObject.getString("name");
+                                                        String addr = jsonObject.getString("addr");
+                                                        String price = jsonObject.getString("price");
+                                                        String keyword = jsonObject.getString("keyword");
+                                                        final String imgurl = jsonObject.getString("imgurl");
+                                                        final String[] imgurls = imgurl.split(",");
+                                                        Thread mThread = new Thread(){
+                                                            @Override
+                                                            public void run(){
+                                                                try {
+                                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
+                                                                    img = ((BitmapDrawable)drawable).getBitmap();
+                                                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                                                    conn.setDoInput(true);
+                                                                    conn.connect();
 
-                                    mAdapter.notifyDataSetChanged(); //새로고침
+                                                                    InputStream is = conn.getInputStream();
+                                                                    img = BitmapFactory.decodeStream(is);
 
+                                                                } catch (MalformedURLException e) {
+                                                                    e.printStackTrace();
+                                                                } catch (IOException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        };
+                                                        mThread.start();
+                                                        try {
+                                                            mThread.join();
+                                                        }catch (InterruptedException e){
+                                                            e.printStackTrace();
+                                                        }
+                                                        for (int x = 0; x < campcodeList.size(); x++) {
+                                                            if (campcodeList.get(x) == code) {
+                                                                avg = reviewList.get(x);
+                                                            }
+                                                        }
+                                                        addItem(img, name, keyword,price,addr,code,imgurl,avg);
+                                                        avg = 0;
+                                                    }
+
+                                                    mAdapter.notifyDataSetChanged(); //새로고침
+
+                                                } else { //검색 결과 없음
+                                                    Toast.makeText(ct,"캠핑장 정보가 없습니다.",Toast.LENGTH_LONG).show();
+                                                    mAdapter.notifyDataSetChanged(); //새로고침
+                                                    return;
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    //실제 서버로 Volley를 이용해서 요청을 함.
+                                    SearchRequest searchRequest = new SearchRequest(mAdd, sAdd, keyword_txt, tema_chk, responseListener);
+                                    RequestQueue queue = Volley.newRequestQueue(ct);
+                                    queue.add(searchRequest);
                                 } else { //검색 결과 없음
-                                    Toast.makeText(ct,"캠핑장 정보가 없습니다.",Toast.LENGTH_LONG).show();
-                                    mAdapter.notifyDataSetChanged(); //새로고침
                                     return;
                                 }
                             } catch (JSONException e) {
@@ -277,11 +318,10 @@ public class Frag2 extends Fragment {
                         }
                     };
                     //실제 서버로 Volley를 이용해서 요청을 함.
-                    SearchRequest searchRequest = new SearchRequest(mAdd, sAdd, keyword_txt, tema_chk, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(ct);
-                    queue.add(searchRequest);
+                    ReviewAvgRequest reviewAvgRequest = new ReviewAvgRequest(responseListener1);
+                    RequestQueue queue1 = Volley.newRequestQueue(ct);
+                    queue1.add(reviewAvgRequest);
                 } //지역 선택 else 끝
-
             }
         });
 
@@ -289,7 +329,6 @@ public class Frag2 extends Fragment {
         mAdapter = new SearchAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-
 
         return view;
     }//onCreateView end.
