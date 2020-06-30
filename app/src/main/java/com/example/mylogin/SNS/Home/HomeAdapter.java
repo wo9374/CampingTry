@@ -198,6 +198,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                                     boolean success = jsonObject.getBoolean("success");
                                     if (success)
                                     {
+                                        System.out.println("좋아요 성공!!!!!!!!!!!!!!!!");
                                     } else {
                                         return;
                                     }
@@ -211,6 +212,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
                         queue1.add(likePlus);
                     }
                 }
+
             });
 
 
