@@ -3,9 +3,8 @@ package com.example.mylogin.MyPage.Master;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,9 +16,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import com.example.mylogin.R;
-
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +34,7 @@ public class AddCamp extends AppCompatActivity {
     public static boolean chk[] = new boolean[11];
     private String facility_chk;
 
-    private EditText camp_name,camp_addr,camp_tel, camp_nature , price_name,price,price_content;
+    private EditText camp_name,camp_addr,camp_tel, camp_keyword, camp_openday , price_name,price,price_content;
     private Button album_btn,add_price,add_camp_btn;
 
     ArrayList<AddPriceItem> priceDataList;
@@ -51,6 +47,7 @@ public class AddCamp extends AppCompatActivity {
 
     String imageFileName;
     String imageFileNamePlus;
+    private Uri photoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +83,9 @@ public class AddCamp extends AppCompatActivity {
         camp_name = findViewById(R.id.camp_name);
         camp_addr = findViewById(R.id.camp_addr);
         camp_tel = findViewById(R.id.camp_tel);
-        camp_nature = findViewById(R.id.keyword);
+        camp_keyword = findViewById(R.id.keyword);
+        camp_openday = findViewById(R.id.openday);
+
 
 
         album_btn = findViewById(R.id.album_btn);
@@ -183,16 +182,16 @@ public class AddCamp extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_TAKE_ALBUM:{
                 if (resultCode == RESULT_OK) {
-                    if (intent.getData()!=null){
-                        try{
-                           // photoURI = intent.getData();
-                           // photo.setImageURI(photoURI);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            Log.v("알림","앨범에서 가져오기 에러");
+                    ClipData clipData = intent.getClipData();
+
+                    if (clipData != null){
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH");
+                        Date now = new Date();
+                        for(int i = 0; i < clipData.getItemCount(); i++){
+
                         }
                     }
-                }
+                }//리절트 오케이 끝
                 break;
             }
         }
