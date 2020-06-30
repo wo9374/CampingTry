@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.2.1'//파이어베이스 인증2
     implementation 'com.github.bumptech.glide:glide:4.9.0'//글라이드 이미지 로딩
     implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-config:19.1.4'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'//글라이드 이미지 로딩2
     implementation 'com.google.android.material:material:1.2.0-alpha01' //뷰 페이저
     implementation 'com.android.volley:volley:1.1.1'//서버 통신에 관한 라이브러리 설치

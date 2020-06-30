@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     intent1.putExtra("nic", userSubname);
                     intent1.putExtra("pass", userPass);
                     intent1.putExtra("name", userName);
-
+                    startActivity(intent1);
                 }
             }
         });

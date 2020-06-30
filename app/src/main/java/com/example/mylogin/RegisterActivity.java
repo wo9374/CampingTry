@@ -1,5 +1,6 @@
 package com.example.mylogin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,15 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mylogin.Chat.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioGroup et_sex;
     private Spinner em_spinner;
     private int userSex;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
         et_num = findViewById(R.id.et_num);
         et_sex = (RadioGroup)findViewById(R.id.et_sex);
         em_spinner = (Spinner)findViewById(R.id.email_spinner);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +102,35 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterRequest registerRequest = new RegisterRequest(userEmail, userPass, userName, userSubname, userNum, userSex, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
+
+
+
+
+            //파이어 베이스
+                FirebaseAuth.getInstance()
+                        .createUserWithEmailAndPassword(et_email.getText().toString() + "@" + em_spinner.getSelectedItem().toString(), et_pass.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                final String uid = task.getResult().getUser().getUid();
+                                final String userName = et_name.getText().toString();
+                                final String userSubname = et_subname.getText().toString();
+
+
+                                UserModel userModel = new UserModel();
+                                userModel.userName = userName;
+                                userModel.userNicname = userSubname;
+                                userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                Log.d("지나가유","지나갈게요");
+
+                                FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        RegisterActivity.this.finish();
+                                    }
+                                });
+                            }
+                        });
             }
         });
     }
