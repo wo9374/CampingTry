@@ -51,7 +51,7 @@ public class ChatRoom extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag5, container, false);
+        view = inflater.inflate(R.layout.activity_chat_room, container, false);
 
         Button_send = view.findViewById(R.id.Button_send);
         EditText_chat = view.findViewById(R.id.EditText_chat);
