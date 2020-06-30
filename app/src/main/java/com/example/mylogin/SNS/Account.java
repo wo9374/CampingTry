@@ -44,7 +44,7 @@ public class Account extends Fragment {
 
         drawable = getResources().getDrawable(R.drawable.tema_4);
         img = ((BitmapDrawable)drawable).getBitmap();
-        addItem("이재범","2020-06-28","내 게시물 임시 테스트",img,"5","0","0");
+        addItem("이재범","2020-06-28","내 게시물 임시 테스트",img,"5","0","0","캠핑장이름");
 
 
         mRecyclerView = view.findViewById(R.id.account_recycle);
@@ -56,7 +56,7 @@ public class Account extends Fragment {
     }
 
 
-    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode){
+    void addItem(String username, String time, String content, Bitmap image, String like, String comment, String snscode,String title){
         AccountItem item = new AccountItem();
 
         item.setUsername(username);
@@ -66,6 +66,8 @@ public class Account extends Fragment {
         item.setLike(like);
         item.setComment(comment);
         item.setSnscode(snscode);
+
+        item.setTitle(title);
 
         mList.add(item);
     }

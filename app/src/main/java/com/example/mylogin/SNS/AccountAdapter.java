@@ -45,6 +45,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         holder.like.setText(item.getLike());
         holder.comment.setText(item.getComment());
         holder.snscode.setText(item.getSnscode());
+        holder.title.setText(item.getTitle());
     }
 
     @Override
@@ -62,6 +63,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         TextView like;
         TextView comment;
 
+        TextView title;
         TextView snscode;
 
         Button like_btn;
@@ -77,6 +79,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
 
+            title = itemView.findViewById(R.id.title);
             snscode = itemView.findViewById(R.id.snscode);
 
             like_btn = itemView.findViewById(R.id.like_btn);
