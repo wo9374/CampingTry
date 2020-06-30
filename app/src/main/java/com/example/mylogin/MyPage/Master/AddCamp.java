@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,9 +15,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import com.example.mylogin.R;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +53,8 @@ public class AddCamp extends AppCompatActivity {
     String imageFileName;
     String imageFileNamePlus;
     private Uri photoURI;
+
+    private ArrayList<Bitmap> p_bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,25 +133,33 @@ public class AddCamp extends AppCompatActivity {
             }
         });
 
+        p_bitmap = new ArrayList<>();
 
         add_camp_btn = findViewById(R.id.add_camp_btn);
         add_camp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //camp_name.getText(); //캠핑장 이름
-                //camp_addr.getText(); //캠핑장 주소
-                //camp_tel.getText(); //문의처 전화번호
-                //camp_nature.getText(); //캠핑장 환경
+                System.out.println( camp_name.getText() + "  캠핑장 이름");
+                System.out.println(camp_addr.getText() + "  캠핑장 주소");
+                System.out.println( camp_tel.getText() + "  캠핑장 문의처");
+                System.out.println( camp_keyword.getText() + "  캠핑장 키워드");
+                System.out.println( camp_openday.getText() + "  캠핑장 운영일");
 
                 int select_tema = tema_spinner.getSelectedItemPosition()+1; //선택된 테마
+                System.out.println( select_tema + "  선택 된 테마");
 
                 CheckTema();
-                System.out.println(facility_chk); // facility_chk 이 배열이 선택한 체크한 시설정보
+                System.out.println(facility_chk + "   기타 시설정보 체크한 시설정보"); // facility_chk 이 배열이 선택한 체크한 시설정보
 
-                for (int i=0; i< priceDataList.size(); i++){
-                    //System.out.println(p_title.get(i));
-                    //System.out.println(p_content.get(i));
-                    //System.out.println(p_price.get(i));
+               for (int i=0; i< priceDataList.size(); i++){
+                    System.out.println(p_title.get(i));
+                    System.out.println(p_content.get(i));
+                    System.out.println(p_price.get(i));
+               }
+
+
+                for (int i=0; i<p_bitmap.size();i++){
+                    System.out.println("비트맵 p_bitmap 어레이 리스트에 넣어줌    "+ p_bitmap.get(i));
                 }
 
             }
@@ -165,11 +180,11 @@ public class AddCamp extends AppCompatActivity {
     }
 
     private void getAlbum() {
-        Intent getAlbumintent = new Intent(Intent.ACTION_PICK);
-        getAlbumintent.setType("image/*");
-        getAlbumintent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        getAlbumintent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        Intent getAlbumintent = new Intent(Intent.ACTION_PICK,MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 
+        getAlbumintent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        getAlbumintent.setAction(Intent.ACTION_GET_CONTENT);
+        getAlbumintent.setType("image/*");
         startActivityForResult(getAlbumintent, REQUEST_TAKE_ALBUM);
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -183,13 +198,17 @@ public class AddCamp extends AppCompatActivity {
             case REQUEST_TAKE_ALBUM:{
                 if (resultCode == RESULT_OK) {
                     ClipData clipData = intent.getClipData();
-
                     if (clipData != null){
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH");
-                        Date now = new Date();
                         for(int i = 0; i < clipData.getItemCount(); i++){
-
+                            try {
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),  clipData.getItemAt(i).getUri());
+                                p_bitmap.add(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
+                    }else{
+                        System.out.println("사진 널 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                     }
                 }//리절트 오케이 끝
                 break;

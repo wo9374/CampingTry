@@ -316,4 +316,5 @@
         android:layout_alignParentBottom="true"
         android:text="캠핑장 등록"
         android:backgroundTint="#F09661"/>
+
 </LinearLayout>
