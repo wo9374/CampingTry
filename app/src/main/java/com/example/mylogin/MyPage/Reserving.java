@@ -91,7 +91,6 @@ public class Reserving extends AppCompatActivity {
                                                 String keyword = jsonObject.getString("keyword");
                                                 final String imgurl = jsonObject.getString("imgurl");
                                                 final String[] imgurls = imgurl.split(",");
-                                                System.out.println(code + name + "@@@@@@@@@@@@@@@@@@@@@@@@@2제발 받아와져라");
                                                 Thread mThread = new Thread(){
                                                     @Override
                                                     public void run(){
@@ -124,7 +123,6 @@ public class Reserving extends AppCompatActivity {
                                             mAdapter.notifyDataSetChanged(); //새로고침
 
                                         } else { //검색 결과 없음
-                                            Toast.makeText(Reserving.this,"캠핑장 정보가 없습니다.",Toast.LENGTH_LONG).show();
                                             mAdapter.notifyDataSetChanged(); //새로고침
                                             return;
                                         }
