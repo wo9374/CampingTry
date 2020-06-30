@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        //로그인
+        //로그인 1
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
