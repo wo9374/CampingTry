@@ -76,7 +76,6 @@ public class MyPage_m extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyPage_m.this, AddCamp.class);
                 intent.putExtra("id", s_id);
-                intent.putExtra("name", d_name);
 
                 startActivity(intent);
             }

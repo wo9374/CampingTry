@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="캠핑장 환경" />
+                        android:text="키워드" />
                     <TextView
                         android:id="@+id/field"
                         android:layout_width="match_parent"

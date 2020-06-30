@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +96,9 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     Button reservation_btn; //예약하기 버튼
 
     int campitemcode = 0; //구역 선택시 구역코드 넣어줄 변수
+
+    TextView tel,field,tema,openday;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +114,11 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
         name = findViewById(R.id.name); //캠핑장 이름
         name.setText(intent.getExtras().getString("name"));
+
+        tel = findViewById(R.id.tel);
+        field = findViewById(R.id.field);
+        tema = findViewById(R.id.tema);
+        openday = findViewById(R.id.openday);
 
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저

@@ -54,7 +54,7 @@ public class Frag2 extends Fragment {
     private String keyword_txt; //키워드를 쿼리문으로 보낼 스트링 변수
     private String mAdd, sAdd; //스피너 값에 따른 주소찾을 쿼리문으로 보낼 스트링 변수
 
-    public static boolean chk[] = new boolean[6];
+    public static boolean chk[] = new boolean[5];
     private String tema_chk;
 
     Bitmap img;
