@@ -12,6 +12,8 @@ public class AccountItem {
 
     private String snscode;
 
+    private String title;
+
     public String getUsername() {
         return username;
     }
@@ -66,5 +68,13 @@ public class AccountItem {
 
     public void setSnscode(String snscode) {
         this.snscode = snscode;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
