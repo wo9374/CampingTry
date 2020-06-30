@@ -22,6 +22,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +97,10 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
     Button reservation_btn; //예약하기 버튼
 
     int campitemcode = 0; //구역 선택시 구역코드 넣어줄 변수
+
+    TextView tel,field,tema,openday;
+
+    Drawable drawable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,11 +111,17 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         final int codeint = Integer.parseInt(code);
         final String imgurl = intent.getExtras().getString("url");
         final String userid = intent.getExtras().getString("userid");
+        final String nic = intent.getExtras().getString("nic");
         addr1 = intent.getExtras().getString("addr");
         nameii = intent.getExtras().getString("name");
 
         name = findViewById(R.id.name); //캠핑장 이름
         name.setText(intent.getExtras().getString("name"));
+
+        tel = findViewById(R.id.tel);
+        field = findViewById(R.id.field);
+        tema = findViewById(R.id.tema);
+        openday = findViewById(R.id.openday);
 
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
@@ -134,7 +146,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         imageAdapter = new ImageAdapter(); //init 어뎁터
 
         ArrayList<ImageItem> img_data = new ArrayList<>();
-        Drawable drawable = getResources().getDrawable(R.drawable.tema_4); //기본 사진
+        drawable = getResources().getDrawable(R.drawable.tema_4); //기본 사진
         final String[] imgurls = imgurl.split(",");
 
         for (int x=0; x<imgurls.length; x++){
@@ -177,15 +189,107 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
         icon_recycle.setLayoutManager(icon_LayoutManager); //레이아웃 매니저 지정
         iconAdapter = new IconAdapter(); //init 어뎁터
 
-        ArrayList<IconItem> icon_data = new ArrayList<>();
-        Bitmap icon_img = ((BitmapDrawable)drawable).getBitmap();
+        Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success)
+                    {
+                        String facility = jsonObject.getString("facility");
+                        String[] facilitys = facility.split(",");
+                        tel.setText(jsonObject.getString("phone"));
+                        field.setText(jsonObject.getString("keyword"));
+                        String temas = jsonObject.getString("theme");
+                        switch (temas) {
+                            case "1":
+                                tema.setText("오토캠핑");
+                                break;
+                            case "2":
+                                tema.setText("글램핑");
+                                break;
+                            case "3":
+                                tema.setText("카라반");
+                                break;
+                            case "4":
+                                tema.setText("팬션");
+                                break;
+                            case "5":
+                                tema.setText("피크닉");
+                                break;
+                        }
+                        openday.setText(jsonObject.getString("openday"));
+                        ArrayList<IconItem> icon_data = new ArrayList<>();
 
-        for (int x = 0; x <10; x++){
-            icon_data.add(new IconItem(icon_img,"테스트"));
-        }//임시로 아이콘이랑 아이콘 텍스트 넣음
 
-        iconAdapter.setData(icon_data); //set data
-        icon_recycle.setAdapter(iconAdapter);
+                        iconAdapter.setData(icon_data); //set data
+                        icon_recycle.setAdapter(iconAdapter);
+
+                        for (int x = 0; x <facilitys.length; x++){
+
+                            String fac = "";
+                            switch (facilitys[x]) {
+                                case "0":
+                                    fac = "전기";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_0);
+                                    break;
+                                case "1":
+                                    fac = "온수";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_1);
+                                    break;
+                                case "2":
+                                    fac = "산책로";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_2);
+                                    break;
+                                case "3":
+                                    fac = "운동시설";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_3);
+                                    break;
+                                case "4":
+                                    fac = "와이파이";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_4);
+                                    break;
+                                case "5":
+                                    fac = "장작대여";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_5);
+                                    break;
+                                case "6":
+                                    fac = "편의점";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_6);
+                                    break;
+                                case "7":
+                                    fac = "운동장";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_7);
+                                    break;
+                                case "8":
+                                    fac = "수영장";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_8);
+                                    break;
+                                case "9":
+                                    fac = "장비대여";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_9);
+                                    break;
+                                case "10":
+                                    fac = "동물동반";
+                                    drawable = getResources().getDrawable(R.drawable.icon_facility_10);
+                                    break;
+                            }
+                            Bitmap icon_img = ((BitmapDrawable)drawable).getBitmap();
+                            icon_data.add(new IconItem(icon_img,fac));
+                        }//임시로 아이콘이랑 아이콘 텍스트 넣음
+
+                    } else {
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        DetailRequest detailRequest = new DetailRequest(codeint, responseListener4);
+        RequestQueue queue4 = Volley.newRequestQueue(DetailInformation.this);
+        queue4.add(detailRequest);
 
 
         // 가격 리사이클러뷰
@@ -303,7 +407,13 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     //String day_full = year + (month+1) + day  + week;
                     String day_full = Integer.toString(year);
                     day_full = day_full + 0 +(month+1);
-                    day_full = day_full + day;
+
+                    if(day < 10){
+                        day_full = day_full + "0"+day;
+                    }else {
+                        day_full = day_full + day;
+                    }
+
                     //day_full = day_full + week;
                     result += (day_full + "\n");
 
@@ -323,7 +433,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                     String now_date = now_dateFor.format(now_current);
                     int today = Integer.parseInt(now_date);
                     int selday = Integer.parseInt(firDay);
-
+                    System.out.println(today + "오늘" + selday);
                     if(selday >= today){
                         if(campitemcode != 0){
                             Response.Listener<String> responseListener3 = new Response.Listener<String>() {
@@ -334,7 +444,8 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                                         boolean success = jsonObject.getBoolean("success");
                                         if (success)//검색 결과 성공
                                         {
-
+                                            Toast.makeText(DetailInformation.this, "예약 신청 완료", Toast.LENGTH_LONG).show();
+                                            finish();
                                         } else { //검색 결과 없음
 
                                             return;

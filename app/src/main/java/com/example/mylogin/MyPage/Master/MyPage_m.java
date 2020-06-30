@@ -16,7 +16,7 @@ public class MyPage_m extends AppCompatActivity {
 
     private TextView d_myid, d_mynic;
     private String d_nic, d_name, d_pass;
-    private Button m_requestpro, d_close;
+    private Button m_requestpro, d_close,add_camp;
 
 
     @Override
@@ -31,7 +31,7 @@ public class MyPage_m extends AppCompatActivity {
         d_close = findViewById(R.id.d_close);
 
         Intent intent = getIntent();
-        String s_id = intent.getStringExtra("id");
+        final String s_id = intent.getStringExtra("id");
         String s_nic = intent.getStringExtra("nic");
         String s_name = intent.getStringExtra("name");
         String s_pass = intent.getStringExtra("pass");
@@ -67,6 +67,17 @@ public class MyPage_m extends AppCompatActivity {
                 intent.putExtra("userSubname", d_nic);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        add_camp= findViewById(R.id.add_camp);
+        add_camp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyPage_m.this, AddCamp.class);
+                intent.putExtra("id", s_id);
+
+                startActivity(intent);
             }
         });
     }

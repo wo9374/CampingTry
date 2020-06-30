@@ -25,6 +25,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Chat.ChatRoom"></activity>
         <activity android:name=".MyPage.ReviewWrite" />
+        <activity android:name=".MyPage.Master.AddCamp"></activity>
+        <activity android:name=".MyPage.ReviewWrite" />
         <activity android:name=".MyPage.Reserving" />
 
         <provider

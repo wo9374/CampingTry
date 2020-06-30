@@ -1,4 +1,4 @@
-package com.example.mylogin.SEARCH;
+package com.example.mylogin.MyPage.Master;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,31 +8,31 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.mylogin.R;
 
-import static com.example.mylogin.SEARCH.Frag2.chk;
+import static com.example.mylogin.MyPage.Master.AddCamp.chk;
 
-public class AdapterTemaSpinner extends BaseAdapter {
+public class AdapterFacilitySpinner extends BaseAdapter {
 
-    String tema[];
+    String facility[];
     Context context;
-    int temaImg[];
+    int facilityImg[];
 
-
-    public AdapterTemaSpinner(String[] tema, int[] temaImg,Context context){
-        this.tema= tema;
-        this.temaImg=temaImg;
+    public AdapterFacilitySpinner(String[] facility, int[] facilityImg, Context context) {
+        this.facility = facility;
         this.context = context;
+        this.facilityImg = facilityImg;
     }
 
     @Override
     public int getCount() {
-        return tema.length;
+        return facility.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return tema[position];
+        return facility[position];
     }
 
     @Override
@@ -50,8 +50,8 @@ public class AdapterTemaSpinner extends BaseAdapter {
         ImageView imgTema = (ImageView) convertView.findViewById(R.id.img_tema);
         final CheckBox c1= (CheckBox)convertView.findViewById(R.id.chk_tema);
 
-        tv.setText(tema[position]);
-        imgTema.setImageResource(temaImg[position]);
+        tv.setText(facility[position]);
+        imgTema.setImageResource(facilityImg[position]);
 
         c1.setOnClickListener(new View.OnClickListener() {
             @Override

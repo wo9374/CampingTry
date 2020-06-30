@@ -14,10 +14,18 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
 import com.example.mylogin.SEARCH.Detail.DetailInformation;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -101,14 +109,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             comment_btn = itemView.findViewById(R.id.comment_btn);
             chat_btn = itemView.findViewById(R.id.chat_btn);
 
+            System.out.println(snscode.getText() + " sns코드@@@@@@@ㄹㄹㄹㄹㄹ@@@@@@");
+            System.out.println(Frag1.likelist.get(0)+ "@@@@@@@@@@@KKKKKK@@@@@@@@@@@@@");
+            for( int i =0; i<Frag1.likelist.size(); i++){
+                if(snscode.getText().equals(Frag1.likelist.get(i))){
+                    like_btn.setText("좋아요 취소");
+                    like_on = true;
+                }
+            }
 
-
-            //for( int i =0; i<Frag1.likelist.size(); i++){
-                //if(snscode == Frag1.likelist.get(i)){
-                   // like_btn.setText("좋아요 취소");
-                 //   like_on = true;
-               // }
-           // }
 
             like_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -140,10 +149,39 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
 
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     Intent intent = new Intent(v.getContext(), DetailInformation.class);
-                    intent.putExtra("code",campcode.getText());
 
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
+                                if (success)//로그인 성공
+                                {
+                                    String imgurl = jsonObject.getString("imgurl");
+                                    String addr = jsonObject.getString("addr");
+                                    String name = jsonObject.getString("name");
+
+                                    Intent intent = new Intent(v.getContext(), DetailInformation.class);
+                                    intent.putExtra("url", imgurl);
+                                    intent.putExtra("userid", Home.userid);
+                                    intent.putExtra("addr", addr);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("code", campcode.getText().toString());
+
+                                    v.getContext().startActivity(intent);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    //실제 서버로 Volley를 이용해서 요청을 함.
+                    GoDetailRequest goDetailRequest = new GoDetailRequest(Integer.parseInt(campcode.getText().toString()), responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(v.getContext());
+                    queue.add(goDetailRequest);
                 }
             });
         }
