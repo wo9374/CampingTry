@@ -41,7 +41,7 @@ public class Home extends Fragment {
     Drawable drawable;
 
     RecyclerView mRecyclerView = null;
-    HomeAdapter mAdapter = null;
+    public static  HomeAdapter mAdapter = null;
     ArrayList<HomeItem> mList = new ArrayList<HomeItem>();
     private ArrayList<String> snscodeList;
     private ArrayList<String> commentcountList;
@@ -138,6 +138,7 @@ public class Home extends Fragment {
                                                 if(snscode.equals(Frag1.likelist.get(x))){
                                                     liked = "취소";
                                                     HomeAdapter.ViewHolder.like_on = true;
+
                                                 }
                                             }
                                             addItem(name, date, desc, img, like, commentcount1, snscode, campname, campcode,liked);

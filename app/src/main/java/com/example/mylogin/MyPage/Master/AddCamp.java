@@ -6,25 +6,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddCamp extends AppCompatActivity {
 
@@ -51,8 +60,10 @@ public class AddCamp extends AppCompatActivity {
 
     final static int REQUEST_TAKE_ALBUM = 2;
 
+    int z = 0;
     String imageFileName;
     String imageFileNamePlus;
+    String urlUpload = "http://3.34.136.232/SnsPhotoUpload.php";
     private Uri photoURI;
 
     private ArrayList<Bitmap> p_bitmap;
@@ -98,6 +109,8 @@ public class AddCamp extends AppCompatActivity {
         album_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                p_bitmap.clear();
                 //카메라 권한부분은 MainActivity에서 미리 받고 있음
                 getAlbum();
             }
@@ -137,26 +150,50 @@ public class AddCamp extends AppCompatActivity {
         add_camp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(camp_name.getText() + "  캠핑장 이름");
-                System.out.println(camp_addr.getText() + "  캠핑장 주소");
-                System.out.println(camp_tel.getText() + "  캠핑장 문의처");
-                System.out.println(camp_keyword.getText() + "  캠핑장 키워드");
-                System.out.println(camp_openday.getText() + "  캠핑장 운영일");
 
-                int select_tema = tema_spinner.getSelectedItemPosition() + 1; //선택된 테마
+                System.out.println(camp_name.getText() + "  캠핑장 이름"); //캠핑장
+                System.out.println(camp_addr.getText() + "  캠핑장 주소"); //캠핑장
+                System.out.println(camp_tel.getText() + "  캠핑장 문의처"); //캠핑장
+                System.out.println(camp_keyword.getText() + "  캠핑장 키워드"); //캠핑장
+                System.out.println(camp_openday.getText() + "  캠핑장 운영일"); //캠핑장
+
+                int select_tema = tema_spinner.getSelectedItemPosition() + 1; //선택된 테마 //캠핑장
                 System.out.println(select_tema + "  선택 된 테마");
 
                 CheckTema();
-                System.out.println(facility_chk + "   기타 시설정보 체크한 시설정보"); // facility_chk 이 배열이 선택한 체크한 시설정보
+                System.out.println(facility_chk + "   기타 시설정보 체크한 시설정보"); // facility_chk 이 배열이 선택한 체크한 시설정보 //캠핑장
 
                 for (int i = 0; i < priceDataList.size(); i++) {
-                    System.out.println(p_title.get(i));
-                    System.out.println(p_content.get(i));
-                    System.out.println(p_price.get(i));
+                    System.out.println(p_title.get(i)); //캠핑장아이템
+                    System.out.println(p_content.get(i)); //캠핑장아이템
+                    System.out.println(p_price.get(i)); //캠핑장아이템
                 }
 
-                for (int i = 0; i < p_bitmap.size(); i++) {
-                    System.out.println("비트맵 p_bitmap 어레이 리스트에 넣어줌    " + p_bitmap.get(i));
+                for (int i = 0; i < p_bitmap.size(); i++){
+                    System.out.println("돕니다@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddCamp.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(0));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName);
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddCamp.this);
+                    requestQueue.add(stringRequest);
                 }
             }
         });
@@ -182,10 +219,6 @@ public class AddCamp extends AppCompatActivity {
         getAlbumintent.setAction(Intent.ACTION_GET_CONTENT);
         getAlbumintent.setType("image/*");
         startActivityForResult(getAlbumintent, REQUEST_TAKE_ALBUM);
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        imageFileName = id + "_" + timeStamp;
-        imageFileNamePlus = imageFileName + ".jpg";
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
@@ -197,6 +230,10 @@ public class AddCamp extends AppCompatActivity {
                     if (clipData != null) {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             try {
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                imageFileName = id + "_" + timeStamp+"_"+i;
+                                imageFileNamePlus = imageFileName + ".jpg";
+
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), clipData.getItemAt(i).getUri());
                                 p_bitmap.add(bitmap);
                             } catch (IOException e) {
@@ -210,5 +247,14 @@ public class AddCamp extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    private String imamgeToString(Bitmap bitmap){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+
+        String encodedImage = Base64.encodeToString(imageBytes,Base64.DEFAULT);
+        return  encodedImage;
     }
 }
