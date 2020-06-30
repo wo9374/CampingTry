@@ -140,6 +140,7 @@ public class Home extends Fragment {
         item.setTitle(title);
         item.setCampcode(campcode);
 
+
         mList.add(item);
     }
 }
