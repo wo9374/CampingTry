@@ -16,7 +16,7 @@ import com.example.mylogin.R;
 import java.util.ArrayList;
 
 public class DetailShop extends AppCompatActivity {
-    TextView name,content;
+    TextView name,content,writer,tel;
 
     RecyclerView image_recycle; //이미지 수평 리사이클
     DetailShopAdapter imageAdapter;
@@ -34,6 +34,8 @@ public class DetailShop extends AppCompatActivity {
 
         name = findViewById(R.id.name); //상품이름
         content = findViewById(R.id.content); //상품설명
+        writer = findViewById(R.id.writer); //작성자이름
+        tel = findViewById(R.id.tel); //전화번호
 
 
 

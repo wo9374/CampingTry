@@ -23,7 +23,7 @@ public class RequestProfileActivity extends AppCompatActivity {
 
     private TextView re_userid, re_username;    //수정불가 정보
     private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;   //수정 정보
-    private Button re_fin;
+    private Button re_fin,re_close;
     private String get_userid, get_pass, get_name;  //Intent정보 저장
 
     @Override
@@ -42,7 +42,7 @@ public class RequestProfileActivity extends AppCompatActivity {
         re_username = findViewById(R.id.re_username);
 
         re_fin = findViewById(R.id.re_fin);
-
+        re_close = findViewById(R.id.re_close);
 
 
         Intent intent = getIntent();

@@ -35,24 +35,23 @@ public class Frag3 extends Fragment {
         drawable = getResources().getDrawable(R.drawable.tema_4);
         img = ((BitmapDrawable) drawable).getBitmap();
 
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
-        addItem(img,"물건이름","10000","1");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
+        addItem(img,"물건이름","10000","1","test12");
         shop_gridview.setAdapter(mAdapter);
 
         FloatingActionButton fab = view.findViewById(R.id.write_fab);
@@ -66,7 +65,7 @@ public class Frag3 extends Fragment {
         return view;
     }
 
-    void addItem(Bitmap image, String name, String price,String shopcode){
-        mAdapter.addItem(new ShopItem(image,name, price,shopcode));
+    void addItem(Bitmap image, String name, String price,String shopcode,String userid){
+        mAdapter.addItem(new ShopItem(image,name, price,shopcode,userid));
     }
 }

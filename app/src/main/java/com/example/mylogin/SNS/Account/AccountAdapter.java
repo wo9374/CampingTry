@@ -1,6 +1,7 @@
 package com.example.mylogin.SNS.Account;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Home.Comment;
+import com.example.mylogin.SNS.Home.Home;
 
 import java.util.ArrayList;
 
@@ -59,10 +62,8 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         TextView time;
         TextView content;
         ImageView img_slide;
-
         TextView like;
         TextView comment;
-
         TextView title;
         TextView snscode;
 
@@ -89,7 +90,12 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
             comment_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), Comment.class);
 
+                    intent.putExtra("snscode",snscode.getText());
+                    intent.putExtra("nic", Home.nic);
+
+                    v.getContext().startActivity(intent);
                 }
             });
         }

@@ -51,12 +51,14 @@ public class ShopAdapter extends BaseAdapter {
         TextView name = convertView.findViewById(R.id.name);
         TextView price = convertView.findViewById(R.id.price);
         final TextView shop_code = convertView.findViewById(R.id.shop_code);
+        TextView userid = convertView.findViewById(R.id.userid);
 
 
         icon_img.setImageBitmap(shopItem.getImage());
         name.setText(shopItem.getName());
         price.setText(shopItem.getPrice());
         shop_code.setText(shopItem.getShopcode());
+        userid.setText(shopItem.getUserid());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
