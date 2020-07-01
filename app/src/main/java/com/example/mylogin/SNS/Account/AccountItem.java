@@ -1,4 +1,4 @@
-package com.example.mylogin.SNS;
+package com.example.mylogin.SNS.Account;
 
 import android.graphics.Bitmap;
 

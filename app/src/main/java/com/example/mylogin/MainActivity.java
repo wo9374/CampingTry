@@ -26,8 +26,12 @@ import com.example.mylogin.MyPage.Reserving;
 import com.example.mylogin.MyPage.User.MyPage;
 import com.example.mylogin.SEARCH.Frag2;
 import com.example.mylogin.SNS.Frag1;
+import com.example.mylogin.Shop.Frag3;
 import com.example.mylogin.WebView.WebViewActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -300,5 +304,12 @@ public class MainActivity extends AppCompatActivity {
         }else if(System.currentTimeMillis()-time<2000){
             finish();
         }
+    }
+
+    void passPushTokenToServer(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid);
     }
 }
