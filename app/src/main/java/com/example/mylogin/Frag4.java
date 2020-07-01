@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +24,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.common.api.Status;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.mylogin.Shop.SearchProduct;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -44,9 +45,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import noman.googleplaces.NRPlaces;
 import noman.googleplaces.Place;
@@ -62,7 +64,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, PlacesListener {
@@ -90,8 +91,10 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
 
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
+    List<Address> list1 = null;
     List<Marker> previous_marker = null;
+    private ArrayList<String>addrList;
+    private ArrayList<String>campnameList;
 
     public Frag4(){
     }
@@ -110,6 +113,37 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        addrList = new ArrayList<>();
+        campnameList = new ArrayList<>();
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String addr = jsonObject.getString("addr");
+                            String campname = jsonObject.getString("name");
+                            addrList.add(addr);
+                            campnameList.add(campname);
+                        }
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        GetAddrRequest getAddrRequest = new GetAddrRequest(responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(getAddrRequest);
+
         if (savedInstanceState != null) {
             mCurrentLocatiion = savedInstanceState.getParcelable(KEY_LOCATION);
             CameraPosition mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
@@ -165,8 +199,28 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
 
         getDeviceLocation();
 
+        for (int i = 0; i < addrList.size(); i++){
+            System.out.println(addrList.get(i) + "도시명@@@@@@@@@@@@@@@@@@@@@@");
+            try {
+                Geocoder geocoder = new Geocoder(getContext());
+                list1 = geocoder.getFromLocationName
+                        (addrList.get(i), // 지역 이름
+                                10); // 읽을 개수
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생1");
+            }
+            Address addrr = list1.get(0);
+            double lat = addrr.getLatitude();
+            double lon = addrr.getLongitude();
 
-
+            LatLng location = new LatLng(lat, lon);//좌표 : 위도,경도
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title(campnameList.get(i));//위치 명
+            markerOptions.snippet(addrList.get(i));//부가 설명
+            markerOptions.position(location);
+            googleMap.addMarker(markerOptions);
+        }
     }
 
     private void updateLocationUI(){
@@ -211,7 +265,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15); //현재위치 줌 &&&&&
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 11); //현재위치 줌 &&&&&
         mMap.moveCamera(cameraUpdate);
     }
     String getCurrentAddress(LatLng latlng) {
