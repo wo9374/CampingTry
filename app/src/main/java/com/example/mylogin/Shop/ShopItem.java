@@ -6,11 +6,13 @@ public class ShopItem {
     Bitmap image;
     String name;
     String price;
+    String shopcode;
 
-    public ShopItem(Bitmap image, String name, String price) {
+    public ShopItem(Bitmap image, String name, String price, String shopcode) {
         this.image = image;
         this.name = name;
         this.price = price;
+        this.shopcode = shopcode;
     }
 
     public Bitmap getImage() {
@@ -35,5 +37,13 @@ public class ShopItem {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getShopcode() {
+        return shopcode;
+    }
+
+    public void setShopcode(String shopcode) {
+        this.shopcode = shopcode;
     }
 }
