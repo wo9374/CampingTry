@@ -133,24 +133,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
             }
         });
 
-//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-//                getActivity().getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-//
-//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-//            @Override
-//            public void onPlaceSelected(@NonNull com.google.android.libraries.places.api.model.Place place) {
-//                mCurrentLocatiion.setLatitude(place.getLatLng().latitude);
-//                mCurrentLocatiion.setLongitude(place.getLatLng().longitude);
-//
-//                setCurrentLocation(mCurrentLocatiion, place.getName().toString(), place.getAddress().toString());
-//            }
-//
-//            @Override
-//            public void onError(@NonNull Status status) {
-//                Log.i(TAG, "An error occurred: "+status);
-//            }
-//        });
-
         return layout;
     }
 
