@@ -243,9 +243,7 @@ public class AddCamp extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//검색 결과 성공
                             {
-                                System.out.println("성공@@@@@@@@@@@@@@@@@");
                             } else { //검색 결과 없음
-                                System.out.println("실패@@@@@@@@@@@@@@@@@");
                                 return;
                             }
                         } catch (JSONException e) {

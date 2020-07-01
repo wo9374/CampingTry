@@ -13,19 +13,41 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
+import com.example.mylogin.SNS.Home.Home;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddShop extends AppCompatActivity {
 
     String id;
     String imageFileName;
+    int z = 0;
+
+    String urlUpload = "http://3.34.136.232/ProductPhotoUpload.php";
+    String urlUpload1 = "http://3.34.136.232/ProductPhotoUpload1.php";
+    String urlUpload2 = "http://3.34.136.232/ProductPhotoUpload2.php";
+    String urlUpload3 = "http://3.34.136.232/ProductPhotoUpload3.php";
+    String urlUpload4 = "http://3.34.136.232/ProductPhotoUpload4.php";
+    String imageFileNamePlus;
 
     TextView item_name, item_content, item_price;
     Button album_button,add_shop_btn;
@@ -64,7 +86,163 @@ public class AddShop extends AppCompatActivity {
                 //item_content.getText().toString();   //물건설명
                 //item_price.getText().toString();     //물건가격
 
-                //p_bitmap //비트맵 들어간 비트맵 배열
+                imageFileNamePlus = "";
+                for (int i =0; i < p_bitmap.size(); i++){
+                    if(i== p_bitmap.size()-1 ){
+                        imageFileNamePlus += imageFileName + i + ".jpg";
+                    }else {
+                        imageFileNamePlus += imageFileName + i + ".jpg,";
+                    }
+                }
+
+                Response.Listener<String> responseListener1 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                            } else { //검색 결과 없음
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                AddShopRequest addShopRequest = new AddShopRequest(item_name.getText().toString(), Integer.parseInt(item_price.getText().toString()), item_content.getText().toString(), Home.userid, imageFileNamePlus, responseListener1);
+                RequestQueue queue1 = Volley.newRequestQueue(AddShop.this);
+                queue1.add(addShopRequest);
+
+                if (p_bitmap.size() >= 1) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddShop.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(0));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 0);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddShop.this);
+                    requestQueue.add(stringRequest);
+                }
+
+                if (p_bitmap.size() >= 2) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload1, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddShop.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(1));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 1);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddShop.this);
+                    requestQueue.add(stringRequest);
+                }
+
+                if (p_bitmap.size() >= 3) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload2, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddShop.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(2));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 2);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddShop.this);
+                    requestQueue.add(stringRequest);
+                }
+                if (p_bitmap.size() >= 4) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload3, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddShop.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(3));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 3);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddShop.this);
+                    requestQueue.add(stringRequest);
+                }
+                if (p_bitmap.size() >= 5) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload4, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddShop.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            String imageData = imamgeToString(p_bitmap.get(4));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 4);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddShop.this);
+                    requestQueue.add(stringRequest);
+                }
             }
         });
     }
@@ -89,7 +267,7 @@ public class AddShop extends AppCompatActivity {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             try {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                                imageFileName = id + "_" + timeStamp+"_"+i;
+                                imageFileName = Home.userid + "_" + timeStamp+"_"+i;
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), clipData.getItemAt(i).getUri());
                                 p_bitmap.add(bitmap);
 

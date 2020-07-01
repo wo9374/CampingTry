@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class RequestProfileRequest extends StringRequest {
 
-    final static private String URL = "http://hwi4011.dothome.co.kr/Request.php";
+    final static private String URL = "http://3.34.136.232/UpdateUser.php";
     private Map<String, String> map;
 
     public RequestProfileRequest(String userEmail, String userPassword, String userSubname, int userNum, Response.Listener<String> listener)
@@ -17,10 +17,11 @@ public class RequestProfileRequest extends StringRequest {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("userEmail", userEmail + "");
+        map.put("userEmail", userEmail);
         map.put("userPassword", userPassword);
         map.put("userSubname", userSubname);
         map.put("userNum", userNum + "");
+        System.out.println(userEmail + userPassword + userSubname + userNum);
     }
 
     @Override

@@ -9,12 +9,17 @@ public class ShopItem {
     String shopcode;
     String userid;
 
-    public ShopItem(Bitmap image, String name, String price, String shopcode, String userid) {
+    String url;
+    String desc;
+
+    public ShopItem(Bitmap image, String name, String price, String shopcode, String userid, String url, String desc) {
         this.image = image;
         this.name = name;
         this.price = price;
         this.shopcode = shopcode;
         this.userid = userid;
+        this.url = url;
+        this.desc = desc;
     }
 
     public Bitmap getImage() {
@@ -55,5 +60,21 @@ public class ShopItem {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

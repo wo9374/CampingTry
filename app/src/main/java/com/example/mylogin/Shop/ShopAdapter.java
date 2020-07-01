@@ -48,10 +48,12 @@ public class ShopAdapter extends BaseAdapter {
 
         //xml에 이미지뷰와 텍스트뷰 참조
         ImageView icon_img = convertView.findViewById(R.id.icon_img);
-        TextView name = convertView.findViewById(R.id.name);
+        final TextView name = convertView.findViewById(R.id.name);
         TextView price = convertView.findViewById(R.id.price);
         final TextView shop_code = convertView.findViewById(R.id.shop_code);
-        TextView userid = convertView.findViewById(R.id.userid);
+        final TextView userid = convertView.findViewById(R.id.userid);
+        final TextView url = convertView.findViewById(R.id.url);
+        final TextView desc = convertView.findViewById(R.id.desc);
 
 
         icon_img.setImageBitmap(shopItem.getImage());
@@ -59,12 +61,18 @@ public class ShopAdapter extends BaseAdapter {
         price.setText(shopItem.getPrice());
         shop_code.setText(shopItem.getShopcode());
         userid.setText(shopItem.getUserid());
+        url.setText(shopItem.getUrl());
+        desc.setText(shopItem.getDesc());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailShop.class);
+                intent.putExtra("name",name.getText());
                 intent.putExtra("shopcode",shop_code.getText());
+                intent.putExtra("userid", userid.getText());
+                intent.putExtra("url", url.getText());
+                intent.putExtra("desc", desc.getText());
                 v.getContext().startActivity(intent);
             }
         });

@@ -49,7 +49,7 @@ public class RequestProfileActivity extends AppCompatActivity {
         get_userid = intent.getStringExtra("id");
         get_pass = intent.getStringExtra("pass");
         get_name = intent.getStringExtra("name");
-
+        System.out.println(get_userid);
         re_userid.setText(get_userid);
         re_username.setText(get_name);
 
@@ -90,7 +90,7 @@ public class RequestProfileActivity extends AppCompatActivity {
 
                     }
                 };
-                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(userEmail, userPass, userSubname, userNum, responseListener);
+                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(get_userid, userPass, userSubname, userNum, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RequestProfileActivity.this);
                 queue.add(requestProfileRequest);
             }
