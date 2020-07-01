@@ -50,7 +50,7 @@ public class MyPage_m extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyPage_m.this, RequestProfileActivity.class);
-                intent.putExtra("id", d_myid.getText().toString());
+                intent.putExtra("id", s_id);
                 intent.putExtra("name", d_name);
                 intent.putExtra("pass", d_pass);
                 startActivity(intent);

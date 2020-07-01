@@ -31,7 +31,7 @@ public class MyPage extends AppCompatActivity {
         d_close = findViewById(R.id.d_close);
 
         Intent intent = getIntent();
-        String s_id = intent.getStringExtra("id");
+        final String s_id = intent.getStringExtra("id");
         String s_nic = intent.getStringExtra("nic");
         String s_name = intent.getStringExtra("name");
         String s_pass = intent.getStringExtra("pass");
@@ -50,7 +50,7 @@ public class MyPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyPage.this, RequestProfileActivity.class);
-                intent.putExtra("id", d_myid.getText().toString());
+                intent.putExtra("id", s_id);
                 intent.putExtra("name", d_name);
                 intent.putExtra("pass", d_pass);
                 startActivity(intent);
