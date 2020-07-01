@@ -124,14 +124,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
 
         previous_marker = new ArrayList<Marker>();
 
-        Button button = (Button)layout.findViewById(R.id.map_good);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPlaceInformation(currentPosition);
-                Toast.makeText(mContext,"현재 위치가 표시될 때까지 화면 전환을 자제해주세요!",Toast.LENGTH_LONG).show();
-            }
-        });
 
         return layout;
     }
@@ -172,6 +164,9 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         updateLocationUI();
 
         getDeviceLocation();
+
+
+
     }
 
     private void updateLocationUI(){
@@ -415,23 +410,5 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
     @Override
     public void onPlacesFinished() {
 
-    }
-
-    public void showPlaceInformation(LatLng location)
-    {
-        mMap.clear();
-
-        if (previous_marker != null)
-            previous_marker.clear();
-
-
-        new NRPlaces.Builder()
-                .listener(Frag4.this)
-                .key("AIzaSyB46jBMhBZZ8oVC7fCqN_l0C0xZSROu3kU")
-                .latlng(location.latitude, location.longitude) //위도,경도  포문으로 이거 감싸 주면 될듯 하다
-                .radius(1500) //주변 검색범위
-                .type(PlaceType.RESTAURANT) //주변 음식점이라는데
-                .build()
-                .execute();
     }
 }
