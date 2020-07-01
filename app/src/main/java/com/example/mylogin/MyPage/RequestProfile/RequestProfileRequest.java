@@ -20,7 +20,7 @@ public class RequestProfileRequest extends StringRequest {
         map.put("userEmail", userEmail);
         map.put("userPassword", userPassword);
         map.put("userSubname", userSubname);
-        map.put("userNum", userNum + "");
+        map.put("userNum", userNum);
         System.out.println(userEmail + userPassword + userSubname + userNum);
     }
 

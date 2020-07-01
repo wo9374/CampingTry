@@ -93,7 +93,7 @@ public class RequestProfileActivity extends AppCompatActivity {
 
                     }
                 };
-                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(userEmail, userPass, userSubname, userNum, responseListener);
+                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(get_userid, userPass, userSubname, userNum, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RequestProfileActivity.this);
                 queue.add(requestProfileRequest);
             }
