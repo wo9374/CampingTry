@@ -263,7 +263,7 @@ public class AddShop extends AppCompatActivity {
             case REQUEST_TAKE_ALBUM: {
                 if (resultCode == RESULT_OK) {
                     ClipData clipData = intent.getClipData();
-                    if (clipData != null) {
+                    if (clipData != null && clipData.getItemCount() < 6) {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             try {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -277,7 +277,7 @@ public class AddShop extends AppCompatActivity {
                             }
                         }
                     } else {
-                        System.out.println("사진 널 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        Toast.makeText(this,"사진은 5장 이하만 첨부가능합니다.",Toast.LENGTH_LONG).show();
                     }
                 }//리절트 오케이 끝
                 break;
