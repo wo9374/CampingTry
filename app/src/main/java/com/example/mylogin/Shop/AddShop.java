@@ -28,7 +28,7 @@ public class AddShop extends AppCompatActivity {
     String imageFileName;
 
     TextView item_name, item_content, item_price;
-    Button album_btn,add_shop_btn;
+    Button album_button,add_shop_btn;
 
     final static int REQUEST_TAKE_ALBUM = 2;
 
@@ -43,9 +43,10 @@ public class AddShop extends AppCompatActivity {
         item_content = findViewById(R.id.item_content);
         item_price = findViewById(R.id.item_price);
 
-        album_btn = findViewById(R.id.album_btn);
+        album_button = findViewById(R.id.album_button);
 
-        album_btn.setOnClickListener(new View.OnClickListener() {
+        p_bitmap = new ArrayList<>();
+        album_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 p_bitmap.clear();
@@ -89,9 +90,10 @@ public class AddShop extends AppCompatActivity {
                             try {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                                 imageFileName = id + "_" + timeStamp+"_"+i;
-
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), clipData.getItemAt(i).getUri());
                                 p_bitmap.add(bitmap);
+
+                                System.out.println(p_bitmap.get(i) + "사진넣는곳@@@@@@@@@@@@@@@");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
