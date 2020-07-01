@@ -200,7 +200,6 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         getDeviceLocation();
 
         for (int i = 0; i < addrList.size(); i++){
-            System.out.println(addrList.get(i) + "도시명@@@@@@@@@@@@@@@@@@@@@@");
             try {
                 Geocoder geocoder = new Geocoder(getContext());
                 list1 = geocoder.getFromLocationName
