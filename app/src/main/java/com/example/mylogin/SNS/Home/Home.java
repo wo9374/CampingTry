@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
-import com.example.mylogin.SNS.Frag1;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +48,8 @@ public class Home extends Fragment {
     public static String userid, nic; //아이디, 닉네임
 
     String liked;
+
+    ArrayList<String> likelist;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +64,36 @@ public class Home extends Fragment {
         snscodeList = new ArrayList<>();
         commentcountList = new ArrayList<>();
         drawable = getResources().getDrawable(R.drawable.tema_4);
+
+
+        likelist = new ArrayList<>();
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String responses) {
+                try {
+                    JSONArray jsonArray = new JSONArray(responses);
+                    JSONObject jsonObjectfirst = jsonArray.getJSONObject(0);
+                    boolean success = jsonObjectfirst.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        for (int i =0; i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String snscode = jsonObject.getString("snscode");
+                            System.out.println(snscode + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                            likelist.add(snscode);
+                        }
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        LikeCheck likeCheck = new LikeCheck(userid, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(ct);
+        queue.add(likeCheck);
 
         Response.Listener<String> responseListener1 = new Response.Listener<String>() {
             @Override
@@ -132,10 +162,18 @@ public class Home extends Fragment {
                                                     commentcount1 = commentcountList.get(x);
                                                 }
                                             }
-                                            liked = "좋아요";
-                                            HomeAdapter.ViewHolder.like_on = false;
-                                            for( int x =0; x<Frag1.likelist.size(); x++){
-                                                if(snscode.equals(Frag1.likelist.get(x))){
+
+
+                                            if(HomeAdapter.ViewHolder.like_on = true){
+                                                HomeAdapter.ViewHolder.like_on = false;
+                                                liked = "좋아요";
+                                            }else{
+                                                HomeAdapter.ViewHolder.like_on = true;
+                                                liked = "취소";
+                                            }
+
+                                            for( int x =0; x<likelist.size(); x++){
+                                                if(snscode.equals(likelist.get(x))){
                                                     liked = "취소";
                                                     HomeAdapter.ViewHolder.like_on = true;
 

@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Chat.TestView"></activity>
+        <activity android:name=".Shop.AddShop"></activity>
+        <activity android:name=".Chat.TestView" />
         <activity android:name=".MyPage.ReviewWrite" />
         <activity android:name=".MyPage.Master.AddCamp" />
         <activity android:name=".MyPage.Reserving" />
