@@ -26,7 +26,6 @@
         <activity android:name=".Chat.ChatView"></activity>
         <activity android:name=".Shop.DetailShop"></activity>
         <activity android:name=".Shop.AddShop" />
-        <activity android:name=".Chat.TestView" />
         <activity android:name=".MyPage.ReviewWrite" />
         <activity android:name=".MyPage.Master.AddCamp" />
         <activity android:name=".MyPage.Reserving" />
