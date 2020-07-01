@@ -220,7 +220,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     //파베부분
-    //임시 테스트 아이디를 위해서 네이버메일 넣어둠 나중에 빼야함
     void loginEvent() {
         auth.signInWithEmailAndPassword(et_id.getText().toString(), et_pass.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
