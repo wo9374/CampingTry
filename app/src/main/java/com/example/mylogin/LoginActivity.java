@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private NetworkReceiver receiver;
     private SignInButtonImpl btn_google;//구글 로긘
     private FirebaseAuth auth;//파베 인증
+    private FirebaseAuth.AuthStateListener authStateListener;
     private GoogleApiClient googleApiClient;//구글 API 클라이언트
     private static final int REQ_SIGN_GOOGLE = 100; //구글 로긘 결과코드
 
@@ -72,6 +74,29 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         auth = FirebaseAuth.getInstance();//파이어베이스 인증 객체 초기화
+        auth.signOut();
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginEvent();
+            }
+        });
+
+        //로그인 인터페이스 리스너
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    //로그인
+                }else{
+                    //로그아웃
+                }
+
+            }
+        };
 
         btn_google = findViewById(R.id.btn_google);
         btn_google.setOnClickListener(new View.OnClickListener() {//구글로그인 버튼 처리
@@ -137,6 +162,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 intent.putExtra("usercheck", usercheck);
                                 //intent.putExtra("userName", userName);
                                 startActivity(intent);
+
+                                //파이어베이스 로긘
+                                loginEvent();
                             } else { //로그인 실패
                                 Toast.makeText(getApplicationContext(),"로그인에 실패하셨습니다.",Toast.LENGTH_SHORT).show();
                                 return;
@@ -150,7 +178,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
             }
+
         });
+
 
     }
 
@@ -186,6 +216,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         }
                     }
                 });
+    }
+
+
+    //파베부분
+    //임시 테스트 아이디를 위해서 네이버메일 넣어둠 나중에 빼야함
+    void loginEvent() {
+        auth.signInWithEmailAndPassword(et_id.getText().toString()+"@naver.com", et_pass.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            //로그인 실패한부분
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        auth.removeAuthStateListener(authStateListener);
     }
 
     @Override

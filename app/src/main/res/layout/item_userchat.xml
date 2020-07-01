@@ -11,20 +11,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/border_round">
+
+            <TextView
+                android:id="@+id/useritem_textview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="이름"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
         <ImageView
-            android:layout_margin="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/useritem_imageview"
-            />
-        <TextView
-            android:id="@+id/useritem_textview_title"
-            android:text="닉네임"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            />
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/usernicname"
             android:text="닉네임"

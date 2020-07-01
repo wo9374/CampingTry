@@ -96,7 +96,7 @@ public class Chat_People extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), TestView.class);
+                    Intent intent = new Intent(view.getContext(), ChatView.class);
                     intent.putExtra("destinationUid",userModels.get(position).uid);
                     ActivityOptions activityOptions = null;
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
