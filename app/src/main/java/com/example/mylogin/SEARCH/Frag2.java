@@ -261,7 +261,7 @@ public class Frag2 extends Fragment {
                                                             @Override
                                                             public void run(){
                                                                 try {
-                                                                    URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
+                                                                    URL url = new URL("http://3.34.136.232:8080/image/campingjang/" + imgurls[0]);
                                                                     img = ((BitmapDrawable)drawable).getBitmap();
                                                                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                                                     conn.setDoInput(true);

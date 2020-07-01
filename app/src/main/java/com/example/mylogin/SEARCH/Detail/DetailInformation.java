@@ -154,7 +154,7 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
                 @Override
                 public void run(){
                     try {
-                        URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[i]);
+                        URL url = new URL("http://3.34.136.232:8080/image/campingjang/" + imgurls[i]);
                         i++;
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         conn.setDoInput(true);

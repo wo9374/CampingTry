@@ -27,6 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mylogin.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -59,15 +62,21 @@ public class AddCamp extends AppCompatActivity {
     private ArrayList<String> p_price;
 
     final static int REQUEST_TAKE_ALBUM = 2;
-
+    int campcode;
     int z = 0;
     String imageFileName;
     String imageFileNamePlus;
-    String urlUpload = "http://3.34.136.232/SnsPhotoUpload.php";
+    int lessprice = 1000000000;
+    String urlUpload = "http://3.34.136.232/CampingjangPhotoUpload.php";
+    String urlUpload1 = "http://3.34.136.232/CampingjangPhotoUpload1.php";
+    String urlUpload2 = "http://3.34.136.232/CampingjangPhotoUpload2.php";
+    String urlUpload3 = "http://3.34.136.232/CampingjangPhotoUpload3.php";
+    String urlUpload4 = "http://3.34.136.232/CampingjangPhotoUpload4.php";
     private Uri photoURI;
 
     private ArrayList<Bitmap> p_bitmap;
 
+    String imageData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,29 @@ public class AddCamp extends AppCompatActivity {
         for (j = 0; j < chk.length; j++) {
             chk[j] = false;
         }
+
+        Response.Listener<String> responseListener4 = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success)//검색 결과 성공
+                    {
+                        campcode = jsonObject.getInt("campcode");
+                        campcode = campcode + 1;
+                    } else { //검색 결과 없음
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //실제 서버로 Volley를 이용해서 요청을 함.
+        CampCodeGet campCodeGet = new CampCodeGet(responseListener4);
+        RequestQueue queue4 = Volley.newRequestQueue(AddCamp.this);
+        queue4.add(campCodeGet);
 
         tema_spinner = findViewById(R.id.tema_spinner);
         facility_spinner = findViewById(R.id.facility_spinner);
@@ -162,15 +194,72 @@ public class AddCamp extends AppCompatActivity {
 
                 CheckTema();
                 System.out.println(facility_chk + "   기타 시설정보 체크한 시설정보"); // facility_chk 이 배열이 선택한 체크한 시설정보 //캠핑장
+                imageFileNamePlus = "";
+                for (int i =0; i < p_bitmap.size(); i++){
+                    if(i== p_bitmap.size()-1 ){
+                        imageFileNamePlus += imageFileName + i + ".jpg";
+                    }else {
+                        imageFileNamePlus += imageFileName + i + ".jpg,";
+                    }
+                }
+
+                for (int i = 0; i < p_price.size(); i++){
+                    if (lessprice > Integer.parseInt(p_price.get(i))){
+                        lessprice = Integer.parseInt(p_price.get(i));
+                    }
+                }
 
                 for (int i = 0; i < priceDataList.size(); i++) {
                     System.out.println(p_title.get(i)); //캠핑장아이템
                     System.out.println(p_content.get(i)); //캠핑장아이템
                     System.out.println(p_price.get(i)); //캠핑장아이템
-                }
+                    Response.Listener<String> responseListener2 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                            } else { //검색 결과 없음
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                    AddItemRequest addItemRequest = new AddItemRequest(campcode,i+1, p_title.get(i), p_content.get(i), Integer.parseInt(p_price.get(i)), responseListener2);
+                RequestQueue queue2 = Volley.newRequestQueue(AddCamp.this);
+                queue2.add(addItemRequest);
+            }
 
-                for (int i = 0; i < p_bitmap.size(); i++){
-                    System.out.println("돕니다@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                Response.Listener<String> responseListener1 = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success)//검색 결과 성공
+                            {
+                                System.out.println("성공@@@@@@@@@@@@@@@@@");
+                            } else { //검색 결과 없음
+                                System.out.println("실패@@@@@@@@@@@@@@@@@");
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //실제 서버로 Volley를 이용해서 요청을 함.
+                AddCampingjang addCampingjang = new AddCampingjang(camp_name.getText().toString(), camp_addr.getText().toString(), camp_tel.getText().toString(),
+                        camp_keyword.getText().toString(), camp_openday.getText().toString(), select_tema, facility_chk, imageFileNamePlus, lessprice, responseListener1);
+                RequestQueue queue1 = Volley.newRequestQueue(AddCamp.this);
+                queue1.add(addCampingjang);
+
+                if (p_bitmap.size() >= 1) {
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -184,11 +273,113 @@ public class AddCamp extends AppCompatActivity {
                     }){
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
-
                             Map<String, String> params = new HashMap<>();
-                            String imageData = imamgeToString(p_bitmap.get(0));
+                            imageData = imamgeToString(p_bitmap.get(0));
                             params.put("image", imageData);
-                            params.put("userid", imageFileName);
+                            params.put("userid", imageFileName + 0);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddCamp.this);
+                    requestQueue.add(stringRequest);
+                }
+
+                if (p_bitmap.size() >= 2) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload1, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddCamp.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            imageData = imamgeToString(p_bitmap.get(1));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 1);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddCamp.this);
+                    requestQueue.add(stringRequest);
+                }
+
+                if (p_bitmap.size() >= 3) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload2, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddCamp.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            imageData = imamgeToString(p_bitmap.get(2));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 2);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddCamp.this);
+                    requestQueue.add(stringRequest);
+                }
+                if (p_bitmap.size() >= 4) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload3, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddCamp.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            imageData = imamgeToString(p_bitmap.get(3));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 3);
+                            z++;
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(AddCamp.this);
+                    requestQueue.add(stringRequest);
+                }
+                if (p_bitmap.size() >= 5) {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpload4, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(AddCamp.this,"error:" + error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            imageData = imamgeToString(p_bitmap.get(4));
+                            params.put("image", imageData);
+                            params.put("userid", imageFileName + 4);
+                            z++;
                             return params;
                         }
                     };
@@ -231,11 +422,11 @@ public class AddCamp extends AppCompatActivity {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             try {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                                imageFileName = id + "_" + timeStamp+"_"+i;
-                                imageFileNamePlus = imageFileName + ".jpg";
-
+                                imageFileName = id + "_" + timeStamp + "_";
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), clipData.getItemAt(i).getUri());
                                 p_bitmap.add(bitmap);
+
+                                System.out.println(p_bitmap.get(i) + "사진넣는곳@@@@@@@@@@@@@@@");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
