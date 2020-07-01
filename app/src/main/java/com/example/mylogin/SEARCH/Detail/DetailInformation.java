@@ -125,11 +125,11 @@ public class DetailInformation extends AppCompatActivity implements OnMapReadyCa
 
 
         icon_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
-        icon_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (사진 리사이클)
+        icon_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (아이콘 리사이클)
 
 
         image_LayoutManager = new LinearLayoutManager(this); //수평 레이아웃 매니저
-        image_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (아이콘 리사이클)
+        image_LayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); //수평으로 지정 (사진 리사이클)
 
 
         price_LayoutManager = new LinearLayoutManager(this); //수직 레이아웃 매니저

@@ -53,6 +53,5 @@ class ImageViewHolder extends RecyclerView.ViewHolder{
 
             }
         });
-
     }
 }

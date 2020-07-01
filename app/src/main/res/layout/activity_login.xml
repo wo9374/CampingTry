@@ -40,7 +40,7 @@
                 android:ems="10"
                 android:hint="아이디"
                 android:inputType="textPersonName"
-                android:text="test12"
+                android:text="test12@naver.com"
                 android:textAlignment="center" />
 
             <EditText
