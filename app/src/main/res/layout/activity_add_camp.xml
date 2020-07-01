@@ -253,6 +253,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="가격" />
+
+                    <Button
+                        android:id="@+id/reset_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#F09661"
+                        android:text="구역 초기화"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout

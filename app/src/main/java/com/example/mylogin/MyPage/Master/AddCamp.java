@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +54,7 @@ public class AddCamp extends AppCompatActivity {
     private String facility_chk;
 
     private EditText camp_name, camp_addr, camp_tel, camp_keyword, camp_openday, price_name, price, price_content;
-    private Button album_btn, add_price, add_camp_btn;
+    private Button album_btn, add_price, add_camp_btn,reset_price;
 
     ArrayList<AddPriceItem> priceDataList;
 
@@ -81,6 +82,8 @@ public class AddCamp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_camp);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//키보드 올라올시 화면도 올라가게
 
         Intent intent = getIntent();
         id = intent.getExtras().getString("id"); //아이디 불러옴
@@ -137,6 +140,7 @@ public class AddCamp extends AppCompatActivity {
         camp_openday = findViewById(R.id.openday);
 
 
+
         album_btn = findViewById(R.id.album_btn);
         album_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +167,20 @@ public class AddCamp extends AppCompatActivity {
         p_content = new ArrayList<>();
         p_price = new ArrayList<>();
 
+
+        reset_price = findViewById(R.id.reset_price);
+        reset_price.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                priceDataList.clear();
+
+                price_name.setText("");
+                price.setText("");
+                price_content.setText("");
+                addPriceAdapter.notifyDataSetChanged();
+            }
+        });
+
         add_price = findViewById(R.id.add_price);
         add_price.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +191,10 @@ public class AddCamp extends AppCompatActivity {
                 p_title.add(price_name.getText().toString());
                 p_content.add(price_content.getText().toString());
                 p_price.add(price.getText().toString());
+
+                price_name.setText("");
+                price.setText("");
+                price_content.setText("");
             }
         });
 
@@ -416,7 +438,7 @@ public class AddCamp extends AppCompatActivity {
             case REQUEST_TAKE_ALBUM: {
                 if (resultCode == RESULT_OK) {
                     ClipData clipData = intent.getClipData();
-                    if (clipData != null) {
+                    if (clipData != null && clipData.getItemCount() < 6) {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             try {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -430,7 +452,8 @@ public class AddCamp extends AppCompatActivity {
                             }
                         }
                     } else {
-                        System.out.println("사진 널 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                        Toast.makeText(this,"사진은 5장 이하만 첨부가능합니다.",Toast.LENGTH_LONG).show();
+                        return;
                     }
                 }//리절트 오케이 끝
                 break;

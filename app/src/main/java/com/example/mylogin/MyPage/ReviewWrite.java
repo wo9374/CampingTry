@@ -124,10 +124,7 @@ public class ReviewWrite extends AppCompatActivity {
                             if (success)//검색 결과 성공
                             {
                                 Toast.makeText(getApplicationContext(),"후기가 등록되었습니다.",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ReviewWrite.this, MainActivity.class);
-                                intent.putExtra("userID", userid);  //로그인한 정보를 넘겨줌
-                                intent.putExtra("userSubname", nic);
-                                startActivity(intent);
+                                finish();
                             } else { //검색 결과 없음
 
                                 return;

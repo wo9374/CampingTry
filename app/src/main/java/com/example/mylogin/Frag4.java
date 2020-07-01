@@ -216,7 +216,7 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mDefaultLocation, 15); //현재위치 줌 &&&&&
         mMap.moveCamera(cameraUpdate);
     }
     String getCurrentAddress(LatLng latlng) {
@@ -424,12 +424,13 @@ public class Frag4<Fragment04> extends Fragment implements OnMapReadyCallback, P
         if (previous_marker != null)
             previous_marker.clear();
 
+
         new NRPlaces.Builder()
                 .listener(Frag4.this)
                 .key("AIzaSyB46jBMhBZZ8oVC7fCqN_l0C0xZSROu3kU")
-                .latlng(location.latitude, location.longitude)
-                .radius(500)
-                .type(PlaceType.RESTAURANT)
+                .latlng(location.latitude, location.longitude) //위도,경도  포문으로 이거 감싸 주면 될듯 하다
+                .radius(1500) //주변 검색범위
+                .type(PlaceType.RESTAURANT) //주변 음식점이라는데
                 .build()
                 .execute();
     }

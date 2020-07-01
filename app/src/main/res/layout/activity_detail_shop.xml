@@ -97,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#F09661"
+            android:layout_weight="1"
             android:text="전화" />
 
         <Button
@@ -104,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#F09661"
+            android:layout_weight="1"
             android:text="채팅" />
     </LinearLayout>
 

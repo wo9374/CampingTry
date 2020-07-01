@@ -46,7 +46,8 @@
             android:background="#56DADADA"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/textView43"

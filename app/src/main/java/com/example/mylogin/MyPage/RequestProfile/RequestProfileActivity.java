@@ -21,8 +21,8 @@ import org.json.JSONObject;
 
 public class RequestProfileActivity extends AppCompatActivity {
 
-    private TextView re_userid, re_username;    //수정불가 정보
-    private EditText re_email, re_pass, re_pass2, re_subname, re_num, check_pass;   //수정 정보
+    private TextView re_username, re_email;    //수정불가 정보
+    private EditText re_pass, re_pass2, re_subname, re_num, check_pass;   //수정 정보
     private Button re_fin,re_close;
     private String get_userid, get_pass, get_name;  //Intent정보 저장
 
@@ -32,12 +32,13 @@ public class RequestProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request_profile);
 
         re_email = findViewById(R.id.re_email);
+
         re_pass = findViewById(R.id.re_pass);
         re_pass2 = findViewById(R.id.re_pass2);
+
         re_subname = findViewById(R.id.re_subname);
         re_num = findViewById(R.id.re_num);
 
-        re_userid = findViewById(R.id.re_userid);
         check_pass = findViewById(R.id.check_pass); //비번 동일한지 확인용
         re_username = findViewById(R.id.re_username);
 
@@ -49,19 +50,21 @@ public class RequestProfileActivity extends AppCompatActivity {
         get_userid = intent.getStringExtra("id");
         get_pass = intent.getStringExtra("pass");
         get_name = intent.getStringExtra("name");
-        System.out.println(get_userid);
-        re_userid.setText(get_userid);
+
+        re_email.setText(get_userid);
         re_username.setText(get_name);
 
         re_fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String userEmail = re_email.getText().toString();
+
                 final String userPass = re_pass.getText().toString();
                 final String userPass2 = re_pass2.getText().toString();
+
                 String userSubname = re_subname.getText().toString();
                 final String Checkpass = check_pass.getText().toString();
-                int userNum = Integer.parseInt(re_num.getText().toString());
+                String userNum = re_num.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -90,9 +93,16 @@ public class RequestProfileActivity extends AppCompatActivity {
 
                     }
                 };
-                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(get_userid, userPass, userSubname, userNum, responseListener);
+                RequestProfileRequest requestProfileRequest = new RequestProfileRequest(userEmail, userPass, userSubname, userNum, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RequestProfileActivity.this);
                 queue.add(requestProfileRequest);
+            }
+        });
+
+        re_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

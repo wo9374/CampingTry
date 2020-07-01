@@ -12,7 +12,7 @@ public class RequestProfileRequest extends StringRequest {
     final static private String URL = "http://3.34.136.232/UpdateUser.php";
     private Map<String, String> map;
 
-    public RequestProfileRequest(String userEmail, String userPassword, String userSubname, int userNum, Response.Listener<String> listener)
+    public RequestProfileRequest(String userEmail, String userPassword, String userSubname, String userNum, Response.Listener<String> listener)
     {
         super(Method.POST, URL, listener, null);
 
