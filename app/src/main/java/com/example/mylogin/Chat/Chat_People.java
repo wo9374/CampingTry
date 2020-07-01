@@ -32,6 +32,7 @@ public class Chat_People extends Fragment {
     public void setArguments(Bundle bundle) {
     }
 
+    //푸싱
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
