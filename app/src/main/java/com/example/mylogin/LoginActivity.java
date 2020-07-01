@@ -76,13 +76,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         auth = FirebaseAuth.getInstance();//파이어베이스 인증 객체 초기화
         auth.signOut();
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginEvent();
-            }
-        });
-
         //로그인 인터페이스 리스너
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
