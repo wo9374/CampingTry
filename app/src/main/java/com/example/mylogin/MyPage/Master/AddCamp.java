@@ -265,6 +265,8 @@ public class AddCamp extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//검색 결과 성공
                             {
+                                Toast.makeText(getApplicationContext(),"캠핑장 등록완료",Toast.LENGTH_SHORT).show();
+                                finish();
                             } else { //검색 결과 없음
                                 return;
                             }

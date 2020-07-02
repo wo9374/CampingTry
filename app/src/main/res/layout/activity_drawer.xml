@@ -43,15 +43,7 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/border_round"
-            android:text="즐 겨 찾 기"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+
 
         <Button
             android:id="@+id/d_reservation"
@@ -74,7 +66,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"

@@ -95,7 +95,7 @@ public class Reserving extends AppCompatActivity {
                                                     @Override
                                                     public void run(){
                                                         try {
-                                                            URL url = new URL("http://3.34.136.232:8080/image/" + imgurls[0]);
+                                                            URL url = new URL("http://3.34.136.232:8080/image/campingjang/" + imgurls[0]);
                                                             img = ((BitmapDrawable)drawable).getBitmap();
                                                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                                             conn.setDoInput(true);
@@ -117,7 +117,7 @@ public class Reserving extends AppCompatActivity {
                                                 }catch (InterruptedException e){
                                                     e.printStackTrace();
                                                 }
-                                                addItem(img, name, keyword,price,addr,code,imgurl, (float)4);
+                                                addItem(img, name, keyword,price,addr,code,imgurl, (float)0);
                                             }
 
                                             mAdapter.notifyDataSetChanged(); //새로고침

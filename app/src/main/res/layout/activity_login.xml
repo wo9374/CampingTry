@@ -40,7 +40,6 @@
                 android:ems="10"
                 android:hint="아이디"
                 android:inputType="textPersonName"
-                android:text="test12@naver.com"
                 android:textAlignment="center" />
 
             <EditText
@@ -52,7 +51,7 @@
                 android:ems="10"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
-                android:text="test12"
+                android:text="1111111"
                 android:textAlignment="center" />
         </LinearLayout>
 

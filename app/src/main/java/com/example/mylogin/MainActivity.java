@@ -145,7 +145,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        Button logout = (Button)findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //마이페이지 버튼
         Button d_mypage = (Button)findViewById(R.id.d_mypage);

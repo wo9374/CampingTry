@@ -103,6 +103,7 @@ public class AddShop extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success)//검색 결과 성공
                             {
+                                finish();
                             } else { //검색 결과 없음
                                 return;
                             }

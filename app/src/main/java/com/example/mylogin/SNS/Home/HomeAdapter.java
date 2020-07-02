@@ -232,7 +232,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>{
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    Intent intent = new Intent(v.getContext(), DetailInformation.class);
 
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
