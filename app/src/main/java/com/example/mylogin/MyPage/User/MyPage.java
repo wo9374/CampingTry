@@ -20,6 +20,11 @@ public class MyPage extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage);
@@ -64,12 +69,10 @@ public class MyPage extends AppCompatActivity {
         d_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyPage.this, MainActivity.class);
-                intent.putExtra("userID", d_myid.getText().toString());
-                intent.putExtra("userSubname", d_nic);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
+
+
     }
 }
